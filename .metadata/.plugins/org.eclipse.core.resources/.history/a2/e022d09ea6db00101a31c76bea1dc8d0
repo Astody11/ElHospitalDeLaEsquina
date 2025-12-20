@@ -1,0 +1,124 @@
+package elements;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.GameScreen;
+
+public class Gatas extends Ghosts {
+	
+	private int nDialog = 0;
+	private Label infoLbl;
+	
+	public Gatas(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s, lvl);
+		this.loadFullAnimation("maps/images/tinaMina.png", 1, 1, 1, false);
+		
+		this.lvl = lvl;
+		this.setEnabled(false);
+		
+		infoLbl = new Label("'E'", ResourceManager.itemStyle);
+		s.addActor(infoLbl);
+		
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(Parametros.cats) {
+			this.setEnabled(true);
+		}
+		if(this.getEnabled()) {
+			dialog();
+			
+			if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				
+				
+				if(!Parametros.catsKey && !this.lvl.player.stayStill) {
+					AudioManager.playSound("audio/sounds/npcs/Gatas.mp3");
+					this.nDialog = 1;
+				} else if(Parametros.catsKey) {
+					
+					AudioManager.playSound("audio/sounds/npcs/Gatas.mp3");
+					this.nDialog = 7;
+				}
+				this.lvl.player.stayStill = true;
+			}
+		
+		if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+			this.nDialog++;
+			if(!Parametros.catsKey) {
+				if(nDialog >= 6) {
+					this.lvl.lblCats.setText("");
+					this.lvl.dialogLabels.get("Jeremy").setText("");
+					this.lvl.player.stayStill = false;
+					Parametros.catsKey = true;
+				}
+			
+			} else if(Parametros.catsKey) {
+				if(nDialog >= 8) {
+					this.lvl.lblCats.setText("");
+					this.lvl.dialogLabels.get("Jeremy").setText("");
+					this.lvl.player.stayStill = false;
+					Parametros.catsKey = true;
+				}
+			}
+			
+		}
+		
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && !this.lvl.player.stayStill && Parametros.cats) {
+			infoLbl.setPosition(this.getX() + this.getWidth()/2.5f, this.getY() + this.getHeight()*1.2f);
+			infoLbl.setText("'E'");
+		} else {
+			infoLbl.setText("");
+		}
+			
+	}
+		
+}
+	
+	private void dialog() {
+		
+		switch(nDialog) {
+		case 1:
+			this.lvl.lblCats.setText("Tina y Mina: ¡Provocábamos incendios!");
+			break;
+			
+		case 2:
+			this.lvl.lblCats.setText("Tina y Mina: ¡Hola Jeremy, cuánto nos alegramos de verte!");
+			break;
+			
+		case 3:
+			this.lvl.lblCats.setText("Tina y Mina: ¡¿Necesitas algo?!");
+			break;
+			
+		case 4:
+			System.out.println(this.lvl.player.stayStill + " " + nDialog);
+			this.lvl.lblCats.setText("");
+			this.lvl.dialogLabels.get("Jeremy").setText("Jeremy: Dadles la llave que os dejé, la de la florecita naranja.");
+			break;
+			
+		case 5:
+			this.lvl.dialogLabels.get("Jeremy").setText("");
+			this.lvl.lblCats.setText("Tina y Mina: ¡Aquí tenéis!");
+			Parametros.ghostPower = "Escudo";
+			break;
+			
+		case 7:
+			this.lvl.lblCats.setText("Tina y Mina: ¡Nos encanta pasar tiempo con Jeremy!");
+			break;
+			
+		default: 
+			this.lvl.lblCats.setText("");
+			this.lvl.dialogLabels.get("Jeremy").setText("");
+			break;
+		}
+	}
+
+}

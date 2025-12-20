@@ -1,0 +1,76 @@
+package screens;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+
+import elements.Elements;
+import game.Demo;
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+
+public class DeathScreen extends BScreen {
+	
+private Table tabla;
+SpriteBatch sb;
+Texture bgImg;
+
+public DeathScreen(Demo game) {
+	super(game);
+	
+	//initialize();
+	sb = new SpriteBatch();
+	bgImg = new Texture(Gdx.files.internal("maps/images/DeathScreen.jpg"));
+	tabla = new Table();
+	tabla.setFillParent(true);
+	tabla.setPosition(-450, 10);
+	this.uiStage.addActor(tabla);
+	TextButton boton = new TextButton("Reintentar", ResourceManager.textButtonStyle);
+	boton.addListener(
+			(Event e)->{if(!(e instanceof InputEvent)|| !((InputEvent)e).getType().equals(Type.touchDown))
+				return false;
+				this.dispose();
+				game.setScreen(new GameScreen(game));
+				return false;
+			}); 
+	
+	boton.padLeft(-55);
+	tabla.add(boton);
+	tabla.row();
+	TextButton botonSalir = new TextButton("Salir", ResourceManager.textButtonStyle);
+	botonSalir.addListener(
+			(Event e)->{if(!(e instanceof InputEvent)|| !((InputEvent)e).getType().equals(Type.touchDown))
+				return false;
+				this.dispose();
+				Gdx.app.exit();
+				return false;
+			});
+	botonSalir.padLeft(-100);
+	tabla.add(botonSalir);
+	
+	AudioManager.playMusic("audio/music/defeatMusic.mp3");
+}
+
+
+	@Override
+	public void render(float delta) {
+		super.render(delta);
+		sb.begin();
+		sb.draw(bgImg, 0, 0);
+		sb.end();
+		uiStage.act();
+		uiStage.draw();
+	}
+	
+}

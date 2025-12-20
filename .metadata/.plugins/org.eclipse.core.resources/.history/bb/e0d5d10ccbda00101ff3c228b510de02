@@ -1,0 +1,311 @@
+package elements;
+
+import org.lwjgl.input.Mouse;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
+
+import game.Parametros;
+import managers.AudioManager;
+import screens.GameScreen;
+
+public class Player extends Elements{
+
+private Animation<TextureRegion> dcha;
+private Animation<TextureRegion> izq;
+private Animation<TextureRegion> afkDcha;
+private Animation<TextureRegion> afkIzq;
+private Animation<TextureRegion> shootDcha;
+private Animation<TextureRegion> shootIzq;
+private Animation<TextureRegion> lasergunDcha;
+private Animation<TextureRegion> lasergunIzq;
+public Elements hitBox;
+public Elements lasergun;
+public Elements sensor;
+private Elements turbo;
+public Array<Laser> ammo;
+private int nBullets = 10;
+private int currentBullet;
+public int direction;
+private float coolDown;
+private float coolDownTime;
+private float shieldCoolDown;
+private float shieldCoolDownTime;
+private boolean iAmShooting = false;
+public boolean win = false;
+public boolean invulnerability;
+public float invulnerabilityTime;
+private float invulnerabilityDuration;
+boolean stayStill = false;
+
+public boolean protegida = false;
+private Shield shield;
+private Angy angy;
+private Aitor aitor;
+private Jeremy jeremy;
+private Hiroaki hiroaki;
+private Marcos marcos;
+private Mireya mireya;
+private Valentina valentina;
+private Selena selena;
+
+private GameScreen lvl;
+
+private Vector2 shootDirection;
+
+
+	public Player(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s);
+		
+		dcha = loadFullAnimation("player/avanzaDcha.png", 1, 10, 0.2f, true);
+		izq = loadFullAnimation("player/avanzaIzq.png", 1, 15, 0.2f, true);
+		afkDcha = loadFullAnimation("player/afkDcha.png", 1, 12, 0.2f, true);
+		afkIzq = loadFullAnimation("player/afkIzq.png", 1, 20, 0.2f, true);
+		shootDcha = loadFullAnimation("player/shootDcha.png", 1, 2, 0.4f, true);
+		shootIzq = loadFullAnimation("player/shootIzq.png", 1, 2, 0.4f, true);
+		lasergunDcha = loadFullAnimation("player/LaserGunDcha.png", 1, 1, 1, false);
+		lasergunIzq = loadFullAnimation("player/LaserGunIzq.png", 1, 1, 1, false);
+		
+		this.setRectangle();
+		this.lvl = lvl;
+		
+		hitBox = new Elements(0, 0, s, this.getWidth(), this.getHeight()/8);
+		hitBox.setRectangle();
+		positionWheels();
+		
+		shield = new Shield(0, 0, s, this.getWidth()/3.5f, this.getHeight()/2, 3, 0, this.getWidth()/1.2f, this.getHeight()/15, lvl);
+		
+		lasergun = new Elements(0, 200, s, this.getWidth(), this.getHeight()*1.5f);
+		positionLasergun();
+		
+		sensor = new Elements(0, 0, s, this.getWidth(), this.getHeight()/3);
+		sensor.setRectangle();
+		positionSensor();
+		
+		/*if(Parametros.angy) {
+			angy = new Angy(-100, 0, s, lvl);
+		}
+		
+		if(Parametros.ghostCompannion.equalsIgnoreCase("Jeremy")) {
+			jeremy = new Jeremy(-100, 0, s, lvl);
+		} else if(Parametros.ghostCompannion.equalsIgnoreCase("Selena")) {
+			selena = new Selena(-100, 0, s, lvl);
+		} else if(Parametros.ghostCompannion.equalsIgnoreCase("Hiroaki")) {
+			hiroaki = new Hiroaki(-100, 0, s, lvl);
+		} else if(Parametros.ghostCompannion.equalsIgnoreCase("Marcos")) {
+			marcos = new Marcos(-100, 0, s, lvl);
+		} else if(Parametros.ghostCompannion.equalsIgnoreCase("Mireya")) {
+			mireya = new Mireya(-100, 0, s, lvl);
+		} else if(Parametros.ghostCompannion.equalsIgnoreCase("Valentina")) {
+			valentina = new Valentina(-100, 0, s, lvl);
+		} else if(Parametros.ghostCompannion.equalsIgnoreCase("Aitor")) {
+			aitor = new Aitor(-100, 0, s, lvl);
+		}*/
+			
+		this.ammo = new Array<Laser>();
+		for(int i = 0; i<nBullets;i++) {
+			this.ammo.add(new Laser(0, 0, s, lvl));
+		}
+		currentBullet = 0;
+		this.direction = 1;
+		this.coolDown = 0.75f;
+		this.coolDownTime = this.coolDown;
+		
+		shootDirection = new Vector2();
+		
+		this.shieldCoolDown = 6.5f;
+		this.shieldCoolDownTime = 0;
+		
+		this.invulnerability = false;
+		this.invulnerabilityDuration = 3;
+		this.invulnerabilityTime = 0;
+	}
+
+
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(!this.stayStill) {
+			controles();
+		} else {
+			this.velocity.x = 0;
+			this.velocity.y = 0;
+		}
+		animaciones();
+		
+		//aplico graviedad
+		this.applyPhysics(delta);
+		
+		if(this.invulnerabilityTime>0) {
+			this.invulnerabilityTime-=delta;
+		} else {
+			this.invulnerability = false;
+		}
+		
+		if(this.coolDownTime>0) {
+			this.coolDownTime -= delta;
+		}
+		
+		if(this.shieldCoolDownTime>0) {
+			this.shieldCoolDownTime -= delta;
+		}
+		
+	}
+	
+	private void controles() {
+		
+		if(Gdx.input.isKeyPressed(Keys.RIGHT)|| Gdx.input.isKeyPressed( Keys.D)) {
+			this.direction = 1;
+			if(Gdx.input.isKeyPressed( Keys.SPACE)) {
+				this.velocity.x = 900;
+			} else {
+				this.velocity.x = 550;
+			}
+			
+			
+		}else if(Gdx.input.isKeyPressed(Keys.LEFT)|| Gdx.input.isKeyPressed( Keys.A)) {
+			this.direction = -1;
+			if(Gdx.input.isKeyPressed( Keys.SPACE)) {
+				this.velocity.x = -900;
+			} else {
+				this.velocity.x = -550;
+			}
+			
+		}else {this.velocity.x = 0;}
+			
+		if(Gdx.input.isKeyPressed(Keys.UP) || Gdx.input.isKeyPressed( Keys.W)) {
+			if(Gdx.input.isKeyPressed( Keys.SPACE)) {
+				this.velocity.y = 800;
+			} else {
+				this.velocity.y = 400;
+			}
+			
+			
+		}else if(Gdx.input.isKeyPressed(Keys.DOWN)|| Gdx.input.isKeyPressed( Keys.S)) {
+			if(Gdx.input.isKeyPressed( Keys.SPACE)) {
+				this.velocity.y = -800;
+			} else {
+				this.velocity.y = -400;
+			}
+			
+		}
+		else {
+			this.velocity.y = 0;
+		}
+	
+		
+		if(this.coolDownTime<=0 && !this.iAmShooting && Gdx.input.isKeyJustPressed(Input.Buttons.LEFT)) {
+			AudioManager.playSound("audio/sounds/laserGun.mp3");
+			this.iAmShooting = true;
+			this.shoot();
+		} else if(this.iAmShooting && !Gdx.input.isButtonPressed(Input.Buttons.LEFT)){
+			this.iAmShooting = false;
+		}
+		
+		if(this.shieldCoolDownTime<=0 && Parametros.angy && Gdx.input.isKeyPressed(Keys.C)) {
+			this.shield.setEnabled(true);
+			shield.protect();
+			this.shieldCoolDownTime = this.shieldCoolDown;
+		}
+	}
+	
+		
+	private void animaciones() {
+		
+		if(this.velocity.x != 0) {
+			if(this.velocity.x > 0) {
+				this.setAnimation(dcha);
+			}else {
+				this.setAnimation(izq);
+				
+			}
+		} else {
+			if(this.direction == 1) {
+				this.setAnimation(afkDcha);
+			} else {
+				this.setAnimation(afkIzq);
+			}
+			
+		}
+		if(this.iAmShooting) {
+			if(this.direction == 1) {
+				this.setAnimation(shootDcha);
+			} else {
+				this.setAnimation(shootIzq);
+			}
+		}
+		
+		if(this.velocity.y != 0) {
+			if(this.direction == 1) {
+				this.setAnimation(dcha);
+			} else {
+				this.setAnimation(izq);
+			}
+		}
+	}
+	
+	public void draw(Batch batch, float parentAlpha) {
+		if(this.invulnerability) {
+			super.draw(batch, parentAlpha*0.5f);
+		} else {
+			super.draw(batch, parentAlpha);
+		}
+	}
+	
+	public void positionWheels() {
+		this.hitBox.setPosition(this.getX(), this.getY());	
+	}
+	
+	public void positionLasergun() {
+		if(direction == 1) {
+			lasergun.setAnimation(lasergunDcha);
+			this.lasergun.setPosition(this.getX()+this.getWidth()/14, this.getY()+this.getHeight()/1.7f);	
+		} else {
+			lasergun.setAnimation(lasergunIzq);
+			this.lasergun.setPosition(this.getX()+this.getWidth()/2.2f, this.getY()+this.getHeight()/1.7f);
+		}
+	}
+	
+	public void positionSensor() {
+		this.sensor.setPosition(this.getX(), this.getY());
+	}
+
+	public void shoot() {
+		if(Parametros.nivel != 201) {
+			this.coolDownTime = this.coolDown;
+			shootDirection.x = lvl.cursorX-this.getX()-120;
+			shootDirection.y = lvl.cursorY-this.getY()-610;
+			shootDirection = shootDirection.nor();
+			this.ammo.get(currentBullet).shootWithMouse(this.getX()+120, this.getY()+610, shootDirection.x*850, shootDirection.y*850);
+			this.currentBullet = (this.currentBullet+1)%this.nBullets;
+		} else {
+			this.coolDownTime = this.coolDown;
+			shootDirection.x = lvl.cursorX-this.getX()-120;
+			shootDirection.y = lvl.cursorY-this.getY()-610;
+			shootDirection = shootDirection.nor();
+			this.ammo.get(currentBullet).shootWithMouse(this.getX()+120, this.getY()+610, shootDirection.x*970, shootDirection.y*970);
+			this.currentBullet = (this.currentBullet+1)%this.nBullets;
+		}
+		
+	}
+	
+	public void damage(int damage) {
+		if(Parametros.vida>0 && !this.invulnerability && !this.stayStill) {
+			AudioManager.playSound("audio/sounds/Hit.mp3");
+			Parametros.vida-=damage;
+			this.invulnerability = true;
+			this.invulnerabilityTime = this.invulnerabilityDuration;
+		}
+	}
+	
+}

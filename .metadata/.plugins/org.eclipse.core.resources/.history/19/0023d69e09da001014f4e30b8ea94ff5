@@ -1,0 +1,150 @@
+package elements;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.GameScreen;
+
+public class Cetro extends Interactables{
+	
+	private float angle = 0.0f;
+	private float vAngle = 0.02f;
+	
+	private Label infoLbl;
+	
+	private int nDialog = 0;
+
+	public Cetro(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s, lvl);
+		this.loadFullAnimation("maps/images/Cetro.png", 1, 1, 1, true);
+		
+		//HACER hitbox más baja
+		infoLbl = new Label("'E'", ResourceManager.itemStyle);
+		s.addActor(infoLbl);
+		
+		this.lvl = lvl;
+	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(this.getEnabled()) {
+			
+			dialog();
+			
+			double x = 0.2f * Math.cos(angle) + this.getX();
+	        double y = 2 * Math.sin(angle) + this.getY();
+	        setPosition((float)x, (float)y);
+			angle +=vAngle;
+
+			velocity.add(acceleration.x * delta, acceleration.y * delta);
+			velocity.x = MathUtils.clamp(velocity.x, -20, 20);
+			velocity.y = MathUtils.clamp(velocity.y, -20, 20);
+
+			acceleration.set(0, 0);
+			moveBy(velocity.x * delta, velocity.y * delta);
+		}
+		
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E) && nDialog == 0) {
+			this.lvl.player.stayStill = true;
+			this.nDialog = 1;
+			
+		}
+		
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor)) {
+			infoLbl.setPosition(this.getX() - this.getWidth()/4, this.getY() + this.getHeight()/2.5f);
+			infoLbl.setText("'E'");
+		} else {
+			infoLbl.setText("");
+		}
+		
+		if(this.getEnabled() && this.lvl.player.stayStill && Gdx.input.isKeyJustPressed(Keys.SPACE) && Parametros.nivel == 200) {
+			this.nDialog++;
+			
+			if(nDialog == 4) {
+				AudioManager.playSound("audio/sounds/AVer.mp3");
+			} else if(nDialog == 6) {
+				Parametros.sunflower = false;
+				Parametros.angy = false;
+				Parametros.ghostCompannion = "";
+			} else if(nDialog>=10) {
+				this.lvl.lblAngy.setText("");
+				this.setEnabled(false);
+				this.lvl.player.stayStill = false;
+				this.lvl.finalBattle();
+			}
+			
+		}
+		
+	}
+	
+	private void dialog() {
+		this.lvl.lblAngy.setPosition(290, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.25f);
+		this.lvl.lblSophie.setPosition(290, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.25f);
+		this.lvl.lblSanson.setPosition(310, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.3f);
+		
+		switch(nDialog) {
+		case 1: 
+			this.lvl.lblAngy.setText("Angy: Sophie... esto huele a trampa que flipas, ¿estás segura de esto?");
+			break;
+			
+		case 2: 
+			this.lvl.lblAngy.setText("");
+			this.lvl.lblSophie.setText("Sophie: No sé que va a pasar a partir de aquí pero claramente la espectralita del cetro "
+					+ "\n" + "está controlando todo lo paranormal de este lugar. Necesito encontrar a los desaparecidos y liberaros.");
+			break;
+			
+		case 3: 
+			this.lvl.lblSophie.setText("");
+			this.lvl.lblAngy.setText("Angy: Es el cetro del director de este sitio, no está aquí porque se le haya olvidado cogerlo.");
+			break;
+			
+		case 4: 
+			this.lvl.lblAngy.setText("");
+			this.lvl.lblSophie.setText("Sophie: A ver que tienes para mí.");
+			break;
+			
+		case 5: 
+			this.lvl.lblSophie.setText("");
+			this.lvl.lblSanson.setText("???: Se cree muy lista, ¿verdad?"
+					+ "\n" + "A sus habitaciones ahora mismo.");
+			break;
+			
+		case 6: 
+			this.lvl.lblSanson.setText("???: Bueno, es la primera que ha sido capaz de llegar a esta habitación, he de admitir que estoy impresionado."
+					+ "\n" + "Me presento, soy Sansón Costura, el director de este hospital,"
+							+ "\n y ahora prepárese para unirse al resto de almas en pena...");
+			break;
+			
+		case 7: 
+			this.lvl.lblSanson.setText("");
+			this.lvl.lblSophie.setText("Sophie: ¿Qué has hecho con los nuevos pacientes? ¿Por qué retienes a las almas que han fallecido en este lugar?"
+					+ "\n" + "¡Quiero respuestas!");
+			break;
+			
+		case 8: 
+			this.lvl.lblSophie.setText("");
+			this.lvl.lblSanson.setText("Sansón: ¡¡¡SILENCIO!!!");
+			break;
+			
+		case 9: 
+			
+			this.lvl.lblSanson.setText("Sansón: ¡Eso no es de su incumbencia! Ha llegado la hora de su final.");
+			break;
+			
+		default: 
+			this.lvl.lblSophie.setText("");
+			this.lvl.lblAngy.setText("");
+			break;
+		}
+		
+	}
+
+}

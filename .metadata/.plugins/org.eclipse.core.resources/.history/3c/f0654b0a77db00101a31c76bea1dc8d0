@@ -1,0 +1,175 @@
+package elements;
+
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.GameScreen;
+
+public class Erraticos extends Enemies {
+	private Animation<TextureRegion> patrol;
+	private Animation<TextureRegion> alert; 
+	private Animation<TextureRegion> alertDcha; 
+
+	boolean persiguiendo;//Indica si está persiguiendo al jugador
+	private float aceleracion;
+	private float velocidadMaxima;
+	private float distanciaVision;
+	private float inicioX;
+	private float inicioY;
+	
+	private float tPoison = 2;
+	private float tPoisonCounter = 0;
+	
+	private boolean dead = false;
+	
+	Label lblHp;
+
+	public Erraticos(float x, float y, Stage s, GameScreen lvl) {
+
+		super(x, y, s, lvl);
+		this.lvl=lvl;
+		
+		this.inicioX=x;
+		this.inicioY=y;
+		persiguiendo = false;
+		
+		patrol = loadFullAnimation("enemies/ErraticoFloats.png", 1, 4, 0.5f, true);
+		alert = loadFullAnimation("enemies/ErraticoAlert.png", 1, 4, 0.5f, true);
+		alertDcha = loadFullAnimation("enemies/ErraticoAlertDcha.png", 1, 4, 0.5f, true);
+		velocidadMaxima = 700;
+		aceleracion = 700;
+		
+		this.hp = 240;
+		
+		if(Parametros.ghostCompannion.equals("Selena")) {
+			this.damage = 25;
+		} else if(Parametros.ghostCompannion.equals("Mireya")) {
+			this.damage = 38;
+		} else {
+			this.damage = 50;
+		}
+		
+		distanciaVision=1100;
+		
+		enemyHitBox = new Elements(0, 0, s, this.getWidth(), this.getHeight()/8);
+		enemyHitBox.setRectangle();
+		positionEnemyHitBox();
+		
+		this.setAnimation(patrol);
+		
+		lblHp = new Label("" + this.hp, ResourceManager.enemyStyle);
+		s.addActor(lblHp);
+
+	}
+
+	@Override
+	public void act(float dt) {
+		
+		super.act(dt);
+		
+		if(this.getEnabled() && this.enemyHitBox.overlaps(this.lvl.player.hitBox) && this.lvl.player.invulnerabilityTime<=0) {
+			AudioManager.playSound("audio/sounds/axe.mp3");
+		}
+		
+		if (this.getEnabled()) {
+			if (this.persiguiendo) {
+				this.setAnimation(alert);
+				perseguir(lvl.player.getX(),lvl.player.getY(), true);
+				
+			} else {
+				if (Math.sqrt(Math.pow(this.getX() - lvl.player.getX(), 2)
+						+ Math.pow(this.getY() - lvl.player.getY(), 2)) < distanciaVision) {
+					persiguiendo = true;
+				} else {
+					
+			        setPosition(this.inicioX, this.inicioY);
+				}
+			}
+
+			velocity.add(acceleration.x * dt, acceleration.y * dt);
+			velocity.x = MathUtils.clamp(velocity.x, -velocidadMaxima, velocidadMaxima);
+			velocity.y = MathUtils.clamp(velocity.y, -velocidadMaxima, velocidadMaxima);
+
+			acceleration.set(0, 0);
+			moveBy(velocity.x * dt, velocity.y * dt);
+		}
+		
+		if(this.hp<240) {
+			this.persiguiendo = true;
+		}
+		
+		if(!this.persiguiendo) {		
+			this.setAnimation(patrol);
+		} else {
+			if(this.lvl.player.getX()>this.getX()) {
+				this.setAnimation(alertDcha);
+			} else {
+				this.setAnimation(alert);
+			}
+		}
+		
+		if(this.tPoisonCounter>0) {
+			this.tPoisonCounter-=dt;
+		}
+		
+		if(this.hp<240) {
+			if(this.tPoisonCounter<=0 && Parametros.ghostCompannion.equals("Marcos")) {
+				this.hp-=8;
+				this.tPoisonCounter = this.tPoison;
+			} else if(Parametros.ghostCompannion.equals("Hiroaki")) {
+				this.hp-=2;
+				this.velocidadMaxima = 462;
+				this.aceleracion = 462;
+			} else if(Parametros.ghostCompannion.equals("Aitor")) {
+				this.velocidadMaxima = 350;
+				this.aceleracion = 350;
+			}
+		}
+		
+		lblHp.setPosition(this.getX()+this.getWidth()/2.8f , this.getY() + this.getHeight());
+		actualizarLabel();
+	}
+
+	
+	private void perseguir(float x, float y, boolean accurate) {
+		float margen=0;
+		if(!accurate) {
+			margen=30;
+		}
+		
+		if (x+margen < this.getX()) {
+			acceleration.add(-aceleracion, 0);
+
+		} else if (x - margen > this.getX()) {
+			acceleration.add(aceleracion, 0);
+		}
+		if (y + margen< this.getY()) {
+			acceleration.add(0, -aceleracion);
+
+		} else if (y - margen> this.getY()) {
+			acceleration.add(0, aceleracion);
+		}
+	}
+	
+	private void actualizarLabel() {
+		if(this.hp>0) {
+			lblHp.setText("" + this.hp);
+		} else {
+			if(Parametros.nivel == 205 && !dead) {
+				Parametros.erraticosKilled++;
+				System.out.println(Parametros.erraticosKilled);
+				dead = true;
+			}
+			lblHp.setText("");
+		}
+		
+	}
+	
+	
+}

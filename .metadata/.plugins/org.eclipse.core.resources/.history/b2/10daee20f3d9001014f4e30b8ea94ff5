@@ -1,0 +1,1011 @@
+package screens;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Array;
+
+import elements.Rebanados;
+import elements.Reception;
+import elements.Sanson;
+import elements.Selena;
+import elements.Aitor;
+import elements.Angy;
+import elements.Boss;
+import elements.Casandra;
+import elements.Cetro;
+import elements.Chest;
+import elements.Elements;
+import elements.Enemies;
+import elements.Erraticos;
+import elements.Gatas;
+import elements.Ghosts;
+import elements.Girasol;
+import elements.HealthPotion;
+import elements.Hiroaki;
+import elements.Interactables;
+import elements.Jeremy;
+import elements.Key200;
+import elements.Key204;
+import elements.Key224;
+import elements.Key231;
+import elements.Key243;
+import elements.Key297;
+import elements.Marcos;
+import elements.Mireya;
+import elements.Oven;
+import elements.Panel;
+import elements.Partidos;
+import elements.Picture;
+import elements.Player;
+import elements.Solid;
+import elements.Valentina;
+import game.Demo;
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+
+
+
+public class GameScreen extends BScreen{
+	
+//Objeto que se encarga de manejar los elementos en la pantalla (más o menos)
+Stage mainStage;
+
+public Array<Enemies> enemies;
+public Array<Ghosts> ghosts;
+public Array<Boss> boss;
+
+Solid pomo224;
+Solid pomo243;
+Solid pomo297;
+Solid exitDoor1;
+
+Solid pomo200;
+Solid pomo204;
+Solid pomo231;
+Solid puzzleRoom;
+Solid exitDoor2;
+
+OrthographicCamera camara;
+private TiledMap map;
+
+private OrthogonalTiledMapRenderer renderer;
+public Array<Solid> solidos;
+public Array<Interactables> interactables;
+
+private int tileWidth, tileHeight, mapWidthInTiles, mapHeightInTiles, mapWidthPx, mapHeightPx;
+private ActorComparator comparator;
+
+public float cursorX;
+public float cursorY;
+Vector3 m3d;
+	   
+public Player player;
+Label lblHp;
+Label lblPower;
+
+public Label lblSophie;
+public Label lblAngy;
+public Label lblAitor;
+public Label lblJeremy;
+public Label lblMireya;
+public Label lblValentina;
+public Label lblCasandra;
+public Label lblSelena;
+public Label lblHiroaki;
+public Label lblMarcos;
+public Label lblSanson;
+
+private Map<String, Label> dialogLabels = new HashMap<>();
+
+	public GameScreen(Demo game) {
+	
+		super(game);
+		
+		comparator = new ActorComparator();
+		mainStage = new Stage();
+		
+		switch(Parametros.nivel) {
+		case 0:
+			map = ResourceManager.getMap("maps/Cocina.tmx");
+			Parametros.zoom = 1.6f;
+			AudioManager.playMusic("audio/music/principal.mp3");
+			break;
+		case 1:
+			map = ResourceManager.getMap("maps/Piso1.tmx");
+			Parametros.zoom = 1.7f;
+			AudioManager.playMusic("audio/music/principal.mp3");
+			break;
+			
+		case 2:
+			map = ResourceManager.getMap("maps/Piso2.tmx");
+			Parametros.zoom = 1.7f;
+			AudioManager.playMusic("audio/music/principal.mp3");
+			break;
+			
+		case 200:
+			map = ResourceManager.getMap("maps/Room200.tmx");
+			Parametros.zoom = 1.8f;
+			AudioManager.playMusic("audio/music/SalaCetro.mp3");
+			break;
+			
+		case 201:
+			map = ResourceManager.getMap("maps/BattleField.tmx");
+			AudioManager.playMusic("audio/music/boss.mp3");
+			Parametros.zoom = 2.2f;
+			break;
+			
+		case 204:
+			map = ResourceManager.getMap("maps/Room204.tmx");
+			Parametros.zoom = 1.6f;
+			AudioManager.playMusic("audio/music/rooms.mp3");
+			break;
+			
+		case 205:
+			map = ResourceManager.getMap("maps/Puzzle.tmx");
+			Parametros.zoom = 2.75f;
+			AudioManager.playMusic("audio/music/rooms.mp3");
+			break;
+			
+		case 224:
+			map = ResourceManager.getMap("maps/Room224.tmx");
+			Parametros.zoom = 1.6f;
+			AudioManager.playMusic("audio/music/rooms.mp3");
+			break;
+			
+		case 231:
+			map = ResourceManager.getMap("maps/Room231.tmx");
+			Parametros.zoom = 1.9f;
+			AudioManager.playMusic("audio/music/rooms.mp3");
+			break;
+			
+		case 243:
+			map = ResourceManager.getMap("maps/Room243.tmx");
+			Parametros.zoom = 1.6f;
+			AudioManager.playMusic("audio/music/rooms.mp3");
+			break;
+			
+		case 297:
+			map = ResourceManager.getMap("maps/Room297.tmx");
+			AudioManager.playMusic("audio/music/AngysRoom.mp3");
+			Parametros.zoom = 1.6f;
+			break;
+		}
+		
+		m3d = new Vector3();
+		renderer = new OrthogonalTiledMapRenderer(map, mainStage.getBatch());
+		
+		MapProperties props;
+		props = map.getProperties();
+		tileWidth = props.get("tilewidth", Integer.class);
+		tileHeight = props.get("tileheight", Integer.class);
+		mapWidthInTiles = props.get("width", Integer.class);
+		mapHeightInTiles = props.get("height", Integer.class);
+		mapWidthPx = tileWidth*mapWidthInTiles;
+		mapHeightPx = tileHeight*mapHeightInTiles;
+		
+		ArrayList<MapObject> elementos;
+		elementos = getRectangleList("Solid");
+		solidos = new Array<Solid>();
+		Solid solido;
+		
+		
+		for(MapObject obj : elementos) {
+			props = obj.getProperties();
+			solido = new Solid((float)props.get("x"), (float)props.get("y"), mainStage,
+					(float)props.get("width"), (float)props.get("height"));
+			solidos.add(solido);
+		}
+		
+		for(Polygon poly: getPolygonList("Polygon")) {
+			solidos.add(new Solid(poly.getX(), poly.getY(), mainStage, poly));
+		}
+		
+		enemies = new Array<Enemies>();
+		for(MapObject enemy: getEnemyList()) {
+			props = enemy.getProperties();
+			
+			switch(props.get("Enemy").toString()) {
+			case "rebanado":
+				Rebanados rebanado = new Rebanados((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				enemies.add(rebanado);
+				break;
+				
+			case "partido":
+				Partidos partido = new Partidos((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				enemies.add(partido);
+				break;
+				
+			case "Erratico":
+				Erraticos erratico = new Erraticos((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				enemies.add(erratico);
+				break;
+				
+			}
+			
+		}
+		
+		boss = new Array<Boss>();
+		for(MapObject jefe: getBossList()) {
+			props = jefe.getProperties();
+			
+			switch(props.get("Boss").toString()) {
+			
+				case "Sanson":
+					Sanson sanson = new Sanson((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					boss.add(sanson);
+					break;
+			}
+			
+		}
+		
+		
+		interactables = new Array<Interactables>();
+		for(MapObject interactiveObj: getInteractablesList()) {
+			props = interactiveObj.getProperties();
+			
+			switch(props.get("Interactable").toString()) {
+				
+				case "reception": 
+					Reception btn = new Reception((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(btn);
+					break;
+					
+				case "Girasol": 
+					Girasol girasol = new Girasol((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(girasol);
+					break;
+					
+				case "Chest":
+					Chest chest = new Chest((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(chest);
+					break;
+					
+				case "Key200":
+					Key200 key200 = new Key200((float)props.get("x"), (float)props.get("y"), mainStage, this); 
+					interactables.add(key200);
+					break;
+					
+				case "Key204":
+					Key204 key204 = new Key204((float)props.get("x"), (float)props.get("y"), mainStage, this); 
+					interactables.add(key204);
+					break;
+					
+				case "Key224":
+					Key224 key224 = new Key224((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(key224);
+					break;
+					
+				case "Key231":
+					Key231 key231 = new Key231((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(key231);
+					break;
+					
+				case "Key243":
+					Key243 key243 = new Key243((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(key243);
+					break;
+					
+				case "Key297":
+					Key297 key297 = new Key297((float)props.get("x"), (float)props.get("y"), mainStage, this); 
+					interactables.add(key297);
+					break;
+					
+				case "Picture":
+					Picture picture = new Picture((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(picture);
+					break;
+					
+				case "Panel":
+					Panel panel = new Panel((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(panel);
+					break;
+					
+				case "Oven":
+					Oven oven = new Oven((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(oven);
+					break;
+					
+				case "Cetro":
+					Cetro cetro = new Cetro((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(cetro);
+					break;
+					
+				case "Potion":
+					HealthPotion potion = new HealthPotion((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(potion);
+					break;
+			}
+			
+		}
+		
+		ghosts = new Array<Ghosts>();
+		for(MapObject interactiveObj: getGhostsList()) {
+			props = interactiveObj.getProperties();
+			switch(props.get("Ghost").toString()) {
+				
+			case "Angy": 
+				Angy angy = new Angy((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(angy);
+				break;
+				
+			case "Jeremy":
+				Jeremy jeremy = new Jeremy((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(jeremy);
+				break;
+				
+			case "Gatas":
+				Gatas gatas = new Gatas((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(gatas);
+				break;
+				
+			case "Aitor":
+				Aitor aitor = new Aitor((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(aitor);
+				break;
+				
+			case "Valentina":
+				Valentina valentina = new Valentina((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(valentina);
+				break;
+				
+			case "Mireya":
+				Mireya mireya = new Mireya((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(mireya);
+				break;
+				
+			case "Selena":
+				Selena selena = new Selena((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(selena);
+				break;
+				
+			case "Casandra":
+				Casandra casandra = new Casandra((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(casandra);
+				break;
+				
+			case "Marcos":
+				Marcos marcos = new Marcos((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(marcos);
+				break;
+				
+			case "Hiroaki":
+				Hiroaki hiroaki = new Hiroaki((float)props.get("x"), (float)props.get("y"), mainStage, this);
+				ghosts.add(hiroaki);
+				break;
+				
+			}
+			
+		}
+		
+		
+		float inicioX;
+		float inicioY;
+
+		elementos = getRectangleList("Start"); //Crear elementos sólidos en el mapa
+		props = elementos.get(0).getProperties(); //Por eso esta línea da error
+		
+		inicioX = (float)props.get("x");
+		inicioY = (float)props.get("y");
+		
+		if(!getRectangleList("Room200").isEmpty()) {
+			elementos = getRectangleList("Room200");
+			props = elementos.get(0).getProperties();
+			pomo200 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
+		}
+		
+		if(!getRectangleList("Room204").isEmpty()) {
+			elementos = getRectangleList("Room204");
+			props = elementos.get(0).getProperties();
+			pomo204 = new Solid((float)props.get("x"), (float)props.get("y"), mainStage, (float)props.get("width")+300, (float)props.get("height")+300);
+		}
+		
+		if(!getRectangleList("Room224").isEmpty()) {
+			elementos = getRectangleList("Room224");
+			props = elementos.get(0).getProperties();
+			pomo224 = new Solid((float)props.get("x"), (float)props.get("y"), mainStage, (float)props.get("width"), (float)props.get("height"));
+		}
+		
+		if(!getRectangleList("Room231").isEmpty()) {
+			elementos = getRectangleList("Room231");
+			props = elementos.get(0).getProperties();
+			pomo231 = new Solid((float)props.get("x"), (float)props.get("y"), mainStage, (float)props.get("width"), (float)props.get("height"));
+		}
+		
+		if(!getRectangleList("Room243").isEmpty()) {
+			elementos = getRectangleList("Room243");
+			props = elementos.get(0).getProperties();
+			pomo243 = new Solid((float)props.get("x"), (float)props.get("y"), mainStage, (float)props.get("width"), (float)props.get("height"));
+		}
+		
+		if(!getRectangleList("Puzzle").isEmpty()) {
+			elementos = getRectangleList("Puzzle");
+			props = elementos.get(0).getProperties();
+			puzzleRoom = new Solid((float)props.get("x"), (float)props.get("y"), mainStage, (float)props.get("width"), (float)props.get("height"));
+		}
+		
+		if(!getRectangleList("Room297").isEmpty()) {
+			elementos = getRectangleList("Room297");
+			props = elementos.get(0).getProperties();
+			pomo297 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
+		}
+		
+		if(!getRectangleList("ExitDoor1").isEmpty()) {
+			elementos = getRectangleList("ExitDoor1");
+			props = elementos.get(0).getProperties();
+			exitDoor1 = new Solid((float)props.get("x"), (float)props.get("y"), mainStage, (float)props.get("width"), (float)props.get("height"));
+		}
+		
+		if(!getRectangleList("ExitDoor2").isEmpty()) {
+			elementos = getRectangleList("ExitDoor2");
+			props = elementos.get(0).getProperties();
+			exitDoor2 = new Solid((float)props.get("x"), (float)props.get("y"), mainStage, (float)props.get("width"), (float)props.get("height"));
+		}
+		
+		camara = (OrthographicCamera) mainStage.getCamera();
+		camara.setToOrtho(false, Parametros.getAnchoPantalla()*Parametros.zoom, Parametros.getAltoPantalla()*Parametros.zoom);
+		
+		//Posición inicial del jugador
+		switch(Parametros.puerta) {
+			case 1:
+				player = new Player(inicioX+5500, inicioY, mainStage, this);
+				break;
+			case 204:
+				player = new Player(inicioX-2500, inicioY, mainStage, this);
+				break;
+				
+			case 224:
+				player = new Player(inicioX+4500, inicioY, mainStage, this);
+				break;
+				
+			case 231:
+				player = new Player(inicioX-3550, inicioY, mainStage, this);
+				break;
+			
+			case 243: 
+				player = new Player(inicioX+2900, inicioY, mainStage, this);
+				break;
+				
+			case 297:
+				player = new Player(inicioX+1500, inicioY, mainStage, this);
+				break;
+				
+			default:
+				player = new Player(inicioX, inicioY, mainStage, this);
+				break;
+		}
+		
+	
+		//iniciar interfaz
+		
+		uiStage = new Stage();
+		lblHp = new Label("Hp: " + Parametros.vida, ResourceManager.buttonStyle);
+		lblHp.setPosition(10, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/12f);
+		
+		lblPower = new Label("Poder: " + Parametros.ghostCompannion, ResourceManager.powerStyle);
+		lblPower.setPosition(Parametros.getAnchoPantalla()-Parametros.getAnchoPantalla()/3.25f, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/15f);
+		
+		lblSophie = new Label("", ResourceManager.sophieStyle);
+		lblSophie.setPosition(Parametros.getAnchoPantalla()-Parametros.getAnchoPantalla()/3f, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.07f);
+		
+		lblAngy = new Label("", ResourceManager.angyStyle);
+		lblAngy.setPosition(Parametros.getAnchoPantalla()-Parametros.getAnchoPantalla()/3f, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.07f);
+		
+		dialogLabelsInitializer(lblAitor);
+		dialogLabelsInitializer(lblJeremy);
+		dialogLabelsInitializer(lblMireya);
+		dialogLabelsInitializer(lblValentina);
+		dialogLabelsInitializer(lblCasandra);
+		dialogLabelsInitializer(lblSelena);
+		dialogLabelsInitializer(lblMarcos);
+		dialogLabelsInitializer(lblHiroaki);
+		dialogLabelsInitializer(lblSanson);
+		
+		uiStage.addActor(lblHp);
+		uiStage.addActor(lblPower);
+		uiStage.addActor(lblSophie);
+		uiStage.addActor(lblAngy);
+		uiStage.addActor(lblAitor);
+		uiStage.addActor(lblJeremy);
+		uiStage.addActor(lblMireya);
+		uiStage.addActor(lblValentina);
+		uiStage.addActor(lblCasandra);
+		uiStage.addActor(lblSelena);
+		uiStage.addActor(lblMarcos);
+		uiStage.addActor(lblHiroaki);
+		uiStage.addActor(lblSanson);
+	
+	}
+	
+	private void dialogLabelsInitializer(Label lblInitialized) {
+		lblInitialized = new Label("", ResourceManager.npcStyle);
+		lblInitialized.setPosition(10, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.07f);
+	}
+	
+	//Bucle de juego, EL BUCLE PRINCIPAL. 3 COSAS: SE PINTAN LOS ELEMENTOS, SE LEEN LAS ENTRADAS(los controles), SE ACTUALIZA LAS PANTALLAS
+	@Override
+	public void render(float delta) { //delta: Tiempo de juego transcurrido desde q se ejecutó el último frame
+		
+		super.render(delta);
+	     mainStage.act(); //ACTUAR O ACTUALIZAR
+	     uiStage.act();
+	     colide(); //COMPRUEBA CONDICIONES
+	    
+	    centrarCamaraRooms();
+	    m3d.x = Gdx.input.getX();
+	    m3d.y = Gdx.input.getY();
+	    m3d.z = 0;
+	    camara.unproject(m3d);
+	    cursorX = m3d.x;
+	    cursorY = m3d.y;
+	    //actualizarInterfaz();
+	    renderer.setView(camara);
+	    renderer.render();
+	    mainStage.getActors().sort(comparator);
+        mainStage.draw();
+        updateInterface();
+        uiStage.draw();
+	       
+	}
+	
+	public void colide() {
+		
+		for(Enemies e: this.enemies) {
+			if(e.getEnabled() && e.hp<=1 && Parametros.nivel == 205) {
+				Parametros.erraticosKilled++;
+			}
+		}
+		
+		if(this.pomo200 != null) {
+			if(this.pomo200.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				if(!Parametros.key200) {
+					AudioManager.playSound("audio/sounds/noAbre.mp3");
+				} else {
+					AudioManager.playSound("audio/sounds/doorOpens.mp3");
+					Parametros.puerta = 0;
+					Parametros.nivel = 200;
+					game.setScreen(new GameScreen(game));
+				}
+				
+			}
+		}
+		
+		if(this.pomo204 != null) {
+			if(this.pomo204.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				if(!Parametros.key204) {
+					AudioManager.playSound("audio/sounds/noAbre.mp3");
+				} else {
+					AudioManager.playSound("audio/sounds/doorOpens.mp3");
+					AudioManager.playSound("audio/sounds/npcs/Bienvenida.mp3");
+					Parametros.puerta = 0;
+					Parametros.nivel = 204;
+					Parametros.erraticosKilled = 0;
+					game.setScreen(new GameScreen(game));
+				}
+			}
+		}
+		
+		if(this.pomo224 != null) {
+			if(this.pomo224.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				if(!Parametros.key224) {
+					AudioManager.playSound("audio/sounds/noAbre.mp3");
+				} else if(!Parametros.angy && Parametros.key224) {
+					AudioManager.playSound("audio/sounds/door224.mp3");
+				} else {
+					AudioManager.playSound("audio/sounds/doorOpens.mp3");
+					Parametros.puerta = 0;
+					Parametros.nivel = 224;
+					game.setScreen(new GameScreen(game));
+				}
+			}
+		}
+		
+		if(this.pomo231 != null) {
+			if(this.pomo231.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				if(!Parametros.key231) {
+					AudioManager.playSound("audio/sounds/noAbre.mp3");
+				} else {
+					AudioManager.playSound("audio/sounds/doorOpens.mp3");
+					Parametros.puerta = 0;
+					Parametros.nivel = 231;
+					game.setScreen(new GameScreen(game));
+				}
+				
+			}
+		}
+		
+		if(this.pomo243 != null) {
+			if(this.pomo243.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				if(!Parametros.key243) {
+					AudioManager.playSound("audio/sounds/noAbre.mp3");
+				} else {
+					AudioManager.playSound("audio/sounds/doorOpens.mp3");
+					Parametros.puerta = 0;
+					Parametros.nivel = 243;
+					game.setScreen(new GameScreen(game));
+				}
+				
+			}
+		}
+		
+		if(this.puzzleRoom != null) {
+			if(this.puzzleRoom.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				AudioManager.playSound("audio/sounds/npcs/YoQtu.mp3");
+				Parametros.nivel = 205;
+				game.setScreen(new GameScreen(game));
+			}
+		}
+		
+		if(this.pomo297 != null) {
+			if(this.pomo297.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E) && Parametros.key297) {
+				AudioManager.playSound("audio/sounds/doorOpens.mp3");
+				Parametros.puerta = 0;
+				Parametros.nivel = 297;
+				game.setScreen(new GameScreen(game));
+			} else if(this.pomo297.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E) && !Parametros.key297) {
+				AudioManager.playSound("audio/sounds/noAbre.mp3");
+			}
+		}
+		
+		if(this.exitDoor1 != null) {
+			if(Parametros.nivel == 297 && this.exitDoor1.overlaps(this.player) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				AudioManager.playSound("audio/sounds/doorOpens.mp3");
+				Parametros.puerta = 297;
+				backToFirstFloor();
+			} else if(Parametros.nivel == 243 && this.exitDoor1.overlaps(this.player) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				AudioManager.playSound("audio/sounds/doorOpens.mp3");
+				Parametros.puerta = 243;
+				backToFirstFloor();
+			} else if(Parametros.nivel == 224 && this.exitDoor1.overlaps(this.player) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				AudioManager.playSound("audio/sounds/doorOpens.mp3");
+				Parametros.puerta = 224;
+				backToFirstFloor();
+			}
+		}
+		
+		if(this.exitDoor2 != null) {
+			if(Parametros.nivel == 200 && this.exitDoor2.overlaps(this.player) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				Parametros.puerta = 200;
+				AudioManager.playSound("audio/sounds/noAbre.mp3");
+			} else if(Parametros.nivel == 204 && this.exitDoor2.overlaps(this.player) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				AudioManager.playSound("audio/sounds/doorOpens.mp3");
+				Parametros.puerta = 204;
+				backToSecondFloor();
+			} else if(Parametros.nivel == 231 && this.exitDoor2.overlaps(this.player) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				AudioManager.playSound("audio/sounds/doorOpens.mp3");
+				Parametros.puerta = 231;
+				backToSecondFloor();
+			}
+		}
+		
+		this.player.positionWheels();
+		this.player.positionLasergun();
+		this.player.positionSensor();
+		
+		if(Parametros.vida<=0) {
+			game.setScreen(new DeathScreen(game));
+			Parametros.vida = Parametros.maxVida;
+		}
+		
+		if(this.player.win) {
+			game.setScreen(new EndScreen(game));
+			Parametros.vida = Parametros.maxVida;
+			Parametros.nivel = 1;
+			Parametros.puerta = 0;
+			 
+			Parametros.key200 = false;
+			Parametros.key204 = false;
+			Parametros.key224 = false;
+			Parametros.key231 = false;
+			Parametros.key243 = false;
+			Parametros.key297 = false;
+			 
+			Parametros.bottleKitchen = false;
+			Parametros.bottle204 = false;
+			Parametros.bottle224 = false;
+			Parametros.bottle231 = false;
+			Parametros.bottle243 = false;
+			Parametros.bottle297 = false;
+			 
+			Parametros.firstEnemyKey = false;
+			Parametros.sunflower = false;
+			Parametros.elevatorPuzzleSolved = false;
+			Parametros.chestPuzzleSolved = false;
+			Parametros.cats = false;
+			Parametros.catsKey = false;
+			Parametros.erraticosKilled = 0;
+			 
+			Parametros.angy = false;
+			Parametros.ghostCompannion = ""; 
+		}
+		
+		for(Solid s: solidos) {
+			if(s.getEnabled() && s.overlaps(player)) {
+				player.preventOverlap(s);
+			}
+		}
+		
+	}
+	
+	public void centrarCamara() {
+		this.camara.position.x = MathUtils.clamp(player.getX(), this.camara.viewportWidth/1.5f, this.mapWidthPx-this.camara.viewportWidth/2);
+		this.camara.position.y = MathUtils.clamp(player.getY(), this.camara.viewportHeight/2, this.mapHeightPx-this.camara.viewportHeight/2);
+		camara.update();
+		
+	}
+	
+	public void centrarCamaraRooms() {
+		this.camara.position.x = MathUtils.clamp(player.getX(), this.camara.viewportWidth/1.5f, this.mapWidthPx);
+		this.camara.position.y = MathUtils.clamp(player.getY()+500, this.camara.viewportHeight/2, this.mapHeightPx);
+		camara.update();
+		
+	}
+	
+	public void backToFirstFloor() {
+		Parametros.nivel = 1;
+		game.setScreen(new GameScreen(game));
+	}
+	
+	public void backToSecondFloor() {
+		Parametros.nivel = 2;
+		game.setScreen(new GameScreen(game));
+	}
+	
+	public void toTheKitchenWeGo() {
+		Parametros.nivel = 0;
+		game.setScreen(new GameScreen(game));
+	}
+	
+	public void finalBattle() {
+		Parametros.nivel = 201;
+		game.setScreen(new GameScreen(game));
+	}
+	
+	
+	public ArrayList<MapObject> getRectangleList(String propertyName){
+		ArrayList<MapObject> list =new ArrayList<MapObject>();
+		for(MapLayer layer: map.getLayers()) {
+			for(MapObject obj: layer.getObjects()) {
+				if(!(obj instanceof RectangleMapObject))
+					continue;
+				MapProperties props= obj.getProperties();
+				if(props.containsKey("name") &&  props.get("name").equals(propertyName)) {
+					list.add(obj);
+				}
+				
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	public ArrayList<Polygon> getPolygonList(String propertyName){
+		
+		Polygon poly;
+		ArrayList<Polygon> list =new ArrayList<Polygon>();
+		for(MapLayer layer: map.getLayers()) {
+			for(MapObject obj: layer.getObjects()) {
+				
+				
+				if(!(obj instanceof PolygonMapObject))
+					continue;
+				MapProperties props= obj.getProperties();
+				if(props.containsKey("name") &&  props.get("name").equals(propertyName))
+				{
+					
+					poly=((PolygonMapObject)obj).getPolygon();
+					list.add(poly);
+				}
+				
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	
+	
+	public ArrayList<MapObject> getEnemyList(){
+		ArrayList<MapObject> list =new ArrayList<MapObject>();
+		for(MapLayer layer: map.getLayers()) {
+			for(MapObject obj: layer.getObjects()) {
+				if(!(obj instanceof TiledMapTileMapObject))
+					continue;
+				MapProperties props= obj.getProperties();
+				
+				
+				TiledMapTileMapObject tmtmo=(TiledMapTileMapObject) obj;
+				TiledMapTile t=tmtmo.getTile();
+				MapProperties defaultProps=t.getProperties();
+				if(defaultProps.containsKey("Enemy")) {
+					list.add(obj);
+					
+					
+				}
+				
+				
+				Iterator<String> propertyKeys=defaultProps.getKeys();
+				while(propertyKeys.hasNext()) {
+					String key =propertyKeys.next();
+					
+					if(props.containsKey(key))
+						continue;
+					else {
+						Object value=defaultProps.get(key);
+						props.put(key, value);
+					}
+						
+				}
+				
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	
+	public ArrayList<MapObject> getInteractablesList(){
+		ArrayList<MapObject> list = new ArrayList<MapObject>();
+		for(MapLayer layer: map.getLayers()) {
+			for(MapObject obj: layer.getObjects()) {
+				if(!(obj instanceof TiledMapTileMapObject))
+					continue;
+				MapProperties props= obj.getProperties();
+				
+				
+				TiledMapTileMapObject tmtmo=(TiledMapTileMapObject) obj;
+				TiledMapTile t=tmtmo.getTile();
+				MapProperties defaultProps = t.getProperties();
+				if(defaultProps.containsKey("Interactable") || defaultProps.containsKey("Interaction")) {
+					list.add(obj);
+				}
+				
+				
+				Iterator<String> propertyKeys=defaultProps.getKeys();
+				while(propertyKeys.hasNext()) {
+					String key =propertyKeys.next();
+					
+					if(props.containsKey(key))
+						continue;
+					else {
+						Object value=defaultProps.get(key);
+						props.put(key, value);
+					}
+						
+				}
+				
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	public ArrayList<MapObject> getGhostsList(){
+		ArrayList<MapObject> list = new ArrayList<MapObject>();
+		for(MapLayer layer: map.getLayers()) {
+			for(MapObject obj: layer.getObjects()) {
+				if(!(obj instanceof TiledMapTileMapObject))
+					continue;
+				MapProperties props= obj.getProperties();
+				
+				
+				TiledMapTileMapObject tmtmo=(TiledMapTileMapObject) obj;
+				TiledMapTile t=tmtmo.getTile();
+				MapProperties defaultProps = t.getProperties();
+				if(defaultProps.containsKey("Ghost")) {
+					list.add(obj);
+				}
+				
+				
+				Iterator<String> propertyKeys=defaultProps.getKeys();
+				while(propertyKeys.hasNext()) {
+					String key =propertyKeys.next();
+					
+					if(props.containsKey(key))
+						continue;
+					else {
+						Object value=defaultProps.get(key);
+						props.put(key, value);
+					}
+						
+				}
+				
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	public ArrayList<MapObject> getBossList(){
+		ArrayList<MapObject> list = new ArrayList<MapObject>();
+		for(MapLayer layer: map.getLayers()) {
+			for(MapObject obj: layer.getObjects()) {
+				if(!(obj instanceof TiledMapTileMapObject))
+					continue;
+				MapProperties props= obj.getProperties();
+				
+				
+				TiledMapTileMapObject tmtmo=(TiledMapTileMapObject) obj;
+				TiledMapTile t=tmtmo.getTile();
+				MapProperties defaultProps = t.getProperties();
+				if(defaultProps.containsKey("Boss")) {
+					list.add(obj);
+				}
+				
+				
+				Iterator<String> propertyKeys=defaultProps.getKeys();
+				while(propertyKeys.hasNext()) {
+					String key =propertyKeys.next();
+					
+					if(props.containsKey(key))
+						continue;
+					else {
+						Object value=defaultProps.get(key);
+						props.put(key, value);
+					}
+						
+				}
+				
+			}
+			
+		}
+		
+		return list;
+	}
+	
+	private void updateInterface() {
+		if(Parametros.vida<=0) {
+			lblHp.setText("Vida: " + 0);
+		} else {
+			lblHp.setText("Hp: " + Parametros.vida);
+		}
+		
+		lblPower.setText("Poder: " + Parametros.ghostPower);
+			
+	}
+	
+	public class ActorComparator implements Comparator<Actor> {
+
+		@Override
+		public int compare(Actor a, Actor b) {
+			if(a.getY() == b.getY()) {
+				return 0;
+			}
+			
+			if(a.getY() > b.getY()) {
+				return -1;
+			}
+			return 1;
+		}
+		
+	}
+	
+}

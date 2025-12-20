@@ -1,0 +1,168 @@
+package elements;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.GameScreen;
+
+public class Angy extends Ghosts {
+	private Animation<TextureRegion> floatingDcha;
+	private Animation<TextureRegion> floatingIzq;
+	private Animation<TextureRegion> protectDcha;
+	private Animation<TextureRegion> protectIzq;
+	private int nDialog = 0;
+	
+	private Label infoLbl;
+	
+	
+	public Angy(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s, lvl);
+		
+		protectDcha = loadFullAnimation("maps/images/AngysPowerDcha.png", 1, 2, 1, true);
+		protectIzq = loadFullAnimation("maps/images/AngysPowerIzq.png", 1, 2, 1, true);
+		floatingDcha = loadFullAnimation("maps/images/AngyFloatDcha.png", 1, 14, 0.1f, true);
+		floatingIzq = loadFullAnimation("maps/images/AngyFloatIzq.png", 1, 14, 0.1f, true);
+		
+		this.setEnabled(false);
+		
+		infoLbl = new Label("", ResourceManager.npcStyle);
+		infoLbl.setPosition(this.getX() + this.getWidth()/2.5f, this.getY() + this.getHeight());
+		s.addActor(infoLbl);
+		
+		this.lvl = lvl;
+	}
+	
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(Parametros.sunflower) {
+			this.setEnabled(true);
+			this.setAnimation(floatingIzq);
+		}
+		
+		if(this.getEnabled()) {
+			animations();
+			dialog();
+			
+			if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E) && !Parametros.angy && !this.lvl.player.stayStill) {
+				this.lvl.player.stayStill = true;
+				this.nDialog = 1;
+			}
+			
+			if((Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Input.Buttons.LEFT)) && Parametros.nivel == 297 && !Parametros.angy) {
+				this.nDialog++;
+				if(nDialog >= 8) {
+					AudioManager.playSound("audio/sounds/npcs/Cueste.mp3");
+					this.lvl.lblAngy.setText("");
+					this.lvl.player.stayStill = false;
+					Parametros.angy = true;
+					positionAngy();
+					Parametros.ghostPower = "Escudo";
+				}
+				
+			}
+			
+			if(this.overlaps(this.lvl.player.sensor) && !Parametros.angy) {
+				this.infoLbl.setText("'E'");
+			} else {
+				this.infoLbl.setText("");
+			}
+			
+			/*if(Parametros.angy) {
+				positionAngy();
+			}*/
+			
+			if(!Parametros.angy && Parametros.nivel == 200) {
+				this.setEnabled(false);
+			}
+			
+			if(!this.overlaps(this.lvl.player.sensor)) {
+				this.lvl.lblAngy.setText("");
+			}
+		}
+	}
+	
+	private void animations() {
+		if(Parametros.angy) {
+			if(!this.lvl.player.protegida) {
+				if(this.lvl.player.direction == 1) {
+					this.setAnimation(floatingDcha);
+				} else {
+					this.setAnimation(floatingIzq);
+				}
+			} else {
+				if(this.lvl.player.direction == 1) {
+					this.setAnimation(protectDcha);
+				} else {
+					this.setAnimation(protectIzq);
+				}
+			}
+		} else {
+			this.setAnimation(floatingIzq);
+		}
+		
+	}
+	
+	private void positionAngy() {
+		if(this.lvl.player.direction == 1) {
+			this.setPosition(lvl.player.getX()-200, lvl.player.getY()+70);
+		} else {
+			this.setPosition(lvl.player.getX()+500, lvl.player.getY()+70);
+		}	
+	}
+	
+	private void dialog() {
+		
+		switch(nDialog) {
+		case 1: 
+			this.lvl.lblAngy.setText("Angy: ¡Oye tú!, ¡No toques esa flor por favor!");
+			break;
+			
+		case 2: 
+			this.lvl.lblAngy.setText("Angy: Es el único recuerdo que me queda de mi hermana...");
+			break;
+			
+		case 3: 
+			this.lvl.lblAngy.setText("Angy: Sophie... ¿¿eres tú?? Ojalá pudiera darte un abrazo, pero ya sabes, lo de no ser corpórea y tal..."
+								+ "\n" + "¿Pero qué haces aquí? ¡Estás en mucho peligro!");
+			break;
+			
+		case 4: 
+			this.lvl.lblAngy.setText("");
+			this.lvl.lblSophie.setText("Sophie: He venido para investigar tres casos de desapariciones, al parecer lo último que se sabe de ellos" 
+								+ "\n"  + "es que les enviaron un correo con la dirección de este hospital abandonado.");
+			break;
+			
+		case 5: 
+			this.lvl.lblSophie.setText("Sophie: Espera... ¡Has estado atrapada aquí desde el accidente!, ¿Pero cómo?");
+
+			break;
+			
+		case 6: 
+			this.lvl.lblSophie.setText("");
+			this.lvl.lblAngy.setText("Angy: No te preocupes de eso ahora hermanita, voy ayudarte a encontrarlos y a salir de aquí."
+					+ "\n" + "Pulsa 'C' para indicarme cuando quieras que active mis poderes para protegerte.");
+			break;
+			
+		case 7: 
+			this.lvl.lblAngy.setText("");
+			this.lvl.lblSophie.setText("Sophie: Tienes razón, ya nos pondremos al día más tarde.");
+			break;
+			
+		default: 
+			this.lvl.lblSophie.setText("");
+			this.lvl.lblAngy.setText("");
+			break;
+		}
+		
+	}
+
+}

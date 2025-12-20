@@ -1,0 +1,43 @@
+1681548077019	Rename type 'Launcher22'
+1681548094968	Rename type 'Parametros22'
+1681548186156	Rename type 'ResourceManager22'
+1681548244201	Rename type 'Blob22'
+1681548253564	Rename type 'Player22'
+1681548265276	Rename type 'Enemy22'
+1681548272142	Rename type 'Element22'
+1681548282859	Rename type 'Bullet'
+1681548303439	Rename type 'Attack'
+1681549994292	Delete element
+1681550789815	Rename resource 'tchAitor.png'
+1681550836597	Rename resource 'tchCasandra.png'
+1681550845298	Rename resource 'tchHiroaki.png'
+1681550853374	Rename resource 'tchJeremy.png'
+1681552317323	Move file
+1681552319730	Move file
+1681552321221	Move file
+1681552322439	Move file
+1681552323574	Move file
+1681552324609	Move file
+1681552325893	Move file
+1681552327022	Move file
+1681552328306	Move file
+1681552329375	Move file
+1681552330529	Move file
+1681552331679	Move file
+1681552332582	Move file
+1681552333627	Move file
+1681552334656	Move file
+1681552406228	Rename resource 'tchMarcos.png'
+1681552413270	Rename resource 'tchMireya.png'
+1681552420429	Rename resource 'tchSanson1.png'
+1681552426961	Rename resource 'tchSelena.png'
+1681552433140	Rename resource 'tchValentina.png'
+1681557618407	Rename resource 'Sanson1.png'
+1681557814057	Rename type 'GameScreen22'
+1681557829023	Rename type 'BScreen22'
+1681557836012	Rename type 'TitleScreen22'
+1681558321536	Rename method 'attack'
+1681558401362	Rename field 'feet'
+1681558432905	Rename method 'positionFeet'
+1681560145364	Delete element
+1681584308550	Rename type 'Recepcion'

@@ -1,0 +1,158 @@
+package screens;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.utils.Align;
+
+import game.Demo;
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+
+public class TitleScreen extends BScreen{
+private Table tabla;
+SpriteBatch sb;
+Texture bgImg;
+	public TitleScreen(Demo game) {
+		super(game);
+		
+		sb = new SpriteBatch();
+		bgImg = new Texture(Gdx.files.internal("maps/images/Titlescreen.png"));
+		tabla= new Table();
+		tabla.setFillParent(true);
+		tabla.setPosition(-450, 170);
+		tabla.align(Align.center);
+		this.uiStage.addActor(tabla);
+		
+		TextButton playBtn=new TextButton("Jugar",ResourceManager.textButtonStyle);
+		playBtn.addListener(
+				(Event e)->{if(!(e instanceof InputEvent))
+					return false;
+				
+				InputEvent ie = (InputEvent) e;
+				
+				//Hover on
+		        if (ie.getType() == Type.enter) {
+		        	
+		        	playBtn.setStyle(ResourceManager.textButtonHoverStyle);
+		        }
+
+		        //Hover off
+		        if (ie.getType() == Type.exit) {
+
+		        	playBtn.setStyle(ResourceManager.textButtonStyle);
+		        }
+
+		        // Handle click
+		        if (ie.getType() == Type.touchDown) {
+		            this.dispose();
+		            game.setScreen(new GameScreen(game));
+		        }
+
+				return false;
+			});
+		playBtn.padLeft(-75);
+		tabla.add(playBtn);
+		tabla.row();
+		/*
+		TextButton botonOpciones=new TextButton("Opciones",ResourceManager.textButtonStyle);
+		tabla.add(botonOpciones);
+		*/
+		
+		TextButton exitBtn=new TextButton("Salir", ResourceManager.textButtonStyle);
+		exitBtn.addListener(
+				(Event e)->{if(!(e instanceof InputEvent))
+					return false;
+				InputEvent ie = (InputEvent) e;
+				
+				//Hover on
+		        if (ie.getType() == Type.enter) {
+		        	
+		        	exitBtn.setStyle(ResourceManager.textButtonHoverStyle);
+		        }
+
+		        //Hover off
+		        if (ie.getType() == Type.exit) {
+
+		        	exitBtn.setStyle(ResourceManager.textButtonStyle);
+		        }
+		        
+		     // Handle click
+		        if (ie.getType() == Type.touchDown) {
+		            this.dispose();
+		            Gdx.app.exit();
+		        }
+			
+				return false;
+			});
+		playBtn.setTransform(false);
+		playBtn.getLabel().setAlignment(Align.center);
+		//exitBtn.padLeft(-100);
+		//exitBtn.setSize(500, 46);
+		//exitBtn.padBottom(-95);
+		tabla.add(exitBtn);
+		
+		TextButton linkBtn = new TextButton("", ResourceManager.logoButtonStyle);
+		linkBtn.setPosition(1084, 0);
+		linkBtn.addListener(
+				(Event e) -> {
+			        if (!(e instanceof InputEvent))
+			            return false;
+
+			        InputEvent ie = (InputEvent) e;
+
+			        // Change to hand cursor on hover
+			        if (ie.getType() == Type.enter) {
+			        	System.out.println("ENTER");
+			            //Gdx.graphics.setSystemCursor(SystemCursor.Hand);
+			        	String drawable2 = "PINK";
+						linkBtn.setBackground(drawable2);
+			        }
+
+			        // Restore cursor when leaving
+			        if (ie.getType() == Type.exit) {
+			        	System.out.println("EXIT");
+			        	String drawable = "BLUE";
+						linkBtn.setBackground(drawable);
+			            //Gdx.graphics.setSystemCursor(SystemCursor.Arrow);
+			        }
+
+			        // Handle click
+			        if (ie.getType() == Type.touchDown) {
+			            this.dispose();
+			            Gdx.net.openURI("https://woody-fennec.itch.io/");
+			        }
+
+			        return false;
+			    }); 
+		this.uiStage.addActor(linkBtn);
+		
+		AudioManager.playMusic("audio/music/TitleScreen.mp3");
+	}
+
+	
+	@Override
+	public void render(float delta) {
+		super.render(delta);
+	    
+		sb.begin();
+		sb.draw(bgImg, 0, 0);
+		sb.end();
+		uiStage.act();
+		uiStage.draw();
+	    
+
+	}
+	
+	
+	
+}

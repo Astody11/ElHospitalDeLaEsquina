@@ -1,0 +1,175 @@
+package elements;
+
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.GameScreen;
+
+public class Rebanados extends Enemies {
+	private Animation<TextureRegion> patrol;
+	private Animation<TextureRegion> hit; 
+	private Animation<TextureRegion> patrolIzq;
+	private Animation<TextureRegion> hitIzq;
+	private float velocidadMaxima;
+	private float aceleracion;
+	private float distanciaVision;
+	
+	boolean persiguiendo;
+	private float angle = 0.0f;
+	private float vAngle = 0.02f;
+	
+	private float tPoison = 2;
+	private float tPoisonCounter = 0;
+	Label lblHp;
+	
+	
+	public Rebanados(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s, lvl);
+		patrol = loadFullAnimation("enemies/RebanadoFloats.png", 1, 11, 0.3f, true);
+		hit = loadFullAnimation("enemies/RebanadoAlert.png", 1, 10, 0.3f, true);
+		patrolIzq = loadFullAnimation("enemies/RebanadoFloatsIzq.png", 1, 11, 0.3f, true);
+		hitIzq = loadFullAnimation("enemies/RebanadoAlertIzq.png", 1, 10, 0.3f, true);
+		
+		velocidadMaxima = 300;
+		aceleracion = 100;
+		
+		distanciaVision = 0;
+		
+		hp = 90;
+		
+		if(Parametros.ghostCompannion.equals("Selena")) {
+			this.damage = 13;
+		} else if(Parametros.ghostCompannion.equals("Mireya")) {
+			this.damage = 16;
+		} else {
+			this.damage = 25;
+		}
+		
+		enemyHitBox = new Elements(0, 0, s, this.getWidth(), this.getHeight()/8);
+		enemyHitBox.setRectangle();
+		positionEnemyHitBox();
+		
+		lblHp = new Label("" + this.hp, ResourceManager.enemyStyle);
+		
+		s.addActor(lblHp);
+		this.setAnimation(patrol);
+	}
+	
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(this.getEnabled() && this.enemyHitBox.overlaps(this.lvl.player.hitBox) && this.lvl.player.invulnerabilityTime<=0) {
+			AudioManager.playSound("audio/sounds/punch.mp3");
+		}
+		
+		if (this.getEnabled() && !this.lvl.player.stayStill) {
+			if (this.persiguiendo) {
+				this.setAnimation(hit);
+				perseguir(lvl.player.getX(),lvl.player.getY(), true);
+				
+			} else {
+				if (Math.sqrt(Math.pow(this.getX() - lvl.player.getX(), 2)
+						+ Math.pow(this.getY() - lvl.player.getY(), 2)) < distanciaVision) {
+					persiguiendo = true;
+				} else {
+					double x = 2 * Math.cos(angle) + this.getX();
+			        double y = 4 * Math.sin(angle) + this.getY();
+			        setPosition((float)x, (float)y);
+					angle +=vAngle;
+				}
+			}
+
+			velocity.add(acceleration.x * delta, acceleration.y * delta);
+			velocity.x = MathUtils.clamp(velocity.x, -velocidadMaxima, velocidadMaxima);
+			velocity.y = MathUtils.clamp(velocity.y, -velocidadMaxima, velocidadMaxima);
+
+			acceleration.set(0, 0);
+			moveBy(velocity.x * delta, velocity.y * delta);
+		}
+			
+		
+		
+		if(this.hp>80) {
+			if(this.lvl.player.getX()>this.getX()) {
+				this.setAnimation(patrol);
+			} else {
+				this.setAnimation(patrolIzq);
+			}
+		} else {
+			this.persiguiendo = !Parametros.ghostCompannion.equals("Jeremy");
+			
+			if(this.tPoisonCounter<=0 && Parametros.ghostCompannion.equals("Marcos")) {
+				this.hp-=8;
+				this.tPoisonCounter = this.tPoison;
+			} else if(Parametros.ghostCompannion.equals("Hiroaki")) {
+				this.velocidadMaxima = 240;
+				this.hp-=2;
+			} else if(Parametros.ghostCompannion.equals("Aitor")) {
+				this.velocidadMaxima = 150;
+			}
+			
+			if(this.lvl.player.getX()>this.getX()) {
+				this.setAnimation(hit);
+			} else {
+				this.setAnimation(hitIzq);
+			}
+		}
+		
+		if(!this.persiguiendo) {
+			if(this.lvl.player.getX()>this.getX()) {		
+				this.setAnimation(patrol);
+			} else {
+				this.setAnimation(patrolIzq);
+			}
+		} else {
+			if(this.lvl.player.getX()>this.getX()) {
+				this.setAnimation(hit);
+			} else {
+				this.setAnimation(hitIzq);
+			}
+		}
+		
+		if(this.tPoisonCounter>0) {
+			this.tPoisonCounter-=delta;
+		}
+		
+		lblHp.setPosition(this.getX()+this.getWidth()/2.8f , this.getY() + this.getHeight());
+		actualizarLabel();
+	}
+
+	private void perseguir(float x, float y, boolean accurate) {
+		float margen=0;
+		if(!accurate) {
+			margen=30;
+		}
+		
+		if (x+margen < this.getX()) {
+			acceleration.add(-aceleracion, 0);
+
+		} else if (x - margen > this.getX()) {
+			acceleration.add(aceleracion, 0);
+		}
+		if (y + margen< this.getY()) {
+			acceleration.add(0, -aceleracion);
+
+		} else if (y - margen> this.getY()) {
+			acceleration.add(0, aceleracion);
+		}
+	}
+	
+	
+	private void actualizarLabel() {
+		if(this.hp>0) {
+			lblHp.setText("" + this.hp);
+		} else {
+			lblHp.setText("");
+		}
+		
+	}
+}

@@ -1,0 +1,91 @@
+package elements;
+
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
+import game.Parametros;
+import managers.AudioManager;
+import screens.GameScreen;
+
+public class Laser extends Elements{
+
+	public float bulletDuration;
+	public float timeActive;
+	private GameScreen lvl;
+	public int damage;
+	
+	public Laser(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s);
+		
+		this.loadFullAnimation("player/Beam.png", 1, 1, 4, false);
+		this.setRectangle();
+		if(Parametros.ghostCompannion.equals("Mireya")) {
+			this.damage = 40;
+		} else if(Parametros.ghostCompannion.equals("Valentina")) {
+			this.damage = 60;
+		} else if(Parametros.ghostCompannion.equals("Hiroaki")) {
+			this.damage = 45;
+		} else {
+			this.damage = 30;
+		}
+		
+		this.bulletDuration = 2;
+		this.setEnabled(false);
+		this.lvl = lvl;
+	}
+	
+	
+	@Override
+	public void act(float delta) {
+		if(this.getEnabled()) {
+			super.act(delta);
+			this.applyPhysics(delta);
+			
+			if(this.timeActive>this.bulletDuration) {
+				this.setEnabled(false);
+			} else {
+				this.timeActive += delta;
+			}
+			colide();
+		}
+		
+	}
+	
+	private void colide() {
+		for(Enemies e: this.lvl.enemies) {
+			if(e.getEnabled() && this.overlaps(e)) {
+				e.damage(this.damage);
+				this.setEnabled(false);
+			}
+			if(e.getEnabled() && e.hp<=1 && Parametros.nivel == 205) {
+				Parametros.erraticosKilled++;
+			}
+			
+			if(e.getEnabled() && e.hp<=1) {
+				AudioManager.playSound("audio/sounds/enemyDeath.mp3");
+			}
+		}
+		for(Boss b: this.lvl.boss) {
+			if(b.getEnabled() && this.overlaps(b)) {
+				b.damage(this.damage);
+				this.setEnabled(false);
+			}
+		}
+	}
+	
+	public void shoot(float x, float y, int direction, int speed) {
+		this.setEnabled(true);
+		this.timeActive = 0;
+		this.setPosition(this.lvl.player.getWidth(), this.lvl.player.getHeight());
+		this.velocity.x = speed*direction;
+		this.velocity.y = 0;
+	}
+	
+	public void shootWithMouse(float x, float y, float speedX, float speedY) {
+		this.setEnabled(true);
+		this.timeActive = 0;
+		this.setPosition(x, y);
+		this.velocity.x = speedX;
+		this.velocity.y = speedY;
+	}
+	
+}

@@ -1,0 +1,120 @@
+package elements;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.GameScreen;
+
+public class Marcos extends Ghosts{
+
+	private Animation<TextureRegion> dcha;
+	private Animation<TextureRegion> izq;
+	private int nDialog = 0;
+	
+	private Label infoLbl;
+	private Label dialogLbl;
+	
+	private GameScreen myLvl;
+	
+	public Marcos(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s, lvl);
+		dcha = loadFullAnimation("npcs/MarcosFloatsTDcha.png", 1, 10, 0.2f, true);
+		izq = loadFullAnimation("npcs/MarcosFloatsT.png", 1, 10, 0.2f, true);
+		this.setAnimation(dcha);
+		
+		infoLbl = new Label("", ResourceManager.npcStyle);
+		infoLbl.setPosition(this.getX() + this.getWidth()/2.5f, this.getY() + this.getHeight());
+		s.addActor(infoLbl);
+		dialogLbl = new Label("AQUI", ResourceManager.npcStyle);
+		dialogLbl.setPosition(10, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/12f);
+		lvl.uiStage.addActor(dialogLbl);
+		
+		myLvl = lvl;
+	}
+	
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(this.getEnabled()) {
+			animations();
+			dialog();
+			
+			if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				AudioManager.playSound("audio/sounds/npcs/MarcosHB.mp3");
+				this.lvl.player.stayStill = true;
+				this.nDialog = 1;
+			}
+			
+			if(Parametros.ghostCompannion.equals("Marcos")) {
+				position();
+			}
+			
+			if(Gdx.input.isKeyJustPressed(Keys.S) && this.nDialog == 1) {
+				this.nDialog++;
+				this.lvl.player.stayStill = false;
+				Parametros.ghostCompannion = "Marcos";
+				AudioManager.playSound("audio/sounds/npcs/mhm.mp3");
+			}
+			
+			if(Gdx.input.isKeyJustPressed(Keys.N) && this.nDialog == 1) {
+				this.nDialog++;
+				this.lvl.player.stayStill = false;
+				AudioManager.playSound("audio/sounds/npcs/MarcosAdios.mp3");
+			}
+			
+			if(this.overlaps(this.lvl.player.sensor)) {
+				this.infoLbl.setText("'E'");
+			} else {
+				this.infoLbl.setText("");
+			}
+			
+			if(Parametros.ghostCompannion.equals("") && Parametros.nivel == 200) {
+				this.setEnabled(false);
+			}
+			
+			if(!this.overlaps(this.lvl.player.sensor)) {
+				dialogLbl.setText("");
+			}
+		}
+	}
+	
+	private void dialog() {
+		//dialogLbl.setPosition(10, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/12f);
+		
+		switch(nDialog) {
+		case 1:
+			dialogLbl.setText("Marcos: Mi poder os permite envenenar a los enemigos y quitarles"
+					+ "\n" +  " unos pocos hp de manera gradual, si queréis que os acompañe me decís."
+					+ "\n" + "Pulsa 'S' para sí 'N' para no.");
+			break;
+			
+		default: 
+			dialogLbl.setText("");
+			break;
+		}
+		
+		//this.myLvl.uiStage.addActor(dialogLbl);
+	}
+	
+	private void animations() {
+		if(Parametros.ghostCompannion.equals("Marcos")) {
+			if(this.lvl.player.direction == 1) {
+				this.setAnimation(dcha);
+			} else {
+				this.setAnimation(izq);
+			}
+		} else {
+			this.setAnimation(dcha);
+		}
+		
+		
+	}
+
+}

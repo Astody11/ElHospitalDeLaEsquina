@@ -1,0 +1,66 @@
+package elements;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.GameScreen;
+
+public class Key224 extends Interactables {
+	
+	Label interactLbl;
+	
+	public Key224(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s, lvl);
+	
+		loadFullAnimation("maps/images/Llave224.png",1,1,1,false);
+		this.setRectangle();
+		this.lvl = lvl;
+		this.setEnabled(false);
+		
+		this.lvl.lblInfo = new Label("Pulsa 'espacio' para acelerar", ResourceManager.itemStyle);
+		
+		interactLbl = new Label("'E'", ResourceManager.itemStyle);
+		s.addActor(interactLbl);
+		
+	}
+	
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(Parametros.firstEnemyKey && !Parametros.key224) {
+			this.setEnabled(true);
+			this.lvl.lblInfo.setText("");
+		}
+		
+		if(!Parametros.firstEnemyKey && Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+			this.lvl.lblInfo.setText("Para usar la pistola láser, apunta con el ratón y haz click izq. para disparar y eliminar enemigos.");
+		}
+		
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor)) {
+			interactLbl.setPosition(this.getX() + this.getWidth()/2.5f, this.getY() + this.getHeight()*1.4f);
+			interactLbl.setText("'E'");
+		} else {
+			interactLbl.setText("");
+		}
+		
+		if(Parametros.key224) {
+			this.setEnabled(false);
+			this.lvl.lblInfo.setText("");
+		}
+					
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+			AudioManager.playSound("audio/sounds/pickup.mp3");
+			Parametros.key224 = true;
+			interactLbl.setText("'E'");
+		}
+		
+	}
+
+}

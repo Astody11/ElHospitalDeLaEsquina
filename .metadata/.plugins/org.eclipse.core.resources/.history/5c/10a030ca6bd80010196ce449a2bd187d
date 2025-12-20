@@ -1,0 +1,48 @@
+package screens;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import game.Demo;
+import managers.ResourceManager;
+
+public class LoadScreen extends BScreen{
+	private float loadDelay=5;
+	private float loadCount=0;
+	
+	SpriteBatch sb;
+	Texture bgImg;
+	
+	public LoadScreen(Demo game){
+		
+	super(game);
+	
+	sb = new SpriteBatch();
+	bgImg = new Texture(Gdx.files.internal("maps/images/LoadScreen.png"));
+	//this.resourceManager=new ResourceManager();
+	//game.resourceManager=this.resourceManager;
+	
+	ResourceManager.loadAllResources();
+	//while(!ResourceManager.update()){}
+	
+	
+	}
+
+	@Override
+	public void render(float delta) {
+		// TODO Auto-generated method stub
+		super.render(delta);
+		if(ResourceManager.update()) {
+		
+			ResourceManager.botones();
+			game.setScreen(new TitleScreen(game));
+			
+		}
+		
+	}
+	
+	
+	
+}

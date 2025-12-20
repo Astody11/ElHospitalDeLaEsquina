@@ -1,0 +1,117 @@
+package elements;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.GameScreen;
+
+public class Hiroaki extends Ghosts{
+
+	private Animation<TextureRegion> dcha;
+	private Animation<TextureRegion> izq;
+	private int nDialog = 0;
+	
+	private Label infoLbl;
+	private Label dialogLbl;
+	
+	public Hiroaki(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s, lvl);
+		dcha = loadFullAnimation("npcs/HiroakiFloatsTDcha.png", 1, 12, 0.2f, true);
+		izq = loadFullAnimation("npcs/HiroakiFloatsT.png", 1, 12, 0.2f, true);
+		this.setAnimation(izq);
+		
+		infoLbl = new Label("", ResourceManager.npcStyle);
+		infoLbl.setPosition(this.getX() + this.getWidth()/1.75f, this.getY() + this.getHeight()/1.1f);
+		s.addActor(infoLbl);
+		dialogLbl = new Label("", ResourceManager.npcStyle);
+		s.addActor(dialogLbl);
+		
+		this.setRectangle(500, 500, 25, 50);
+	}
+	
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(this.getEnabled()) {
+			animations();
+			dialog();
+			
+			if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				AudioManager.playSound("audio/sounds/npcs/Saludos.mp3");
+				this.lvl.player.stayStill = true;
+				this.nDialog = 1;
+			}
+			
+			if(Parametros.ghostCompannion.equals("Hiroaki")) {
+				position();
+			}
+			
+			if(Gdx.input.isKeyJustPressed(Keys.S) && this.nDialog == 1) {
+				this.nDialog++;
+				this.lvl.player.stayStill = false;
+				Parametros.ghostCompannion = "Hiroaki";
+				Parametros.ghostPower = "Vel. enemigos -33% + Daño gradual 2hp/s";
+				AudioManager.playSound("audio/sounds/npcs/Eeh.mp3");
+			}
+			
+			if(Gdx.input.isKeyJustPressed(Keys.N) && this.nDialog == 1) {
+				this.nDialog++;
+				this.lvl.player.stayStill = false;
+				AudioManager.playSound("audio/sounds/npcs/Chao.mp3");
+			}
+			
+			if(this.overlaps(this.lvl.player.sensor)) {
+				this.infoLbl.setText("'E'");
+			} else {
+				this.infoLbl.setText("");
+			}
+			
+			if(Parametros.ghostCompannion.equals("") && Parametros.nivel == 200) {
+				this.setEnabled(false);
+			}
+			
+			
+			if(!this.overlaps(this.lvl.player.sensor)) {
+				dialogLbl.setText("");
+			}
+		}
+	}
+	
+	private void dialog() {
+		dialogLbl.setPosition(100, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.35f);
+		
+		switch(nDialog) {
+		case 1:
+			dialogLbl.setText("Hiroaki: Mi poder os permite electrocutar a los enemigos *Bzz*"
+					+ "\n" +  "aumenta vuestro ataque y reduce su velocidad, ¿qué tal si *Bzz* os acompaño?"
+					+ "\n" + "Pulsa 'S' para sí 'N' para no.");
+			break;
+			
+		default: 
+			dialogLbl.setText("");
+			break;
+		}
+	}
+	
+	private void animations() {
+		if(Parametros.ghostCompannion.equals("Hiroaki")) {
+			if(this.lvl.player.direction == 1) {
+				this.setAnimation(dcha);
+			} else {
+				this.setAnimation(izq);
+			}
+		} else {
+			this.setAnimation(izq);
+		}
+		
+		
+	}
+
+}

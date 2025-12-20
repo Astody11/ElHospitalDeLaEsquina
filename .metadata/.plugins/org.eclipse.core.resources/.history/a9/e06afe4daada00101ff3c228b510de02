@@ -1,0 +1,509 @@
+package managers;
+
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
+public final class ResourceManager {
+	private ResourceManager() {}
+	public static AssetManager assets=new AssetManager();
+	public static LabelStyle buttonStyle;
+	public static LabelStyle powerStyle;
+	public static TextButtonStyle textButtonStyle;
+	public static TextButtonStyle textButtonHoverStyle;
+	public static TextButtonStyle logoButtonStyle;
+	public static LabelStyle nonActiveTear;
+	public static TextButtonStyle nonActiveTearTxt;
+	public static LabelStyle activeTear;
+	public static TextButtonStyle activeTearTxt;
+	public static LabelStyle sophieStyle;
+	public static LabelStyle angyStyle;
+	public static LabelStyle npcStyle;
+	public static LabelStyle npcMarcadorStyle;
+	public static LabelStyle catsStyle;
+	public static LabelStyle itemStyle;
+	public static LabelStyle enemyStyle;
+	public static LabelStyle bossStyle;
+	public static TextButtonStyle circle1;
+	public static TextButtonStyle circle2;
+	public static TextButtonStyle circle3;
+	public static TextButtonStyle circle4;
+	public static TextButtonStyle circle5;
+	public static TextButtonStyle circle6;
+	
+	
+	
+	public static void loadAllResources(){
+
+		//mapas
+		assets.setLoader(TiledMap.class, new TmxMapLoader());
+		assets.load("maps/Piso1.tmx", TiledMap.class);
+		assets.load("maps/Piso2.tmx", TiledMap.class);
+		assets.load("maps/Cocina.tmx", TiledMap.class);
+		assets.load("maps/Room200.tmx", TiledMap.class);
+		assets.load("maps/BattleField.tmx", TiledMap.class);
+		assets.load("maps/Room204.tmx", TiledMap.class);
+		assets.load("maps/Puzzle.tmx", TiledMap.class);
+		assets.load("maps/Room224.tmx", TiledMap.class);
+		assets.load("maps/Room231.tmx", TiledMap.class);
+		assets.load("maps/Room243.tmx", TiledMap.class);
+		assets.load("maps/Room297.tmx", TiledMap.class);
+		
+		
+        //elementos de mapa
+		assets.load("maps/images/girasol.png", Texture.class);
+        assets.load("maps/images/panel.png", Texture.class);
+        assets.load("maps/images/closePanel.jpg", Texture.class);
+        assets.load("maps/images/tearDrop.png", Texture.class);
+        assets.load("maps/images/tearDropActive.png", Texture.class);
+        assets.load("maps/images/recibidor.png", Texture.class);
+        assets.load("maps/images/recibidorLlave.png", Texture.class);
+        assets.load("maps/images/cofreMapa.png", Texture.class);
+        assets.load("maps/images/Circulos.jpg", Texture.class);
+        assets.load("maps/images/Circulo1.png", Texture.class);
+        assets.load("maps/images/Circulo2.png", Texture.class);
+        assets.load("maps/images/Circulo3.png", Texture.class);
+        assets.load("maps/images/Circulo4.png", Texture.class);
+        assets.load("maps/images/Circulo5.png", Texture.class);
+        assets.load("maps/images/Circulo6.png", Texture.class); 
+        assets.load("maps/images/ClosedOven.png", Texture.class);
+        assets.load("maps/images/OpenOven.png", Texture.class);
+        assets.load("maps/images/Cuadro.png", Texture.class);
+        assets.load("maps/images/CuadroGrande.png", Texture.class);
+        
+		//Sophie
+		assets.load("player/afkDcha.png", Texture.class);
+		assets.load("player/afkIzq.png", Texture.class);
+		assets.load("player/avanzaDcha.png", Texture.class);
+		assets.load("player/avanzaIzq.png", Texture.class);
+		assets.load("player/shootDcha.png", Texture.class);
+		assets.load("player/shootIzq.png", Texture.class);
+		assets.load("player/Sophie.jpg", Texture.class);
+		assets.load("player/LaserGunDcha.png", Texture.class);
+		assets.load("player/LaserGunIzq.png", Texture.class);
+		assets.load("player/Beam.png", Texture.class);
+		assets.load("player/Escudo.png", Texture.class);
+		assets.load("player/EscudoL.png", Texture.class);
+		
+		//Personajes
+		assets.load("maps/images/Angy.png", Texture.class);
+		assets.load("maps/images/AngyFloatDcha.png", Texture.class);
+		assets.load("maps/images/AngyFloatIzq.png", Texture.class);
+		assets.load("maps/images/AngysPowerDcha.png", Texture.class);
+		assets.load("maps/images/AngysPowerIzq.png", Texture.class);
+		assets.load("maps/images/Aitor.png", Texture.class);
+		assets.load("npcs/AitorFloatsT.png", Texture.class);
+		assets.load("npcs/AitorFloatsTDcha.png", Texture.class);
+		assets.load("maps/images/Jeremy.png", Texture.class);
+		assets.load("npcs/JeremyFloatsT.png", Texture.class);
+		assets.load("npcs/JeremyFloatsTDcha.png", Texture.class);
+		assets.load("maps/images/tinaMina.png", Texture.class);
+		assets.load("maps/images/Mireya.png", Texture.class);
+		assets.load("npcs/MireyaFloatsT.png", Texture.class);
+		assets.load("npcs/MireyaFloatsTDcha.png", Texture.class);
+		assets.load("maps/images/Valentina.png", Texture.class);
+		assets.load("npcs/ValentinaFloats.png", Texture.class);
+		assets.load("npcs/ValentinaFloatsT.png", Texture.class);
+		assets.load("npcs/ValentinaFloatsTDcha.png", Texture.class);
+		assets.load("maps/images/Casandra.png", Texture.class);
+		assets.load("npcs/CasandraFloatsT.png", Texture.class);
+		assets.load("maps/images/Selena.png", Texture.class);
+		assets.load("npcs/SelenaFloatsT.png", Texture.class);
+		assets.load("npcs/SelenaFloatsTDcha.png", Texture.class);
+		assets.load("maps/images/Marcos.png", Texture.class);
+		assets.load("npcs/MarcosFloatsT.png", Texture.class);
+		assets.load("npcs/MarcosFloatsTDcha.png", Texture.class);
+		assets.load("maps/images/Hiroaki.png", Texture.class);
+		assets.load("npcs/HiroakiFloatsT.png", Texture.class);
+		assets.load("npcs/HiroakiFloatsTDcha.png", Texture.class);
+		assets.load("maps/images/Sanson.png", Texture.class);
+		assets.load("npcs/SansonFloatsT.png", Texture.class);
+		
+		
+        //enemigos
+		assets.load("enemies/Rebanado.png", Texture.class);
+		assets.load("enemies/Partido.png", Texture.class);
+		assets.load("enemies/Erratico.png", Texture.class);
+		assets.load("enemies/RebanadoFloats.png", Texture.class);
+		assets.load("enemies/RebanadoFloatsIzq.png", Texture.class);
+		assets.load("enemies/RebanadoAlert.png", Texture.class);
+		assets.load("enemies/RebanadoAlertIzq.png", Texture.class);
+		assets.load("enemies/PartidoFloats.png", Texture.class);
+		assets.load("enemies/PartidoAlert.png", Texture.class);
+		assets.load("enemies/PartidoFloatsIzq.png", Texture.class);
+		assets.load("enemies/PartidoAlertIzq.png", Texture.class);
+		assets.load("enemies/ErraticoFloats.png", Texture.class);
+		assets.load("enemies/ErraticoAlert.png", Texture.class);
+		assets.load("enemies/ErraticoAlertDcha.png", Texture.class);
+		
+		//Cetro
+		assets.load("maps/images/cetroHit.png", Texture.class);
+		assets.load("maps/images/cetroFollows.png", Texture.class);
+		assets.load("maps/images/Shadow.png", Texture.class);
+		assets.load("maps/images/scepterThrow.png", Texture.class);
+		
+             
+        //objetos
+        assets.load("maps/images/Llave200.png", Texture.class);
+        assets.load("maps/images/Llave204.png", Texture.class);
+        assets.load("maps/images/Llave224.png", Texture.class);
+        assets.load("maps/images/Llave231.png", Texture.class);
+        assets.load("maps/images/Llave243.png", Texture.class);
+        assets.load("maps/images/Llave297.png", Texture.class);
+        assets.load("maps/images/Cetro.png", Texture.class);
+        assets.load("maps/images/healthPotion.png", Texture.class);
+        
+        
+        //Musica
+        assets.load("audio/music/principal.mp3", Music.class);
+        assets.load("audio/music/SalaCetro.mp3", Music.class);
+        assets.load("audio/music/rooms.mp3", Music.class);
+        assets.load("audio/music/TitleScreen.mp3", Music.class);
+        assets.load("audio/music/AngysRoom.mp3", Music.class);
+        assets.load("audio/music/defeatMusic.mp3", Music.class);
+        assets.load("audio/music/boss.mp3", Music.class);
+        
+        //Sonidos
+        assets.load("audio/sounds/ovenDoor.mp3", Sound.class);
+        assets.load("audio/sounds/heal.mp3", Sound.class);
+        assets.load("audio/sounds/button.mp3", Sound.class);
+        assets.load("audio/sounds/pickup.mp3", Sound.class);
+        assets.load("audio/sounds/wellDone.wav", Sound.class);
+        
+        
+        
+	        //Player
+        	assets.load("audio/sounds/YEsto.mp3", Sound.class);
+        	assets.load("audio/sounds/Hit.mp3", Sound.class);
+        	assets.load("audio/sounds/AVer.mp3", Sound.class);
+	        assets.load("audio/sounds/noAbre.mp3", Sound.class);
+	        assets.load("audio/sounds/doorOpens.mp3", Sound.class);
+	        assets.load("audio/sounds/door224.mp3", Sound.class);
+	        assets.load("audio/sounds/laserGun.mp3", Sound.class);
+	        assets.load("audio/sounds/shield.wav", Sound.class);
+	        
+	        //NPCs
+	        
+	        //Angy
+	        assets.load("audio/sounds/npcs/oyeTu.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/Cueste.mp3", Sound.class);
+	        
+	        //Gatas
+	        assets.load("audio/sounds/npcs/Gatas.mp3", Sound.class);
+	        
+	        //Aitor
+	        assets.load("audio/sounds/npcs/holaChicas.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/vamos.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/noMeMuevo.mp3", Sound.class);
+	        
+	        //Jeremy
+	        assets.load("audio/sounds/npcs/Eey.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/PorFin.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/YAhoraQ.mp3", Sound.class);
+	        
+	        //Selena
+	        assets.load("audio/sounds/npcs/Bienvenida.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/Hola.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/patearTrasero.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/Gudbai.mp3", Sound.class);
+	        
+	        //Casandra
+	        assets.load("audio/sounds/npcs/Ugh.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/YoQtu.mp3", Sound.class);
+	        
+	        //Valentina
+	        assets.load("audio/sounds/npcs/holaaa.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/Vamonos.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/Adioos.mp3", Sound.class);
+	        
+	        //Hiroaki
+	        assets.load("audio/sounds/npcs/Saludos.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/Eeh.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/Chao.mp3", Sound.class);
+	        
+	        //Marcos
+	        assets.load("audio/sounds/npcs/MarcosHB.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/mhm.mp3", Sound.class);
+	        assets.load("audio/sounds/npcs/MarcosAdios.mp3", Sound.class);
+	        
+	        
+	        //Enemies
+	        assets.load("audio/sounds/enemyHit.mp3", Sound.class);
+	        assets.load("audio/sounds/enemyDeath.mp3", Sound.class);
+	        assets.load("audio/sounds/punch.mp3", Sound.class);
+	        assets.load("audio/sounds/sword.mp3", Sound.class);
+	        assets.load("audio/sounds/axe.mp3", Sound.class);
+	        
+	        //Bossbattle
+	        assets.load("audio/sounds/scepterHit.mp3", Sound.class);
+	        assets.load("audio/sounds/bossHit.mp3", Sound.class);
+	        assets.load("audio/sounds/cetro.mp3", Sound.class);
+	        assets.load("audio/sounds/drill.mp3", Sound.class);
+        
+        //UI
+        assets.load("ui/LogoBtn.png", Texture.class);
+        //assets.load("ui/morado.jpg", Texture.class);
+ 
+	//añadir más elementos
+        
+        
+		
+	
+	}
+	
+	public static boolean update(){
+		return assets.update();
+	}
+	
+	public static void botones() {
+		
+		//estilo para botones
+        FreeTypeFontGenerator ftfg= new FreeTypeFontGenerator(Gdx.files.internal("lucidabrightdemibold.ttf"));
+		FreeTypeFontParameter ftfp= new FreeTypeFontParameter();
+		
+		ftfp.size=36;
+		ftfp.color=Color.NAVY;
+		ftfp.borderColor=Color.WHITE;
+		ftfp.borderWidth=2;
+		
+		BitmapFont fuentePropia = ftfg.generateFont(ftfp);
+		buttonStyle = new LabelStyle();
+		buttonStyle.font = fuentePropia;
+		textButtonStyle = new TextButtonStyle();
+		textButtonStyle.font=fuentePropia;
+		
+		//TITLESCREEN
+		textButtonHoverStyle = new TextButtonStyle();
+		textButtonHoverStyle.font=fuentePropia;
+		textButtonHoverStyle.up = createColorDrawable(200, 40, Color.valueOf("79BDF2"));
+		
+		//Boton Logo TitleScreen
+		logoButtonStyle = new TextButtonStyle();
+		Texture logoImg = ResourceManager.getTexture("ui/LogoBtn.png");
+		NinePatch logoPatch = new NinePatch(logoImg);
+		logoButtonStyle.up=new NinePatchDrawable(logoPatch);
+		logoButtonStyle.font = fuentePropia;
+		
+		//Fuente poder
+		FreeTypeFontParameter ftfp11 = new FreeTypeFontParameter();
+		ftfp11.size=20;
+		ftfp11.color=Color.NAVY;
+		ftfp11.borderColor=Color.WHITE;
+		ftfp11.borderWidth=3;
+		
+		BitmapFont powerFont = ftfg.generateFont(ftfp11);
+		powerStyle = new LabelStyle();
+		powerStyle.font = powerFont;
+		
+		//Sophie
+		FreeTypeFontParameter ftfp1 = new FreeTypeFontParameter();
+		ftfp1.size=48;
+		ftfp1.color=Color.NAVY;
+		ftfp1.borderColor=Color.WHITE;
+		ftfp1.borderWidth=4;
+		
+		BitmapFont sophieFont = ftfg.generateFont(ftfp1);
+		sophieStyle = new LabelStyle();
+		sophieStyle.font = sophieFont;
+		
+		//Angy
+		FreeTypeFontParameter ftfp7 = new FreeTypeFontParameter();
+		ftfp7.size=48;
+		ftfp7.color=Color.PURPLE;
+		ftfp7.borderColor=Color.BLACK;
+		ftfp7.borderWidth=4;
+		
+		BitmapFont angyFont = ftfg.generateFont(ftfp7);
+		angyStyle = new LabelStyle();
+		angyStyle.font = angyFont;
+		
+		//NPCs
+		FreeTypeFontParameter ftfp8 = new FreeTypeFontParameter();
+		ftfp8.size=20;
+		ftfp8.color=Color.BLACK;
+		ftfp8.borderColor=Color.WHITE;
+		ftfp8.borderWidth=2;
+		
+		BitmapFont npcFont = ftfg.generateFont(ftfp8);
+		npcStyle = new LabelStyle();
+		npcStyle.font = npcFont;
+		
+		FreeTypeFontParameter ftfp12 = new FreeTypeFontParameter();
+		ftfp12.size=48;
+		ftfp12.color=Color.BLACK;
+		ftfp12.borderColor=Color.WHITE;
+		ftfp12.borderWidth=4;
+		
+		BitmapFont npcMarcadorFont = ftfg.generateFont(ftfp12);
+		npcMarcadorStyle = new LabelStyle();
+		npcMarcadorStyle.font = npcMarcadorFont;
+		
+		//Gatas
+		FreeTypeFontParameter ftfp9 = new FreeTypeFontParameter();
+		ftfp9.size=48;
+		ftfp9.color=Color.GREEN;
+		ftfp9.borderColor=Color.PURPLE;
+		ftfp9.borderWidth=4;
+		
+		BitmapFont catsFont = ftfg.generateFont(ftfp9);
+		catsStyle = new LabelStyle();
+		catsStyle.font = catsFont;
+		
+		//Items interaction
+		FreeTypeFontParameter ftfp6= new FreeTypeFontParameter();
+		ftfp6.size=48;
+		ftfp6.color=Color.YELLOW;
+		ftfp6.borderColor=Color.PURPLE;
+		ftfp6.borderWidth=5;
+		
+		BitmapFont itemFont = ftfg.generateFont(ftfp6);
+		itemStyle = new LabelStyle();
+		itemStyle.font = itemFont;
+		
+		//Boss
+		FreeTypeFontParameter ftfp5= new FreeTypeFontParameter();
+		ftfp5.size=80;
+		ftfp5.color=Color.PURPLE;
+		ftfp5.borderColor=Color.GOLD;
+		ftfp5.borderWidth=9;
+		
+		BitmapFont bossFont = ftfg.generateFont(ftfp5);
+		bossStyle = new LabelStyle();
+		bossStyle.font = bossFont;
+		
+		//Lágrimas, puzzle ascensor
+		FreeTypeFontParameter ftfp2= new FreeTypeFontParameter();
+		ftfp2.size=42;
+		ftfp2.color=Color.PURPLE;
+		ftfp2.borderColor=Color.GOLD;
+		ftfp2.borderWidth=3;
+		
+		FreeTypeFontParameter ftfp3= new FreeTypeFontParameter();
+		ftfp3.size=36;
+		ftfp3.color=Color.CHARTREUSE;
+		ftfp3.borderColor=Color.WHITE;
+		ftfp3.borderWidth=2;
+		
+		BitmapFont inactiveTear = ftfg.generateFont(ftfp2);
+		nonActiveTear = new LabelStyle();
+		nonActiveTear.font = inactiveTear;
+		nonActiveTearTxt = new TextButtonStyle();
+		Texture buttonText = ResourceManager.getTexture("maps/images/tearDrop.png");
+		NinePatch buttonPatch = new NinePatch(buttonText);
+		nonActiveTearTxt.up = new NinePatchDrawable(buttonPatch);
+		nonActiveTearTxt.font = inactiveTear;
+		
+		BitmapFont activeTeardrop = ftfg.generateFont(ftfp3);
+		activeTear = new LabelStyle();
+		activeTear.font = activeTeardrop;
+		activeTearTxt = new TextButtonStyle();
+		Texture buttonText2 = ResourceManager.getTexture("maps/images/tearDropActive.png");
+		NinePatch buttonPatch2 = new NinePatch(buttonText2);
+		activeTearTxt.up = new NinePatchDrawable(buttonPatch2);
+		activeTearTxt.font = activeTeardrop;
+		
+		FreeTypeFontParameter ftfp4 = new FreeTypeFontParameter();
+		ftfp4.size = 49;
+		ftfp4.color = Color.PURPLE;
+		ftfp4.borderColor = Color.WHITE;
+		ftfp4.borderWidth = 4;
+		
+		//Vida enemigos
+		BitmapFont enemyFont = ftfg.generateFont(ftfp4);
+		enemyStyle = new LabelStyle();
+		enemyStyle.font = enemyFont;
+		
+		//Ciirculos
+		circle1 = new TextButtonStyle();
+		Texture c1 = ResourceManager.getTexture("maps/images/Circulo1.png");
+		NinePatch patchC1 = new NinePatch(c1);
+		circle1.up = new NinePatchDrawable(patchC1);
+		circle1.font = enemyFont;
+		
+		circle2 = new TextButtonStyle();
+		Texture c2 = ResourceManager.getTexture("maps/images/Circulo2.png");
+		NinePatch patchC2 = new NinePatch(c2);
+		circle2.up = new NinePatchDrawable(patchC2);
+		circle2.font = enemyFont;
+		
+		circle3 = new TextButtonStyle();
+		Texture c3 = ResourceManager.getTexture("maps/images/Circulo3.png");
+		NinePatch patchC3 = new NinePatch(c3);
+		circle3.up = new NinePatchDrawable(patchC3);
+		circle3.font = enemyFont;
+		
+		circle4 = new TextButtonStyle();
+		Texture c4 = ResourceManager.getTexture("maps/images/Circulo4.png");
+		NinePatch patchC4 = new NinePatch(c4);
+		circle4.up = new NinePatchDrawable(patchC4);
+		circle4.font = enemyFont;
+		
+		circle5 = new TextButtonStyle();
+		Texture c5 = ResourceManager.getTexture("maps/images/Circulo5.png");
+		NinePatch patchC5 = new NinePatch(c5);
+		circle5.up = new NinePatchDrawable(patchC5);
+		circle5.font = enemyFont;
+		
+		circle6 = new TextButtonStyle();
+		Texture c6 = ResourceManager.getTexture("maps/images/Circulo6.png");
+		NinePatch patchC6 = new NinePatch(c6);
+		circle6.up = new NinePatchDrawable(patchC6);
+		circle6.font = enemyFont;
+		
+	}
+	
+	/*public static TextureAtlas getAtlas(String path){
+		return assets.get(path, TextureAtlas.class);
+		
+	}*/
+	
+	private static Drawable createColorDrawable(int width, int height, Color color) {
+	    Pixmap pixmap = new Pixmap(width, height, Pixmap.Format.RGBA8888);
+	    pixmap.setColor(color);
+	    pixmap.fill();
+
+	    Texture texture = new Texture(pixmap);
+	    pixmap.dispose();
+
+	    return new TextureRegionDrawable(new TextureRegion(texture));
+	}
+	
+	public static Texture getTexture(String path) {
+		return assets.get(path, Texture.class);
+	}
+	
+	public static Music getMusic(String path){
+		return assets.get(path, Music.class);
+	}
+	
+	public static Sound getSound(String path)
+	{
+		return assets.get(path, Sound.class);
+	}
+	
+	public static TiledMap getMap(String path){
+		return assets.get(path, TiledMap.class);
+	}
+
+	public static void dispose(){
+		assets.dispose();
+	}
+}
