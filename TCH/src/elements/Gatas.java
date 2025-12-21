@@ -75,7 +75,7 @@ public class Gatas extends Ghosts {
 		
 		System.out.println(this.lvl.player.stayStill + " " + nDialog + " " + Parametros.catsKey);
 		
-		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && !this.lvl.player.stayStill && Parametros.cats) {
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && !this.lvl.player.stayStill && Parametros.catsKey) {
 			infoLbl.setPosition(this.getX() + this.getWidth()/2.5f, this.getY() + this.getHeight()*1.2f);
 			infoLbl.setText("'E'");
 		} else {

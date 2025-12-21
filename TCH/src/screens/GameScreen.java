@@ -110,6 +110,7 @@ Vector3 m3d;
 	   
 public Player player;
 Label lblHp;
+public TextButton btnInactiveShield;
 Label lblPower;
 public Label lblInfo;
 
@@ -515,6 +516,9 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		lblHp = new Label("Hp: " + Parametros.vida, ResourceManager.buttonStyle);
 		lblHp.setPosition(10, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/12f);
 		
+		btnInactiveShield = new TextButton("", ResourceManager.activeShieldTxt);
+		btnInactiveShield.setPosition(10, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/6f);
+		
 		lblPower = new Label("Poder: " + Parametros.ghostCompannion, ResourceManager.powerStyle);
 		lblPower.setPosition(Parametros.getAnchoPantalla()-Parametros.getAnchoPantalla()/3.25f, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/15f);
 		
@@ -537,6 +541,7 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		initDialogLabels();
 		
 		uiStage.addActor(lblHp);
+		uiStage.addActor(btnInactiveShield);
 		uiStage.addActor(lblPower);
 		uiStage.addActor(lblInfo);
 		uiStage.addActor(lblSophie);
@@ -1110,6 +1115,8 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		} else {
 			lblPower.setText("Poder adicional: " + Parametros.ghostPower);
 		}
+		
+		btnInactiveShield.setVisible(Parametros.angy);
 			
 	}
 	

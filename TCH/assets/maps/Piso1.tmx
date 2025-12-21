@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="272" height="86" tilewidth="24" tileheight="24" infinite="0" nextlayerid="6" nextobjectid="38">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="272" height="86" tilewidth="24" tileheight="24" infinite="0" nextlayerid="6" nextobjectid="39">
  <tileset firstgid="1" source="Objects.tsx"/>
  <tileset firstgid="23" source="EnemigosMetalicos.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="272" height="86">
@@ -106,7 +106,7 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="18" name="Start" x="5820.73" y="1624.91" width="124" height="88.6667">
+  <object id="18" name="Start" x="313.455" y="1697.15" width="124" height="88.6667">
    <properties>
     <property name="name" value="Start"/>
    </properties>
@@ -145,7 +145,6 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="36" gid="20" x="5530.79" y="1248.64" width="97" height="170"/>
   <object id="37" x="733.334" y="963.637" width="448.485" height="206.061">
    <properties>
     <property name="name" value="Solid"/>
@@ -155,6 +154,7 @@
  <objectgroup id="5" name="Interactables">
   <object id="32" gid="12" x="801.242" y="1541.33" width="255" height="288.333"/>
   <object id="35" gid="9" x="2536.64" y="1743.15" width="255" height="255"/>
+  <object id="38" gid="20" x="5536.33" y="1260" width="115" height="200"/>
  </objectgroup>
  <objectgroup id="4" name="Enemigos"/>
 </map>

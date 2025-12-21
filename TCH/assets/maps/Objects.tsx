@@ -71,7 +71,7 @@
   <properties>
    <property name="Interactable" value="Panel"/>
   </properties>
-  <image width="97" height="170" source="images/panel.png"/>
+  <image width="115" height="200" source="images/panel.png"/>
  </tile>
  <tile id="20">
   <properties>
@@ -83,6 +83,6 @@
   <properties>
    <property name="Interactable" value="Potion"/>
   </properties>
-  <image width="512" height="512" source="images/healthPotion.png"/>
+  <image width="256" height="256" source="images/healthPotion.png"/>
  </tile>
 </tileset>

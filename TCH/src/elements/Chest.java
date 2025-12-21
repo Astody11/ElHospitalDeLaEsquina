@@ -44,8 +44,8 @@ public class Chest extends Interactables {
 	
 	public Chest(float x, float y, Stage s, GameScreen lvl) {
 		super(x, y, s, lvl);
-		chest = this.loadFullAnimation("maps/images/cofreMapa.png", 1, 1, 1, false);
-		closeChest = this.loadFullAnimation("maps/images/Circulos.jpg", 1, 1, 1, false);
+		chest = this.loadFullAnimation("maps/images/cofreMapa.png", 1, 1, 1, false); //De lejos
+		closeChest = this.loadFullAnimation("maps/images/Cofre.png", 1, 1, 1, false); //De cerca
 		this.lvl = lvl;
 		this.posX = x;
 		this.posY = y;
@@ -66,11 +66,12 @@ public class Chest extends Interactables {
 		super.act(delta);
 		
 		if(this.getEnabled() && !Parametros.chestPuzzleSolved && this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+			this.setPosition(0, 0);
 			this.setAnimation(closeChest);
+			this.lvl.uiStage.addActor(this);
 			showPuzzle();
 			this.solvingPuzzle = true;
 			this.lvl.player.stayStill = true;
-			this.setPosition(-50, 100);
 		} 
 		
 		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && !Parametros.chestPuzzleSolved) {
@@ -167,7 +168,7 @@ public class Chest extends Interactables {
 				return false;
 				
 		});
-		btn1.setPosition(430, 445);
+		btn1.setPosition(435, 395);
 		
 		btn2.setStyle(ResourceManager.circle2);
 		btn2.addListener(
@@ -183,7 +184,7 @@ public class Chest extends Interactables {
 				return false;
 				
 		});
-		btn2.setPosition(585, 445);
+		btn2.setPosition(585, 395);
 		
 		btn3.setStyle(ResourceManager.circle3);
 		btn3.addListener(
@@ -198,7 +199,7 @@ public class Chest extends Interactables {
 				return false;
 				
 		});
-		btn3.setPosition(745, 445);
+		btn3.setPosition(735, 395);
 		
 		btn4.setStyle(ResourceManager.circle4);
 		btn4.addListener(
@@ -213,7 +214,7 @@ public class Chest extends Interactables {
 				return false;
 				
 		});
-		btn4.setPosition(430, 310);
+		btn4.setPosition(435, 260);
 		
 		btn5.setStyle(ResourceManager.circle5);
 		btn5.addListener(
@@ -228,7 +229,7 @@ public class Chest extends Interactables {
 				return false;
 				
 		});
-		btn5.setPosition(585, 310);
+		btn5.setPosition(585, 260);
 		
 		btn6.setStyle(ResourceManager.circle6);
 		btn6.addListener(
@@ -243,7 +244,7 @@ public class Chest extends Interactables {
 				return false;
 				
 		});
-		btn6.setPosition(745, 310);
+		btn6.setPosition(735, 260);
 		
 		this.lvl.uiStage.addActor(btn1);
 		this.lvl.uiStage.addActor(btn2);

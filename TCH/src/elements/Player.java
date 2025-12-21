@@ -11,11 +11,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
 import game.Parametros;
 import managers.AudioManager;
+import managers.ResourceManager;
 import screens.GameScreen;
 
 public class Player extends Elements{
@@ -212,11 +214,17 @@ private Vector2 shootDirection;
 			this.iAmShooting = false;
 		}
 		
-		if(this.shieldCoolDownTime<=0 && Parametros.angy && Gdx.input.isKeyPressed(Keys.C)) {
-			this.shield.setEnabled(true);
-			shield.protect();
-			this.shieldCoolDownTime = this.shieldCoolDown;
+		if(this.shieldCoolDownTime<=0){
+			this.lvl.btnInactiveShield.setStyle(ResourceManager.activeShieldTxt);
+			
+			if(Parametros.angy && Gdx.input.isKeyPressed(Keys.C)) {
+				this.lvl.btnInactiveShield.setStyle(ResourceManager.nonActiveShieldTxt);
+				this.shield.setEnabled(true);
+				shield.protect();
+				this.shieldCoolDownTime = this.shieldCoolDown;
+			}
 		}
+		
 	}
 	
 		

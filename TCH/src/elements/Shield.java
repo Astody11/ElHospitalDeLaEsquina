@@ -1,5 +1,7 @@
 package elements;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
@@ -9,8 +11,7 @@ import managers.AudioManager;
 import screens.GameScreen;
 
 public class Shield extends Elements {
-	private Animation<TextureRegion> right;
-	private Animation<TextureRegion> left;
+	private Animation<TextureRegion> shield;
 	public float duration;
 	public float timeCounter;
 	public int damage;
@@ -22,12 +23,11 @@ public class Shield extends Elements {
 	public Shield(float x, float y, Stage s, float w, float h, float duration, int damage, float offsetX, float offsetY, GameScreen lvl) {
 		super(x, y, s, w, h);
 		
-		right = this.loadFullAnimation("player/Escudo.png", 1, 1, 1, false);
-		left = this.loadFullAnimation("player/EscudoL.png", 1, 1, 1, false);
+		shield = this.loadFullAnimation("player/Escudo.png", 1, 1, 1, false);
 		this.setRectangle();
 		this.lvl = lvl;
 		
-		this.setAnimation(right);
+		this.setAnimation(shield);
 		
 		//Caja de colisión
 		float[] vertices = {0,0,w,0,w,h,0,h};
@@ -81,10 +81,8 @@ public class Shield extends Elements {
 	
 	private void position() {
 		if(this.lvl.player.direction == 1) {
-			this.setAnimation(right);
 			this.setPosition(lvl.player.getX()+this.offsetX*1.2f, lvl.player.getY()+this.offsetY);
 		} else {
-			this.setAnimation(left);
 			this.setPosition(lvl.player.getX()-this.offsetX/2, lvl.player.getY()-this.offsetY/2);
 		}
 		

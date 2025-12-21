@@ -66,7 +66,6 @@ public class Panel extends Interactables{
 		super(x, y, s, lvl);
 		
 		panel = loadFullAnimation("maps/images/panel.png", 1, 1, 1, false);
-		//closeLook = loadFullAnimation("maps/images/closePanel.jpg", 1, 1, 1, false);
 		closeLook = loadFullAnimation("maps/images/PuzzleAscensor.png", 1, 1, 1, false);
 		this.setRectangle();
 		this.inicioX = x;

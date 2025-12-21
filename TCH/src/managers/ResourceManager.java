@@ -30,10 +30,17 @@ public final class ResourceManager {
 	public static TextButtonStyle textButtonStyle;
 	public static TextButtonStyle textButtonHoverStyle;
 	public static TextButtonStyle logoButtonStyle;
+	
+	public static LabelStyle nonActiveShield;
+	public static TextButtonStyle nonActiveShieldTxt;
+	public static LabelStyle activeShield;
+	public static TextButtonStyle activeShieldTxt;
+	
 	public static LabelStyle nonActiveTear;
 	public static TextButtonStyle nonActiveTearTxt;
 	public static LabelStyle activeTear;
 	public static TextButtonStyle activeTearTxt;
+	
 	public static LabelStyle sophieStyle;
 	public static LabelStyle angyStyle;
 	public static LabelStyle npcStyle;
@@ -84,6 +91,7 @@ public final class ResourceManager {
         assets.load("maps/images/recibidor.png", Texture.class);
         assets.load("maps/images/recibidorLlave.png", Texture.class);
         assets.load("maps/images/cofreMapa.png", Texture.class);
+        assets.load("maps/images/Cofre.png", Texture.class);
         assets.load("maps/images/Circulos.jpg", Texture.class);
         assets.load("maps/images/Circulo1.png", Texture.class);
         assets.load("maps/images/Circulo2.png", Texture.class);
@@ -270,6 +278,8 @@ public final class ResourceManager {
 	        assets.load("ui/Sonido.png", Texture.class);
 	        assets.load("ui/Mas.png", Texture.class);
 	        assets.load("ui/Menos.png", Texture.class);
+	        assets.load("ui/ActivoEscudoIcon.png", Texture.class);
+	        assets.load("ui/InactivoEscudoIcon.png", Texture.class);
 	
 	}
 	
@@ -417,6 +427,25 @@ public final class ResourceManager {
 		ftfp3.borderColor=Color.WHITE;
 		ftfp3.borderWidth=2;
 		
+		BitmapFont inactiveShield = ftfg.generateFont(ftfp2);
+		nonActiveShield = new LabelStyle();
+		nonActiveShield.font = inactiveShield;
+		nonActiveShieldTxt = new TextButtonStyle();
+		Texture iconText = ResourceManager.getTexture("ui/InactivoEscudoIcon.png");
+		NinePatch iconPatch = new NinePatch(iconText);
+		nonActiveShieldTxt.up = new NinePatchDrawable(iconPatch);
+		nonActiveShieldTxt.font = inactiveShield;
+		
+		BitmapFont activeShieldFont = ftfg.generateFont(ftfp3);
+		activeShield = new LabelStyle();
+		activeShield.font = activeShieldFont;
+		activeShieldTxt = new TextButtonStyle();
+		Texture iconText2 = ResourceManager.getTexture("ui/ActivoEscudoIcon.png");
+		NinePatch iconPatch2 = new NinePatch(iconText2);
+		activeShieldTxt.up = new NinePatchDrawable(iconPatch2);
+		activeShieldTxt.font = activeShieldFont;
+		
+		//Lagrimas
 		BitmapFont inactiveTear = ftfg.generateFont(ftfp2);
 		nonActiveTear = new LabelStyle();
 		nonActiveTear.font = inactiveTear;
