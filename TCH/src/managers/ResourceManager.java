@@ -105,7 +105,7 @@ public final class ResourceManager {
         assets.load("maps/images/Cuadro.png", Texture.class);
         assets.load("maps/images/CuadroGrande.png", Texture.class);
         assets.load("maps/images/PomoVeggy.png", Texture.class);
-        assets.load("maps/images/VeggyAnimation.png", Texture.class);
+        assets.load("maps/images/BlackFrame.png", Texture.class);
         assets.load("maps/images/5x14.png", Texture.class);
         
 		//Sophie

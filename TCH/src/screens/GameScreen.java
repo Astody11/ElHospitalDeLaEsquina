@@ -963,7 +963,9 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 			Parametros.erraticosKilled = 0;
 			 
 			Parametros.angy = false;
-			Parametros.ghostCompannion = ""; 
+			Parametros.ghostCompannion = "";
+			
+			Parametros.jumpscared = false;
 		}
 		
 		for(Solid s: solidos) {

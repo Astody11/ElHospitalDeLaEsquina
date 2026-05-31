@@ -32,6 +32,8 @@ private Animation<TextureRegion> veggy;
 SpriteBatch sb;
 Texture jumpscareSheet;
 float stateTime;
+boolean jumpscareFinished = false;
+Demo lvl;
 
 @Override
 public void show() {
@@ -41,6 +43,13 @@ public void show() {
 
 public JumpscareScreen(Demo game) {
 	super(game);
+	
+	lvl = game;
+	
+	if(jumpscareFinished) {
+		System.out.println("I'VE FINISHED");
+		game.setScreen(new GameScreen(game));
+	}
 	
 	//initialize();
 	sb = new SpriteBatch();
@@ -62,7 +71,7 @@ public JumpscareScreen(Demo game) {
 		}
 	}
 	
-	veggy = new Animation<TextureRegion>(0.025f, jsFrames);
+	veggy = new Animation<TextureRegion>(0.035f, jsFrames);
 	//sb = new SpriteBatch();
 	stateTime = 0f;
 	/*
@@ -141,8 +150,6 @@ public JumpscareScreen(Demo game) {
 	    super.render(delta);
 	    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	
-	    // 2. Limitamos el delta time. Si el juego se congela y el delta es gigante, 
-	    // lo cortamos a un máximo de 0.05 segundos para no saltarnos la animación.
 	    float safeDelta = Math.min(delta, 0.05f);
 	    stateTime += safeDelta;
 	
@@ -157,7 +164,11 @@ public JumpscareScreen(Demo game) {
 	
 	    // Comprobación para salir del jumpscare
 	    if (veggy.isAnimationFinished(stateTime)) {
-	        System.out.println("El jumpscare ha terminado. Cambiar de pantalla aquí.");
+	    	jumpscareFinished = true;
+	    	Parametros.jumpscared = false;
+	    	lvl.setScreen(new DeathScreen(lvl));
+	        //System.out.println("El jumpscare ha terminado. Cambiar de pantalla aquí.");
+	        //Parametros.vida = 0;
 	    }
 	}
 	

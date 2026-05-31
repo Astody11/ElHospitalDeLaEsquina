@@ -19,11 +19,9 @@ public class UnknownDoor extends Interactables {
 	
 	private Animation<TextureRegion> pomo;
 	private Animation<TextureRegion> blackFrame;
-	private Animation<TextureRegion> veggy;
+	
 	private float blackFrameTimer;
-	private float dyingFrameTimer;
-	private boolean playingAnimation = false;
-	private SpriteBatch spritebatch;
+	private boolean openedDoor = false;
 	
 	int nUnknownDoorDialog = 0;
 	
@@ -33,10 +31,7 @@ public class UnknownDoor extends Interactables {
 		super(x, y, s, lvl);
 	
 		pomo = this.loadFullAnimation("maps/images/PomoVeggy.png",1,1,1,false);
-		blackFrame = this.loadFullAnimation("maps/images/Battlefield.jpg",1,1,1,false);
-		veggy = this.loadFullAnimation("maps/images/5x14.png",14,5,0,false);
-		
-		spritebatch = new SpriteBatch();
+		blackFrame = this.loadFullAnimation("maps/images/BlackFrame.png",1,1,1,false);
 		
 		this.setRectangle(this.getWidth(), this.getHeight()-50, -150, -140);
 		this.lvl = lvl;
@@ -45,112 +40,71 @@ public class UnknownDoor extends Interactables {
 		s.addActor(infoLbl);
 		
 		this.setAnimation(pomo);
-		this.blackFrameTimer = 2f;
-		this.dyingFrameTimer = 5*14*0.05f;
+		this.blackFrameTimer = 1f;
 	}
 	
 	public void act(float delta) {
 		super.act(delta);
 				
-		if(Parametros.jumpscared) {
-			//lvl.set
-			//System.out.println(blackFrameTimer);
+		if(openedDoor) {
+			blackFrameTimer -= delta;
+			this.setPosition(this.lvl.player.getX()-475, this.lvl.player.getY()-75);
+			this.setScale(1.2f, 1.2f);
+			this.setRectangle(this.getWidth(), this.getHeight(), 0, 0);
+			this.lvl.player.stayStill = true;
+			this.setAnimation(blackFrame);
 		}
 		
 		if(blackFrameTimer<=0) {
-			this.dyingFrameTimer -= delta;
-			if(!playingAnimation) {
-				//this.setAnimation(veggy);
-				veggy.setPlayMode(PlayMode.NORMAL);
-				veggy.setFrameDuration(0);
-				System.out.println(veggy.getKeyFrame(delta));
-				if(veggy.isAnimationFinished(delta)) {
-					this.dyingFrameTimer = 16*5*0.05f;
-					//veggy.setPlayMode(PlayMode.REVERSED);
-					veggy.setFrameDuration(0);
-					spritebatch.begin(); //NO SE VE ESTA MIERDA
-					spritebatch.draw(veggy.getKeyFrame(delta), 50, 50);
-					spritebatch.end();
-					//veggy.setPlayMode(PlayMode.LOOP);
-					veggy.setFrameDuration(0.05f);
-				}
-					
-				//veggy = this.loadFullAnimation("maps/images/VeggyAnimation.png",10,5,0.05f,false);
-				
-			}
-			//veggy.setPlayMode(PlayMode.NORMAL);
-			playingAnimation = true;
-			
-			if(playingAnimation && this.dyingFrameTimer<=0) {
-				veggy.setFrameDuration(0);
-				System.out.println("BYEEE");
-				Parametros.jumpscared = false;
-				Parametros.vida = 0;
-				
-			}
+			Parametros.jumpscared = true;
 		}
 		
 		
 		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+			nUnknownDoorDialog++;
 			
-			/*
-			if(this.pomoUnknown.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
-				nUnknownDoorDialog++;
-				
-				switch(nUnknownDoorDialog) {
-					case 1:
-						this.lblSophie.setText("Tengo un mal presentimiento...");
-						this.player.stayStill = true;
-						
+			switch(nUnknownDoorDialog) {
+				case 1:
+					this.lvl.lblSophie.setText("Tengo un mal presentimiento...");
+					this.lvl.player.stayStill = true;
+					
+					break;
+					
+				case 2:
+					this.lvl.lblSophie.setText("Creo que debería pensármelo mejor");
+					this.lvl.player.stayStill = true;
+					
+					break;
+					
+				case 3:
+					this.lvl.lblSophie.setText("");
+					this.lvl.lblAngy.setText("¡Sophie no abras eso!");
+					this.lvl.player.stayStill = true;
+					
+					break;
+					
+				case 4:
+					this.lvl.lblAngy.setText("");
+					this.lvl.lblSophie.setText("Esta es mi última oportunidad");
+					this.lvl.player.stayStill = true;
+					
+					break;
+					
+				case 5:
+					this.lvl.lblAngy.setText("¡¡NOOOO!!");
+					openedDoor = true;
+					break;
+					
+					default:
+						this.lvl.lblSophie.setText("");
 						break;
-						
-					case 2:
-						this.lblSophie.setText("Creo que debería pensármelo mejor");
-						this.player.stayStill = true;
-						
-						break;
-						
-					case 3:
-						this.lblSophie.setText("");
-						this.lblAngy.setText("¡Sophie no abras eso!");
-						this.player.stayStill = true;
-						
-						break;
-						
-					case 4:
-						this.lblAngy.setText("");
-						this.lblSophie.setText("Esta es mi última oportunidad");
-						this.player.stayStill = true;
-						
-						break;
-						
-					case 5:
-						this.lblAngy.setText("¡¡NOOOO!!");
-						game.setScreen(new DeathScreen(game));
-						Parametros.vida = Parametros.maxVida;
-						break;
-						
-						default:
-							this.lblSophie.setText("");
-							break;
-				}
 			}
-			
-			if(this.pomoUnknown.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.SPACE)) {
-					this.lblSophie.setText("");
-					this.lblAngy.setText("");
-					this.player.stayStill = false;
-			}*/
-			
-			Parametros.jumpscared = true;
-			 
-			/*this.setPosition(this.lvl.player.getX()-475, this.lvl.player.getY()-75);
-			this.setScale(1.2f, 1.2f);
-			this.setRectangle(this.getWidth(), this.getHeight(), 0, 0);
-			this.lvl.player.stayStill = true;
-			this.setAnimation(veggy);
-			veggy.setPlayMode(PlayMode.REVERSED);*/
-			
+		}
+		
+		if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+			this.lvl.lblSophie.setText("");
+			this.lvl.lblAngy.setText("");
+			this.lvl.player.stayStill = false;
 		}
 	}
 }
