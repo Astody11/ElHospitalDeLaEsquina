@@ -36,7 +36,10 @@ public class Mireya extends Ghosts{
 		
 		if(this.getEnabled()) {
 			animations();
-			dialog();
+			
+			if(Parametros.nivel == 224) {
+				dialog();
+			}
 			
 			if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
 				this.lvl.player.stayStill = true;
@@ -51,17 +54,21 @@ public class Mireya extends Ghosts{
 				this.nDialog++;
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.S) && this.nDialog == 2) {
+			if(this.lvl.player.agreeToCompannion.equals("YES") && this.nDialog == 2) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				Parametros.ghostCompannion = "Mireya";
 				Parametros.ghostPower = "- Ataque +25%" +
 						"\n" + "          - Defensa +25%";
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.N) && this.nDialog == 2) {
+			if(this.lvl.player.agreeToCompannion.equals("NO") && this.nDialog == 2) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
@@ -74,7 +81,7 @@ public class Mireya extends Ghosts{
 				this.setEnabled(false);
 			}
 			
-			if(!this.overlaps(this.lvl.player.sensor)) {
+			if(!this.overlaps(this.lvl.player.sensor) && (Parametros.nivel == 224)) {
 				this.lvl.dialogLabels.get("Mireya").setText("");
 				this.lvl.lblAngy.setText("");
 			}
@@ -89,8 +96,8 @@ public class Mireya extends Ghosts{
 			break;
 		case 2:
 			this.lvl.dialogLabels.get("Mireya").setText("");
-			this.lvl.lblAngy.setText("Angy: Mireya dice que su poder nos ayudará a tener un 25% más tanto de ataque como de defensa."
-					 + "\n" + "Y que si queremos que nos acompañe que pulsemos 'S' o si no 'N'.");
+			this.lvl.lblAngy.setText("Angy: Mireya dice que su poder nos ayudará a tener un 25% más tanto de ataque como defensa.");
+			this.lvl.yesNoBtns.yesNoTableAppear(true);
 			break;
 			
 		default: 

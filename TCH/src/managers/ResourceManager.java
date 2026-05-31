@@ -48,6 +48,7 @@ public final class ResourceManager {
 	public static LabelStyle catsStyle;
 	public static LabelStyle itemStyle;
 	public static LabelStyle adviceStyle;
+	public static LabelStyle doorsStyle;
 	public static LabelStyle enemyStyle;
 	public static LabelStyle bossStyle;
 	
@@ -103,6 +104,9 @@ public final class ResourceManager {
         assets.load("maps/images/OpenOven.png", Texture.class);
         assets.load("maps/images/Cuadro.png", Texture.class);
         assets.load("maps/images/CuadroGrande.png", Texture.class);
+        assets.load("maps/images/PomoVeggy.png", Texture.class);
+        assets.load("maps/images/VeggyAnimation.png", Texture.class);
+        assets.load("maps/images/5x14.png", Texture.class);
         
 		//Sophie
 		assets.load("player/afkDcha.png", Texture.class);
@@ -202,6 +206,8 @@ public final class ResourceManager {
         assets.load("audio/sounds/button.mp3", Sound.class);
         assets.load("audio/sounds/pickup.mp3", Sound.class);
         assets.load("audio/sounds/wellDone.wav", Sound.class);
+        assets.load("audio/sounds/Puf.mp3", Sound.class);
+        
         
         
         
@@ -402,6 +408,10 @@ public final class ResourceManager {
 		BitmapFont adviceFont = ftfg.generateFont(ftfp10);
 		adviceStyle = new LabelStyle();
 		adviceStyle.font = adviceFont;
+		
+		BitmapFont doorsFont = ftfg.generateFont(ftfp10);
+		doorsStyle = new LabelStyle();
+		doorsStyle.font = doorsFont;
 		
 		//Boss
 		FreeTypeFontParameter ftfp5= new FreeTypeFontParameter();

@@ -49,18 +49,22 @@ public class Marcos extends Ghosts{
 				position();
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.S) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("YES") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				Parametros.ghostCompannion = "Marcos";
-				Parametros.ghostPower = "- Daño gradual 8hp";
+				Parametros.ghostPower = "- Daño periódico 8hp";
 				AudioManager.playSound("audio/sounds/npcs/mhm.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.N) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("NO") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				AudioManager.playSound("audio/sounds/npcs/MarcosAdios.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
@@ -83,9 +87,10 @@ public class Marcos extends Ghosts{
 		
 		switch(nDialog) {
 		case 1:
-			this.lvl.dialogLabels.get("Marcos").setText("Marcos: Mi poder os permite envenenar a los enemigos y quitarles"
-					+ "\n" +  " unos pocos hp de manera gradual, si queréis que os acompañe me decís."
-					+ "\n" + "Pulsa 'S' para sí 'N' para no.");
+			this.lvl.dialogLabels.get("Marcos").setText("Marcos: Mi poder os permite envenenar a los enemigos y hacerles"
+					+ "\n" +  " daño poco a poco, si queréis que os acompañe me decís.");
+			
+			this.lvl.yesNoBtns.yesNoTableAppear(true);
 			break;
 			
 		default: 

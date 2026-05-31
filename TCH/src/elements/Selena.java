@@ -50,20 +50,24 @@ public class Selena extends Ghosts{
 				position();
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.S) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("YES") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				Parametros.ghostCompannion = "Selena";
 				Parametros.ghostPower = "Defensa x2";
 				this.lvl.dialogLabels.get("Selena").setText("");
 				AudioManager.playSound("audio/sounds/npcs/patearTrasero.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.N) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("NO") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				this.lvl.dialogLabels.get("Selena").setText("");
 				AudioManager.playSound("audio/sounds/npcs/Gudbai.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
 			if(Parametros.ghostCompannion.equals("") && Parametros.nivel == 200) {
@@ -86,8 +90,8 @@ public class Selena extends Ghosts{
 		
 		switch(nDialog) {
 		case 1:
-			this.lvl.dialogLabels.get("Selena").setText("Selena: Mi poder hará que reciban la mitad del daño, ¿quieren que les acompañe?"
-					+ "\n" + "Pulsa 'S' para sí 'N' para no.");
+			this.lvl.dialogLabels.get("Selena").setText("Selena: Mi poder hará que reciban la mitad del daño, ¿quieren que les acompañe?");
+			this.lvl.yesNoBtns.yesNoTableAppear(true);
 			break;
 		}
 	}

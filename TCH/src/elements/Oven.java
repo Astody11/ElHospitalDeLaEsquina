@@ -21,11 +21,14 @@ public class Oven extends Interactables{
 	
 	public Oven(float x, float y, Stage s, GameScreen lvl) {
 		super(x, y, s, lvl);
+		
 		closedOven = loadFullAnimation("maps/images/ClosedOven.png", 1, 1, 1, false);
 		openOven = loadFullAnimation("maps/images/OpenOven.png", 1, 1, 1, false);
 		
 		infoLbl = new Label("'E'", ResourceManager.itemStyle);
 		s.addActor(infoLbl);
+		
+		this.setAnimation(closedOven);
 	}
 	
 	@Override

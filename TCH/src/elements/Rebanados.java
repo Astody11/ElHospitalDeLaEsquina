@@ -43,13 +43,7 @@ public class Rebanados extends Enemies {
 		
 		hp = 90;
 		
-		if(Parametros.ghostCompannion.equals("Selena")) {
-			this.damage = 13;
-		} else if(Parametros.ghostCompannion.equals("Mireya")) {
-			this.damage = 16;
-		} else {
-			this.damage = 25;
-		}
+		determineDamage();
 		
 		enemyHitBox = new Elements(0, 0, s, this.getWidth(), this.getHeight()/8);
 		enemyHitBox.setRectangle();
@@ -139,6 +133,12 @@ public class Rebanados extends Enemies {
 		
 		lblHp.setPosition(this.getX()+this.getWidth()/2.8f , this.getY() + this.getHeight());
 		actualizarLabel();
+		
+		if(this.lvl.player.protegida) {
+			this.damage = 0;
+		} else {
+			determineDamage();
+		}
 	}
 
 	private void perseguir(float x, float y, boolean accurate) {
@@ -169,5 +169,15 @@ public class Rebanados extends Enemies {
 			lblHp.setText("");
 		}
 		
+	}
+	
+	private void determineDamage() {
+		if(Parametros.ghostCompannion.equals("Selena")) {
+			this.damage = 13;
+		} else if(Parametros.ghostCompannion.equals("Mireya")) {
+			this.damage = 16;
+		} else {
+			this.damage = 25;
+		}
 	}
 }

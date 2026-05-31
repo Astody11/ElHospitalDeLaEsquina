@@ -73,7 +73,6 @@ public class Gatas extends Ghosts {
 			
 		}
 		
-		System.out.println(this.lvl.player.stayStill + " " + nDialog + " " + Parametros.catsKey);
 		
 		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && !this.lvl.player.stayStill && Parametros.catsKey) {
 			infoLbl.setPosition(this.getX() + this.getWidth()/2.5f, this.getY() + this.getHeight()*1.2f);
@@ -103,7 +102,7 @@ public class Gatas extends Ghosts {
 			
 		case 4:
 			this.lvl.lblCats.setText("");
-			System.out.println("ESTOY AQUÍ");
+			
 			this.lvl.dialogLabels.get("Jeremy").setText("Jeremy: Dadles la llave que os dejé, la de la florecita naranja.");
 			break;
 			

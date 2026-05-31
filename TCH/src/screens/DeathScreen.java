@@ -34,34 +34,73 @@ public DeathScreen(Demo game) {
 	bgImg = new Texture(Gdx.files.internal("maps/images/DeathScreen.jpg"));
 	tabla = new Table();
 	tabla.setFillParent(true);
-	tabla.setPosition(-450, 10);
+	tabla.setPosition(-500, 100);
 	this.uiStage.addActor(tabla);
-	TextButton boton = new TextButton("Reintentar", ResourceManager.textButtonStyle);
-	boton.addListener(
-			(Event e)->{if(!(e instanceof InputEvent)|| !((InputEvent)e).getType().equals(Type.touchDown))
-				return false;
-				this.dispose();
-				game.setScreen(new GameScreen(game));
-				return false;
-			}); 
 	
-	boton.padLeft(-55);
-	tabla.add(boton);
+	TextButton resetBtn = new TextButton("Reintentar", ResourceManager.textButtonStyle);
+	resetBtn.addListener(
+			(Event e)->{if(!(e instanceof InputEvent))
+				return false;
+			
+			InputEvent ie = (InputEvent) e;
+			
+			//Hover on
+	        if (ie.getType() == Type.enter) {
+	        	
+	        	resetBtn.setStyle(ResourceManager.textButtonHoverStyle);
+	        }
+
+	        //Hover off
+	        if (ie.getType() == Type.exit) {
+
+	        	resetBtn.setStyle(ResourceManager.textButtonStyle);
+	        }
+
+	        // Handle click
+	        if (ie.getType() == Type.touchDown) {
+	            this.dispose();
+	            game.setScreen(new GameScreen(game));
+	        }
+
+			return false;
+		});
+			
+	
+	tabla.add(resetBtn);
 	tabla.row();
+	
 	TextButton botonSalir = new TextButton("Salir", ResourceManager.textButtonStyle);
 	botonSalir.addListener(
-			(Event e)->{if(!(e instanceof InputEvent)|| !((InputEvent)e).getType().equals(Type.touchDown))
+			(Event e)->{if(!(e instanceof InputEvent))
 				return false;
-				this.dispose();
-				Gdx.app.exit();
-				return false;
-			});
-	botonSalir.padLeft(-100);
+			
+			InputEvent ie = (InputEvent) e;
+			
+			//Hover on
+	        if (ie.getType() == Type.enter) {
+	        	
+	        	botonSalir.setStyle(ResourceManager.textButtonHoverStyle);
+	        }
+
+	        //Hover off
+	        if (ie.getType() == Type.exit) {
+
+	        	botonSalir.setStyle(ResourceManager.textButtonStyle);
+	        }
+
+	        // Handle click
+	        if (ie.getType() == Type.touchDown) {
+	        	this.dispose();
+	            Gdx.app.exit();
+	        }
+
+			return false;
+		});
+	
 	tabla.add(botonSalir);
 	
 	AudioManager.playMusic("audio/music/defeatMusic.mp3");
 }
-
 
 	@Override
 	public void render(float delta) {

@@ -152,7 +152,7 @@
   </object>
  </objectgroup>
  <objectgroup id="5" name="Interactables">
-  <object id="32" gid="12" x="801.242" y="1541.33" width="255" height="288.333"/>
+  <object id="32" gid="12" x="807.242" y="1534.33" width="255" height="288.333"/>
   <object id="35" gid="9" x="2536.64" y="1743.15" width="255" height="255"/>
   <object id="38" gid="20" x="5536.33" y="1260" width="115" height="200"/>
  </objectgroup>

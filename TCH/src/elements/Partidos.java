@@ -46,13 +46,7 @@ public class Partidos extends Enemies {
 		
 		this.hp = 140;
 		
-		if(Parametros.ghostCompannion.equals("Selena")) {
-			this.damage = 21;
-		} else if(Parametros.ghostCompannion.equals("Mireya")) {
-			this.damage = 30;
-		} else {
-			this.damage = 42;
-		}
+		determineDamage();
 		
 		distanciaVision=750;
 		
@@ -72,6 +66,10 @@ public class Partidos extends Enemies {
 		
 		super.act(dt);
 		
+		if(Parametros.jumpscared == true) {
+			this.setEnabled(false);
+		}
+			
 		if(this.getEnabled() && this.enemyHitBox.overlaps(this.lvl.player.hitBox) && this.lvl.player.invulnerabilityTime<=0) {
 			AudioManager.playSound("audio/sounds/sword.mp3");
 		}
@@ -138,6 +136,12 @@ public class Partidos extends Enemies {
 		
 		lblHp.setPosition(this.getX()+this.getWidth()/2.4f , this.getY() + this.getHeight());
 		actualizarLabel();
+		
+		if(this.lvl.player.protegida) {
+			this.damage = 5;
+		} else {
+			determineDamage();
+		}
 	}
 
 	
@@ -170,5 +174,13 @@ public class Partidos extends Enemies {
 		
 	}
 	
-	
+	private void determineDamage() {
+		if(Parametros.ghostCompannion.equals("Selena")) {
+			this.damage = 21;
+		} else if(Parametros.ghostCompannion.equals("Mireya")) {
+			this.damage = 30;
+		} else {
+			this.damage = 42;
+		}
+	}
 }

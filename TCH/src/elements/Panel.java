@@ -61,6 +61,7 @@ public class Panel extends Interactables{
 	private float inicioY;
 	
 	private Label infoLbl;
+	Stage s;
 	
 	public Panel(float x, float y, Stage s, GameScreen lvl) {
 		super(x, y, s, lvl);
@@ -71,6 +72,7 @@ public class Panel extends Interactables{
 		this.inicioX = x;
 		this.inicioY = y;
 		this.lvl = lvl;
+		this.s = s;
 		this.setRectangle(80, -580, 280, -200);
 		this.setAnimation(panel);
 		
@@ -99,14 +101,17 @@ public class Panel extends Interactables{
 			this.setPosition(0, 0);
 			this.setAnimation(closeLook);
 			this.lvl.uiStage.addActor(this);
+			this.toBack();
 			this.solvingPuzzle = true;
 			this.lvl.player.stayStill = true;
 			this.showPuzzle();
 		}
 		
 		if((this.getEnabled() && this.solvingPuzzle && !Parametros.elevatorPuzzleSolved && (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.ESCAPE))) || Parametros.elevatorPuzzleSolved) {
+			this.clearListeners();
 			this.setPosition(this.inicioX, this.inicioY);
 			this.setAnimation(panel);
+			s.addActor(this);
 			this.solvingPuzzle = false;
 			
 			this.active1 = false;

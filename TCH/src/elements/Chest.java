@@ -41,12 +41,14 @@ public class Chest extends Interactables {
 	TextButton btn6 = new TextButton("", ResourceManager.circle6);
 	
 	private Label infoLbl;
+	Stage s;
 	
 	public Chest(float x, float y, Stage s, GameScreen lvl) {
 		super(x, y, s, lvl);
 		chest = this.loadFullAnimation("maps/images/cofreMapa.png", 1, 1, 1, false); //De lejos
 		closeChest = this.loadFullAnimation("maps/images/Cofre.png", 1, 1, 1, false); //De cerca
 		this.lvl = lvl;
+		this.s = s;
 		this.posX = x;
 		this.posY = y;
 		this.setAnimation(chest);
@@ -69,6 +71,7 @@ public class Chest extends Interactables {
 			this.setPosition(0, 0);
 			this.setAnimation(closeChest);
 			this.lvl.uiStage.addActor(this);
+			this.toBack();
 			showPuzzle();
 			this.solvingPuzzle = true;
 			this.lvl.player.stayStill = true;
@@ -82,8 +85,9 @@ public class Chest extends Interactables {
 		}
 		
 		if((this.getEnabled() && !Parametros.chestPuzzleSolved && this.solvingPuzzle && (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.ESCAPE))) || Parametros.chestPuzzleSolved) {
+			this.clearListeners();
+			s.addActor(this);
 			this.setAnimation(chest);
-			
 			this.solvingPuzzle = false;
 			this.lvl.player.stayStill = false;
 			
@@ -252,6 +256,7 @@ public class Chest extends Interactables {
 		this.lvl.uiStage.addActor(btn4);
 		this.lvl.uiStage.addActor(btn5);
 		this.lvl.uiStage.addActor(btn6);
+		
 	}
 	
 }

@@ -24,16 +24,10 @@ public class Shield extends Elements {
 		super(x, y, s, w, h);
 		
 		shield = this.loadFullAnimation("player/Escudo.png", 1, 1, 1, false);
-		this.setRectangle();
+		this.setRectangle(0, 0, 0, 0);
 		this.lvl = lvl;
 		
 		this.setAnimation(shield);
-		
-		//Caja de colisión
-		float[] vertices = {0,0,w,0,w,h,0,h};
-		colision = new Polygon(vertices);
-		this.setSize(w, h);
-		this.damage = damage;
 		
 		this.duration = duration;
 		this.timeCounter = 3;
@@ -49,7 +43,6 @@ public class Shield extends Elements {
 			super.act(delta);
 
 			position();
-			colide();
 			
 			if(timeCounter>0) {
 				timeCounter -= delta;
@@ -70,20 +63,11 @@ public class Shield extends Elements {
 		
 	}
 	
-	public void colide() {
-		for(Enemies e: lvl.enemies) {
-			if(e.getEnabled() && this.overlaps(e)) {
-				e.damage(this.damage);
-				e.preventOverlap(this);
-			}
-		}
-	}
-	
 	private void position() {
 		if(this.lvl.player.direction == 1) {
-			this.setPosition(lvl.player.getX()+this.offsetX*1.2f, lvl.player.getY()+this.offsetY);
+			this.setPosition(lvl.player.getX()-100, lvl.player.getY());
 		} else {
-			this.setPosition(lvl.player.getX()-this.offsetX/2, lvl.player.getY()-this.offsetY/2);
+			this.setPosition(lvl.player.getX()-100, lvl.player.getY());
 		}
 		
 	}

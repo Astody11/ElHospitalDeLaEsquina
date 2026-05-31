@@ -27,7 +27,7 @@ public class Aitor extends Ghosts{
 		izq = loadFullAnimation("npcs/AitorFloatsT.png", 1, 10, 0.2f, true);
 		this.setAnimation(izq);
 		
-		infoLbl = new Label("", ResourceManager.npcStyle);
+		infoLbl = new Label("", ResourceManager.npcMarcadorStyle);
 		infoLbl.setPosition(this.getX() + this.getWidth()/2.4f, this.getY() + this.getHeight()*1.05f);
 		s.addActor(infoLbl);
 	}
@@ -49,18 +49,22 @@ public class Aitor extends Ghosts{
 				position();
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.S) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("YES") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				Parametros.ghostCompannion = "Aitor";
 				Parametros.ghostPower = "Vel. enemigo -50%";
 				AudioManager.playSound("audio/sounds/npcs/vamos.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.N) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("NO") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				AudioManager.playSound("audio/sounds/npcs/noMeMuevo.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
 			if(Parametros.ghostCompannion.equals("") && Parametros.nivel == 200) {
@@ -83,8 +87,8 @@ public class Aitor extends Ghosts{
 		
 		switch(nDialog) {
 		case 1:
-			this.lvl.dialogLabels.get("Aitor").setText("Aitor: Mi poder reduce la velocidad de los enemigos a la mitad. ¿Puedo ir con vosotras?"
-					+ "\n" + "Pulsa 'S' para sí 'N' para no.");
+			this.lvl.dialogLabels.get("Aitor").setText("Aitor: Mi poder reduce la velocidad de los enemigos a la mitad. ¿Puedo ir con vosotras?");
+			this.lvl.yesNoBtns.yesNoTableAppear(true);
 			break;
 			
 		default:

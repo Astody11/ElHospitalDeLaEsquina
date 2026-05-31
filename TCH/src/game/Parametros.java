@@ -21,7 +21,7 @@ public class Parametros {
  
  //variables de juego
  
- public static int nivel = 1;
+ public static int nivel = 2;
  
  public static int gravedad = -130;
  public static float jugadorx = 0;
@@ -37,6 +37,8 @@ public class Parametros {
  public static boolean key231 = false;
  public static boolean key243 = false;
  public static boolean key297 = false;
+ 
+ public static boolean jumpscared = false;
  
  public static boolean bottleKitchen = false;
  public static boolean bottle204 = false;

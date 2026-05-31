@@ -141,7 +141,7 @@ public class Jeremy extends Ghosts{
 			
 			default:
 				this.lvl.lblSophie.setText("");
-				this.lvl.dialogLabels.get("Jeremy").setText("Pepe");
+				this.lvl.dialogLabels.get("Jeremy").setText("");
 				break;
 		}
 	}

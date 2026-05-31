@@ -49,18 +49,22 @@ public class Valentina extends Ghosts{
 				position();
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.S) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("YES") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				Parametros.ghostCompannion = "Valentina";
 				Parametros.ghostPower = "Ataque x2";
 				AudioManager.playSound("audio/sounds/npcs/Vamonos.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.N) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("NO") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				AudioManager.playSound("audio/sounds/npcs/Adioos.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
@@ -83,8 +87,8 @@ public class Valentina extends Ghosts{
 		
 		switch(nDialog) {
 		case 1:
-			this.lvl.dialogLabels.get("Valentina").setText("Valentina: Mi poder os otorgará el doble de fuerza. ¿Queréis que vaya con vosotras?"
-					+ "\n" + "Pulsa 'S' para sí, o 'N' para no.");
+			this.lvl.dialogLabels.get("Valentina").setText("Valentina: Mi poder os otorgará el doble de fuerza. ¿Queréis que vaya con vosotras?");
+			this.lvl.yesNoBtns.yesNoTableAppear(true);	
 			break;
 			
 		default: 

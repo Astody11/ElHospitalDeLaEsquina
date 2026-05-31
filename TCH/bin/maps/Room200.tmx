@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="171" height="68" tilewidth="24" tileheight="24" infinite="0" nextlayerid="4" nextobjectid="8">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="171" height="68" tilewidth="24" tileheight="24" infinite="0" nextlayerid="4" nextobjectid="10">
  <tileset firstgid="1" source="Objects.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="171" height="68">
   <data encoding="csv">
@@ -98,14 +98,19 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="6" x="610.875" y="-48" width="2673.74" height="681.241">
+  <object id="7" name="End" x="1592.53" y="1446.65" width="808.421" height="130.685">
+   <properties>
+    <property name="name" value="ExitDoor2"/>
+   </properties>
+  </object>
+  <object id="8" x="1881.62" y="2.80649" width="233.281" height="623.497">
    <properties>
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="7" name="End" x="1592.53" y="1446.65" width="808.421" height="130.685">
+  <object id="9" x="681.143" y="-27.5853" width="2582.56" height="465.459">
    <properties>
-    <property name="name" value="ExitDoor2"/>
+    <property name="name" value="Solid"/>
    </properties>
   </object>
  </objectgroup>

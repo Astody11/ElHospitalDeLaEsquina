@@ -33,7 +33,6 @@ private Animation<TextureRegion> lasergunIzq;
 public Elements hitBox;
 public Elements lasergun;
 public Elements sensor;
-private Elements turbo;
 public Array<Laser> ammo;
 private int nBullets = 10;
 private int currentBullet;
@@ -47,7 +46,7 @@ public boolean win = false;
 public boolean invulnerability;
 public float invulnerabilityTime;
 private float invulnerabilityDuration;
-boolean stayStill = false;
+public boolean stayStill = false;
 
 public boolean protegida = false;
 private Shield shield;
@@ -59,6 +58,8 @@ private Marcos marcos;
 private Mireya mireya;
 private Valentina valentina;
 private Selena selena;
+
+public String agreeToCompannion = "";
 
 private GameScreen lvl;
 

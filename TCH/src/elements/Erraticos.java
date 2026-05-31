@@ -45,15 +45,9 @@ public class Erraticos extends Enemies {
 		velocidadMaxima = 700;
 		aceleracion = 700;
 		
-		this.hp = 240;
+		this.hp = 360;
 		
-		if(Parametros.ghostCompannion.equals("Selena")) {
-			this.damage = 25;
-		} else if(Parametros.ghostCompannion.equals("Mireya")) {
-			this.damage = 38;
-		} else {
-			this.damage = 50;
-		}
+		determineDamage();
 		
 		distanciaVision=1100;
 		
@@ -134,6 +128,12 @@ public class Erraticos extends Enemies {
 		
 		lblHp.setPosition(this.getX()+this.getWidth()/2.8f , this.getY() + this.getHeight());
 		actualizarLabel();
+		
+		if(this.lvl.player.protegida) {
+			this.damage = 10;
+		} else {
+			determineDamage();
+		}
 	}
 
 	
@@ -171,5 +171,13 @@ public class Erraticos extends Enemies {
 		
 	}
 	
-	
+	private void determineDamage() {
+		if(Parametros.ghostCompannion.equals("Selena")) {
+			this.damage = 25;
+		} else if(Parametros.ghostCompannion.equals("Mireya")) {
+			this.damage = 38;
+		} else {
+			this.damage = 50;
+		}
+	}
 }

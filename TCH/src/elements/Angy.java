@@ -50,27 +50,34 @@ public class Angy extends Ghosts {
 		
 		if(this.getEnabled()) {
 			animations();
-			dialog();
+			if(Parametros.nivel == 297) {
+				dialog();
+			}
 			
 			if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E) && !Parametros.angy && !this.lvl.player.stayStill) {
 				this.lvl.player.stayStill = true;
 				this.nDialog = 1;
 			}
 			
-			if((Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) && Parametros.nivel == 297 && !Parametros.angy) {
+			if((this.overlaps(this.lvl.player.sensor)&& this.lvl.player.stayStill && Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) && Parametros.nivel == 297 && !Parametros.angy) {
 				this.nDialog++;
 				if(nDialog >= 8) {
 					AudioManager.playSound("audio/sounds/npcs/Cueste.mp3");
 					this.lvl.lblAngy.setText("");
-					this.lvl.player.stayStill = false;
 					Parametros.angy = true;
 					Parametros.ghostPower = "Escudo";
+					this.lvl.player.stayStill = false;
 				}
 				
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor) && !Parametros.angy) {
-				this.infoLbl.setText("'E'");
+				
+				if(this.lvl.player.stayStill) {
+					this.infoLbl.setText("'Espacio'");
+				} else {
+					this.infoLbl.setText("'E'");
+				}
 			} else {
 				this.infoLbl.setText("");
 			}
@@ -83,7 +90,7 @@ public class Angy extends Ghosts {
 				this.setEnabled(false);
 			}
 			
-			if(!this.overlaps(this.lvl.player.sensor)) {
+			if(!this.overlaps(this.lvl.player.sensor) && (Parametros.nivel != 2 ||Parametros.nivel != 224) ) {
 				this.lvl.lblAngy.setText("");
 			}
 		}

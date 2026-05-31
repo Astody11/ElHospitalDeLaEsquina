@@ -68,14 +68,7 @@ public class Cetro extends Interactables{
 		if(this.getEnabled() && this.lvl.player.stayStill && Gdx.input.isKeyJustPressed(Keys.SPACE) && Parametros.nivel == 200) {
 			this.nDialog++;
 			
-			if(nDialog == 4) {
-				AudioManager.playSound("audio/sounds/AVer.mp3");
-			} else if(nDialog == 6) {
-				Parametros.sunflower = false;
-				Parametros.angy = false;
-				Parametros.ghostCompannion = "";
-				Parametros.ghostPower = "Ninguno";
-			} else if(nDialog>=10) {
+			if(nDialog>=11) {
 				this.lvl.lblAngy.setText("");
 				this.setEnabled(false);
 				this.lvl.player.stayStill = false;
@@ -105,6 +98,7 @@ public class Cetro extends Interactables{
 			break;
 			
 		case 4: 
+			AudioManager.playSound("audio/sounds/AVer.mp3");
 			this.lvl.lblAngy.setText("");
 			this.lvl.lblSophie.setText("Sophie: A ver que tienes para mí.");
 			break;
@@ -116,23 +110,34 @@ public class Cetro extends Interactables{
 			break;
 			
 		case 6: 
+			this.lvl.lblAngy.setText("!Si de verdad piensas que voy a dejar a mi her-!");
+			this.lvl.lblSanson.setText("");
+			break;
+			
+		case 7:
+			AudioManager.playSound("audio/sounds/Puf.mp3");
+			Parametros.sunflower = false;
+			Parametros.angy = false;
+			Parametros.ghostCompannion = "";
+			Parametros.ghostPower = "Ninguno";
+			this.lvl.lblAngy.setText("");
 			this.lvl.lblSanson.setText("???: Bueno, es la primera que ha sido capaz de llegar a esta habitación, he de admitir que estoy impresionado."
 					+ "\n" + "Me presento, soy Sansón Costura, el director de este hospital,"
 							+ "\n y ahora prepárese para unirse al resto de almas en pena...");
 			break;
 			
-		case 7: 
+		case 8: 
 			this.lvl.lblSanson.setText("");
 			this.lvl.lblSophie.setText("Sophie: ¿Qué has hecho con los nuevos pacientes? ¿Por qué retienes a las almas que han fallecido en este lugar?"
 					+ "\n" + "¡Quiero respuestas!");
 			break;
 			
-		case 8: 
+		case 9: 
 			this.lvl.lblSophie.setText("");
 			this.lvl.lblSanson.setText("Sansón: ¡¡¡SILENCIO!!!");
 			break;
 			
-		case 9: 
+		case 10: 
 			
 			this.lvl.lblSanson.setText("Sansón: ¡Eso no es de su incumbencia! Ha llegado la hora de su final.");
 			break;

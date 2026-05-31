@@ -18,6 +18,7 @@ public class Picture extends Interactables {
 	private boolean zoom = false;
 	private float posY;
 	private float posX;
+	Stage s;
 	
 	private Label infoLbl;
 	
@@ -32,7 +33,9 @@ public class Picture extends Interactables {
 		infoLbl = new Label("'E'", ResourceManager.itemStyle);
 		s.addActor(infoLbl);
 		
+		this.setRectangle(450, 500, 0, -100);
 		this.lvl = lvl;
+		this.s = s;
 	}
 	
 	@Override
@@ -40,18 +43,21 @@ public class Picture extends Interactables {
 		super.act(delta);
 		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
 			this.setAnimation(big);
-			this.setPosition(800, 130);
+			this.setPosition(0, 0);
+			this.lvl.uiStage.addActor(this);
 			this.zoom = true;
 			this.lvl.player.stayStill = true;
+			
 		} else if (this.zoom && (Gdx.input.isKeyJustPressed(Keys.ESCAPE) || Gdx.input.isKeyJustPressed(Keys.SPACE))) {
 			this.setAnimation(small);
 			this.setPosition(this.posX, this.posY);
+			s.addActor(this);
 			this.zoom = false;
 			this.lvl.player.stayStill = false;
 		}
 		
 		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor)) {
-			infoLbl.setPosition(this.getX() - this.getWidth()/1.75f, this.getY() + this.getHeight()/3);
+			infoLbl.setPosition(this.getX() - this.getWidth()/4f, this.getY() + this.getHeight()/3);
 			infoLbl.setText("'E'");
 		} else {
 			infoLbl.setText("");

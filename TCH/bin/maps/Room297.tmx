@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="128" height="85" tilewidth="24" tileheight="24" infinite="0" nextlayerid="5" nextobjectid="15">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="128" height="85" tilewidth="24" tileheight="24" infinite="0" nextlayerid="5" nextobjectid="16">
  <tileset firstgid="1" source="Objects.tsx"/>
  <tileset firstgid="23" source="Ghosts.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="128" height="85">
@@ -100,7 +100,7 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="2" x="505.851" y="246.149" width="517.682" height="669.684">
+  <object id="2" x="505.851" y="246.149" width="452.349" height="669.684">
    <properties>
     <property name="name" value="Solid"/>
    </properties>
@@ -130,10 +130,10 @@
     <property name="name" value="ExitDoor1"/>
    </properties>
   </object>
-  <object id="13" gid="37" x="2040" y="1008" width="192" height="571"/>
-  <object id="14" gid="22" x="799.455" y="1206.48" width="256" height="256"/>
  </objectgroup>
  <objectgroup id="4" name="Interactuables">
-  <object id="10" gid="15" x="1118.38" y="857.692" width="130" height="222"/>
+  <object id="10" gid="15" x="1123.71" y="859.025" width="130" height="222"/>
+  <object id="13" gid="37" x="2040" y="1008" width="192" height="571"/>
+  <object id="14" gid="22" x="733.455" y="1207.81" width="256" height="256"/>
  </objectgroup>
 </map>

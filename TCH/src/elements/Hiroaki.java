@@ -50,19 +50,23 @@ public class Hiroaki extends Ghosts{
 				position();
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.S) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("YES") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				Parametros.ghostCompannion = "Hiroaki";
 				Parametros.ghostPower = "- Vel. enemigos -33%" +
-				"\n" + "          - Daño gradual 2hp";
+				"\n" + "          - Daño periódico 2hp";
 				AudioManager.playSound("audio/sounds/npcs/Eeh.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
-			if(Gdx.input.isKeyJustPressed(Keys.N) && this.nDialog == 1) {
+			if(this.lvl.player.agreeToCompannion.equals("NO") && this.nDialog == 1) {
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				AudioManager.playSound("audio/sounds/npcs/Chao.mp3");
+				this.lvl.yesNoBtns.yesNoTableAppear(false);
+				this.lvl.player.agreeToCompannion = "";
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
@@ -87,8 +91,8 @@ public class Hiroaki extends Ghosts{
 		switch(nDialog) {
 		case 1:
 			this.lvl.dialogLabels.get("Hiroaki").setText("Hiroaki: Mi poder os permite electrocutar a los enemigos *Bzz*"
-					+ "\n" +  "aumenta vuestro ataque y reduce su velocidad, ¿qué tal si *Bzz* os acompaño?"
-					+ "\n" + "Pulsa 'S' para sí 'N' para no.");
+					+ "\n" +  "aumenta vuestro ataque y reduce su velocidad, ¿qué tal si *Bzz* os acompaño?");
+			this.lvl.yesNoBtns.yesNoTableAppear(true);
 			break;
 			
 		default: 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.9.2" name="Objects" tilewidth="512" tileheight="844" tilecount="14" columns="0">
+<tileset version="1.9" tiledversion="1.9.2" name="Objects" tilewidth="453" tileheight="844" tilecount="15" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="6">
   <properties>
@@ -71,18 +71,24 @@
   <properties>
    <property name="Interactable" value="Panel"/>
   </properties>
-  <image width="97" height="170" source="images/panel.png"/>
+  <image width="115" height="200" source="images/panel.png"/>
  </tile>
  <tile id="20">
   <properties>
    <property name="Interactable" value="Oven"/>
   </properties>
-  <image width="458" height="475" source="images/ClosedOven.png"/>
+  <image width="400" height="400" source="images/ClosedOven.png"/>
  </tile>
  <tile id="21">
   <properties>
    <property name="Interactable" value="Potion"/>
   </properties>
-  <image width="512" height="512" source="images/healthPotion.png"/>
+  <image width="256" height="256" source="images/healthPotion.png"/>
+ </tile>
+ <tile id="22">
+  <properties>
+   <property name="Interactable" value="RoomUnknown"/>
+  </properties>
+  <image width="115" height="115" source="images/PomoVeggy.png"/>
  </tile>
 </tileset>

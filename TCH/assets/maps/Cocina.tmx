@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="137" height="70" tilewidth="24" tileheight="24" infinite="0" nextlayerid="6" nextobjectid="16">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="137" height="70" tilewidth="24" tileheight="24" infinite="0" nextlayerid="6" nextobjectid="18">
  <tileset firstgid="1" source="Objects.tsx"/>
  <tileset firstgid="23" source="Ghosts.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="137" height="70">
@@ -112,11 +112,11 @@
   </object>
  </objectgroup>
  <objectgroup id="4" name="Interactables">
-  <object id="4" name="Gatas" gid="36" x="1513.43" y="1472.51" width="472" height="432"/>
+  <object id="4" name="Gatas" gid="36" x="1513.43" y="1472.51" width="472" height="432" visible="0"/>
   <object id="10" gid="20" x="2539.1" y="1059.98" width="97" height="170"/>
   <object id="13" gid="22" x="57.2039" y="1658.04" width="256" height="256"/>
   <object id="14" gid="34" x="1807.39" y="1712.02" width="529" height="968"/>
-  <object id="12" name="Horno" gid="21" x="1506.03" y="1389.79" width="458" height="475"/>
   <object id="6" gid="8" x="1152.3" y="1187.91" width="255" height="255"/>
+  <object id="17" gid="21" x="1552.67" y="1385.33" width="400" height="400"/>
  </objectgroup>
 </map>

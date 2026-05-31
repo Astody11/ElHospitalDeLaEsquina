@@ -66,7 +66,9 @@ import elements.Partidos;
 import elements.Picture;
 import elements.Player;
 import elements.Solid;
+import elements.UnknownDoor;
 import elements.Valentina;
+import elements.YesNoButtons;
 import game.Demo;
 import game.Parametros;
 import managers.AudioManager;
@@ -91,6 +93,8 @@ Solid exitDoor1;
 Solid pomo200;
 Solid pomo204;
 Solid pomo231;
+
+
 Solid puzzleRoom;
 Solid exitDoor2;
 
@@ -113,6 +117,8 @@ Label lblHp;
 public TextButton btnInactiveShield;
 Label lblPower;
 public Label lblInfo;
+public Label lblDoors;
+public YesNoButtons yesNoBtns;
 
 public Label lblSophie;
 public Label lblAngy;
@@ -159,14 +165,14 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 			
 		case 200:
 			map = ResourceManager.getMap("maps/Room200.tmx");
-			Parametros.zoom = 1.8f;
+			Parametros.zoom = 2.2f;
 			AudioManager.playMusic("audio/music/SalaCetro.mp3");
 			break;
 			
 		case 201:
 			map = ResourceManager.getMap("maps/BattleField.tmx");
 			AudioManager.playMusic("audio/music/boss.mp3");
-			Parametros.zoom = 2.2f;
+			Parametros.zoom = 2.75f;
 			break;
 			
 		case 204:
@@ -177,7 +183,7 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 			
 		case 205:
 			map = ResourceManager.getMap("maps/Puzzle.tmx");
-			Parametros.zoom = 2.75f;
+			Parametros.zoom = 2.25f;
 			AudioManager.playMusic("audio/music/rooms.mp3");
 			break;
 			
@@ -349,6 +355,11 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 					HealthPotion potion = new HealthPotion((float)props.get("x"), (float)props.get("y"), mainStage, this);
 					interactables.add(potion);
 					break;
+					
+				case "RoomUnknown":
+					UnknownDoor unknownDoor = new UnknownDoor((float)props.get("x"), (float)props.get("y"), mainStage, this);
+					interactables.add(unknownDoor);
+					break;
 			}
 			
 		}
@@ -431,25 +442,25 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		if(!getRectangleList("Room204").isEmpty()) {
 			elementos = getRectangleList("Room204");
 			props = elementos.get(0).getProperties();
-			pomo204 = pomo297 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
+			pomo204 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
 		}
 		
 		if(!getRectangleList("Room224").isEmpty()) {
 			elementos = getRectangleList("Room224");
 			props = elementos.get(0).getProperties();
-			pomo224 = pomo297 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
+			pomo224 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
 		}
 		
 		if(!getRectangleList("Room231").isEmpty()) {
 			elementos = getRectangleList("Room231");
 			props = elementos.get(0).getProperties();
-			pomo231 = pomo297 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
+			pomo231 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
 		}
 		
 		if(!getRectangleList("Room243").isEmpty()) {
 			elementos = getRectangleList("Room243");
 			props = elementos.get(0).getProperties();
-			pomo243 = pomo297 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
+			pomo243 = new Solid((float)props.get("x")-300, (float)props.get("y")-290, mainStage, (float)props.get("width")+320, (float)props.get("height")+300);
 		}
 		
 		if(!getRectangleList("Puzzle").isEmpty()) {
@@ -520,11 +531,14 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		btnInactiveShield.setPosition(10, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/6f);
 		
 		lblPower = new Label("Poder: " + Parametros.ghostCompannion, ResourceManager.powerStyle);
-		lblPower.setPosition(Parametros.getAnchoPantalla()-Parametros.getAnchoPantalla()/3.25f, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/15f);
+		lblPower.setPosition(Parametros.getAnchoPantalla()-Parametros.getAnchoPantalla()/2.75f, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/15f);
 		
 		
 		lblInfo = new Label("", ResourceManager.adviceStyle);
 		lblInfo.setPosition(10,  Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.07f);
+		
+		lblDoors = new Label("", ResourceManager.adviceStyle);
+		lblDoors.setPosition(Parametros.getAnchoPantalla()-Parametros.getAnchoPantalla()/1.75f,  Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.25f);
 		
 		lblSophie = new Label("", ResourceManager.sophieStyle);
 		lblSophie.setPosition(10, Parametros.getAltoPantalla()-Parametros.getAltoPantalla()/1.07f);
@@ -544,6 +558,7 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		uiStage.addActor(btnInactiveShield);
 		uiStage.addActor(lblPower);
 		uiStage.addActor(lblInfo);
+		uiStage.addActor(lblDoors);
 		uiStage.addActor(lblSophie);
 		uiStage.addActor(lblAngy);
 		uiStage.addActor(lblCats);
@@ -551,8 +566,10 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		
 		tabla = new Table();
 		tabla.setFillParent(true);
-		tabla.setPosition(515, -150);
+		tabla.setPosition(540, -240);
 		this.uiStage.addActor(tabla);
+		
+		this.yesNoBtns = new YesNoButtons(inicioY, inicioY, mainStage, this);
 		
 		lblSound = new Label("Sonido\n    " + (int)(Parametros.soundVolume*10), ResourceManager.sophieStyle);
 		
@@ -760,16 +777,19 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		}
 		
 		if(this.pomo243 != null) {
-			if(this.pomo243.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
-				if(!Parametros.key243) {
-					AudioManager.playSound("audio/sounds/noAbre.mp3");
-				} else {
-					AudioManager.playSound("audio/sounds/doorOpens.mp3");
-					Parametros.puerta = 0;
-					Parametros.nivel = 243;
-					game.setScreen(new GameScreen(game));
+			if(this.pomo243.overlaps(this.player.sensor)) {
+				if(Gdx.input.isKeyJustPressed(Keys.E)) {
+			
+					if(!Parametros.key243) {
+						AudioManager.playSound("audio/sounds/noAbre.mp3");
+					} else {
+						AudioManager.playSound("audio/sounds/doorOpens.mp3");
+						Parametros.puerta = 0;
+						Parametros.nivel = 243;
+						game.setScreen(new GameScreen(game));
+					}
+					
 				}
-				
 			}
 		}
 		
@@ -782,13 +802,17 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		}
 		
 		if(this.pomo297 != null) {
-			if(this.pomo297.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E) && Parametros.key297) {
-				AudioManager.playSound("audio/sounds/doorOpens.mp3");
-				Parametros.puerta = 0;
-				Parametros.nivel = 297;
-				game.setScreen(new GameScreen(game));
-			} else if(this.pomo297.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E) && !Parametros.key297) {
-				AudioManager.playSound("audio/sounds/noAbre.mp3");
+			if(this.pomo297.overlaps(this.player.sensor)){
+				if(Gdx.input.isKeyJustPressed(Keys.E)) {
+					if(Parametros.key297) {
+						AudioManager.playSound("audio/sounds/doorOpens.mp3");
+						Parametros.puerta = 0;
+						Parametros.nivel = 297;
+						game.setScreen(new GameScreen(game));
+					} else {
+						AudioManager.playSound("audio/sounds/noAbre.mp3");
+					}
+				}
 			}
 		}
 		
@@ -823,9 +847,87 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 			}
 		}
 		
+		switch(Parametros.nivel) {
+			case 0:
+				break;
+			case 1:
+				if(this.pomo224 != null && this.pomo243 != null && this.pomo297 != null) {
+					if(this.pomo224.overlaps(this.player.sensor) || this.pomo243.overlaps(this.player.sensor)
+							|| this.pomo297.overlaps(this.player.sensor)) {
+						lblDoors.setText("'E' Entrar");
+					} else {
+						lblDoors.setText("");
+					}
+				}
+				break;
+				
+			case 2:
+				if(this.pomo200 != null && this.pomo204 != null && this.pomo231 != null) {
+					if(this.pomo200.overlaps(this.player.sensor) || this.pomo204.overlaps(this.player.sensor)
+							|| this.pomo231.overlaps(this.player.sensor)) {
+						lblDoors.setText("'E' Entrar");
+					} else {
+						lblDoors.setText("");
+					}
+				}
+				break;
+				
+			case 200:
+			case 231:
+				if(this.exitDoor2 != null) {
+					
+					if(this.exitDoor2.overlaps(this.player.sensor)) {
+						lblDoors.setText("'E' Salir");
+					} else {
+						lblDoors.setText("");
+					}
+				}
+				break;
+				
+			case 224:
+			case 243:
+			case 297:
+				if(this.exitDoor1 != null) {
+					
+					if(this.exitDoor1.overlaps(this.player.sensor)) {
+						lblDoors.setText("'E' Salir");
+					} else {
+						lblDoors.setText("");
+					}
+				}
+				break;
+				
+			case 204:
+				if(this.exitDoor2 != null || this.puzzleRoom != null) {
+					
+					if(this.exitDoor2.overlaps(this.player.sensor)) {
+						lblDoors.setText("'E' Salir");
+					} else if(this.puzzleRoom.overlaps(this.player.sensor)) {
+						lblDoors.setText("'E' Entrar");
+					} else {
+						lblDoors.setText("");
+					}
+				}
+				break;
+			case 205:
+				if(this.pomo204 != null) {
+					if(this.pomo204.overlaps(this.player.sensor)) {
+						lblDoors.setText("'E' Salir");
+					} else {
+						lblDoors.setText("");
+					}
+				}
+				break;
+		}
+		
+		
 		this.player.positionWheels();
 		this.player.positionLasergun();
 		this.player.positionSensor();
+		
+		if(Parametros.jumpscared) {
+			game.setScreen(new JumpscareScreen(game));
+		}
 		
 		if(Parametros.vida<=0) {
 			game.setScreen(new DeathScreen(game));
@@ -872,16 +974,43 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 		
 	}
 	
-	public void centrarCamara() {
-		this.camara.position.x = MathUtils.clamp(player.getX(), this.camara.viewportWidth/1.5f, this.mapWidthPx-this.camara.viewportWidth/2);
-		this.camara.position.y = MathUtils.clamp(player.getY(), this.camara.viewportHeight/2, this.mapHeightPx-this.camara.viewportHeight/2);
-		camara.update();
-		
-	}
-	
 	public void centrarCamaraRooms() {
-		this.camara.position.x = MathUtils.clamp(player.getX(), this.camara.viewportWidth/1.5f, this.mapWidthPx);
-		this.camara.position.y = MathUtils.clamp(player.getY()+500, this.camara.viewportHeight/2, this.mapHeightPx);
+		switch(Parametros.nivel) {
+		case 0:
+			this.camara.position.x = MathUtils.clamp(player.getX(), this.camara.viewportWidth/1.5f, this.mapWidthPx);
+			this.camara.position.y = MathUtils.clamp(player.getY(), this.camara.viewportHeight/2, this.mapHeightPx);
+			break;
+			
+		case 1: 
+		case 2:
+			this.camara.position.x = MathUtils.clamp(player.getX()+500, this.camara.viewportWidth/2f, this.mapWidthPx);
+			this.camara.position.y = MathUtils.clamp(player.getY()+500, this.camara.viewportHeight/2, this.mapHeightPx);
+			break;
+			
+		case 200:
+		case 204:
+		case 224:
+		case 231:
+		case 243:
+		case 297:
+			this.camara.position.x = MathUtils.clamp(player.getX()+250, this.camara.viewportWidth/1.5f, this.mapWidthPx);
+			this.camara.position.y = MathUtils.clamp(player.getY()+500, this.camara.viewportHeight/2, this.mapHeightPx);
+			break;
+			
+		case 205:
+			this.camara.position.x = MathUtils.clamp(player.getX()+500, this.camara.viewportWidth/1.5f, this.mapWidthPx);
+			this.camara.position.y = MathUtils.clamp(player.getY(), this.camara.viewportHeight/2, this.mapHeightPx);
+			break;
+			
+		default:
+			this.camara.position.x = MathUtils.clamp(player.getX(), this.camara.viewportWidth/1.5f, this.mapWidthPx);
+			this.camara.position.y = MathUtils.clamp(player.getY(), this.camara.viewportHeight/2, this.mapHeightPx);
+			
+			break;
+		
+			
+		}
+		
 		camara.update();
 		
 	}
