@@ -66,7 +66,8 @@ public class Jeremy extends Ghosts{
 						this.lvl.dialogLabels.get("Jeremy").setText("");
 						this.lvl.player.stayStill = false;
 						Parametros.ghostCompannion = "Jeremy";
-						Parametros.ghostPower = "Enemigos no te persiguen";
+						Parametros.ghostPower = "Enemigos no"
+								+ "\n" + "te persiguen";
 					}
 					if(nDialog == 7) {
 						AudioManager.playSound("audio/sounds/npcs/PorFin.mp3");
@@ -74,7 +75,6 @@ public class Jeremy extends Ghosts{
 				} else if(Parametros.nivel == 0) {
 					if(nDialog >= 9) {
 						this.lvl.dialogLabels.get("Jeremy").setText("");
-						this.lvl.player.stayStill = false;
 					}
 				}
 				
@@ -88,7 +88,11 @@ public class Jeremy extends Ghosts{
 			
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
-				infoLbl.setText("'E'");
+				if(this.lvl.player.stayStill) {
+					this.infoLbl.setText("'Espacio'");
+				} else {
+					this.infoLbl.setText("'E'");
+				}
 			} else {
 				if(Parametros.cats) {
 					infoLbl.setText("");
@@ -99,7 +103,6 @@ public class Jeremy extends Ghosts{
 						infoLbl.setText("!");
 					}
 				}
-				//this.lvl.dialogLabels.get("Jeremy").setText("");
 			}
 		}
 	}
@@ -158,7 +161,6 @@ public class Jeremy extends Ghosts{
 		} else {
 			this.setAnimation(izq);
 		}
-		
 		
 	}
 

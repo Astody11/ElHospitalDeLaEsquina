@@ -137,14 +137,16 @@ public class Angy extends Ghosts {
 			break;
 			
 		case 3: 
-			this.lvl.lblAngy.setText("Angy: Sophie... ¿¿eres tú?? Ojalá pudiera darte un abrazo, pero ya sabes, lo de no ser corpórea y tal..."
+			this.lvl.lblAngy.setText("Angy: Sophie... ¿¿eres tú??"
+								+ "\n" + "Ojalá pudiera darte un abrazo, pero ya sabes, lo de no ser corpórea y tal..."
 								+ "\n" + "¿Pero qué haces aquí? ¡Estás en mucho peligro!");
 			break;
 			
 		case 4: 
 			this.lvl.lblAngy.setText("");
-			this.lvl.lblSophie.setText("Sophie: He venido para investigar tres casos de desapariciones, al parecer lo último que se sabe de ellos" 
-								+ "\n"  + "es que les enviaron un correo con la dirección de este hospital abandonado.");
+			this.lvl.lblSophie.setText("Sophie: He venido para investigar tres casos de desapariciones, al parecer"
+								+ "\n" + "lo último que se sabe de ellos es que les enviaron un correo"
+								+ "\n" + "con la dirección de este hospital abandonado.");
 			break;
 			
 		case 5: 
@@ -154,7 +156,8 @@ public class Angy extends Ghosts {
 			
 		case 6: 
 			this.lvl.lblSophie.setText("");
-			this.lvl.lblAngy.setText("Angy: No te preocupes de eso ahora hermanita, voy ayudarte a encontrarlos y a salir de aquí."
+			this.lvl.lblAngy.setText("Angy: No te preocupes de eso ahora hermanita,"
+					+ "\n" + "voy ayudarte a encontrarlos y a salir de aquí."
 					+ "\n" + "Pulsa 'C' para indicarme cuando quieras que active mis poderes para protegerte.");
 			break;
 			

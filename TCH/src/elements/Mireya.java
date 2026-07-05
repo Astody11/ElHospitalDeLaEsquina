@@ -72,7 +72,11 @@ public class Mireya extends Ghosts{
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
-				this.infoLbl.setText("'E'");
+				if(this.lvl.player.stayStill) {
+					this.infoLbl.setText("'Espacio'");
+				} else {
+					this.infoLbl.setText("'E'");
+				}
 			} else {
 				this.infoLbl.setText("");
 			}
@@ -96,7 +100,8 @@ public class Mireya extends Ghosts{
 			break;
 		case 2:
 			this.lvl.dialogLabels.get("Mireya").setText("");
-			this.lvl.lblAngy.setText("Angy: Mireya dice que su poder nos ayudará a tener un 25% más tanto de ataque como defensa.");
+			this.lvl.lblAngy.setText("Angy: Mireya dice que su poder nos ayudará a tener un 25% más"
+					+ "\n" + "tanto de ataque como defensa.");
 			this.lvl.yesNoBtns.yesNoTableAppear(true);
 			break;
 			

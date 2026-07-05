@@ -28,6 +28,8 @@ public class Selena extends Ghosts{
 		
 		this.setAnimation(izq);
 		
+		this.setRectangle(0, 400, 0, 0);
+		
 		infoLbl = new Label("", ResourceManager.npcMarcadorStyle);
 		infoLbl.setPosition(this.getX() + this.getWidth()/2.5f, this.getY() + this.getHeight());
 		s.addActor(infoLbl);
@@ -75,7 +77,11 @@ public class Selena extends Ghosts{
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
-				this.infoLbl.setText("'E'");
+				if(this.lvl.player.stayStill) {
+					this.infoLbl.setText("");
+				} else {
+					this.infoLbl.setText("'E'");
+				}
 			} else {
 				this.infoLbl.setText("");
 			}

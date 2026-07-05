@@ -15,6 +15,7 @@ import screens.GameScreen;
 public class Key200 extends Interactables {
 	
 	private Label infoLbl;
+	private boolean keySound = true;
 	
 	public Key200(float x, float y, Stage s, GameScreen lvl) {
 		super(x, y, s, lvl);
@@ -35,7 +36,10 @@ public class Key200 extends Interactables {
 		
 		if(Parametros.erraticosKilled == 3 && !Parametros.key200) {
 			//Parametros.erraticosKilled++;
-			AudioManager.playSound("audio/sounds/wellDone.wav");
+			if(this.keySound) {
+				AudioManager.playSound("audio/sounds/wellDone.wav");
+				this.keySound = false;
+			}
 			this.setEnabled(true);
 		}
 		

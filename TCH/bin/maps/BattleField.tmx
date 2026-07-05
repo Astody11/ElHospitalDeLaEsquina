@@ -120,7 +120,7 @@
     <property name="name" value="Start"/>
    </properties>
   </object>
-  <object id="2" gid="8" x="2477.03" y="1573.59" width="1202" height="1917"/>
+  <object id="2" gid="8" x="2497.03" y="1717.59" width="1202" height="1917"/>
   <object id="3" x="739.906" y="358.433" width="112" height="2017.4">
    <properties>
     <property name="name" value="Solid"/>
@@ -153,6 +153,6 @@
   </object>
  </objectgroup>
  <objectgroup id="4" name="Interactables">
-  <object id="9" gid="37" x="1239.92" y="1565.79" width="512" height="512"/>
+  <object id="9" gid="37" x="2647.92" y="1889.79" width="512" height="512"/>
  </objectgroup>
 </map>

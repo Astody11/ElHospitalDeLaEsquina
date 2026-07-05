@@ -19,12 +19,11 @@ public class Gatas extends Ghosts {
 		super(x, y, s, lvl);
 		this.loadFullAnimation("maps/images/tinaMina.png", 1, 1, 1, false);
 		
-		this.lvl = lvl;
 		this.setEnabled(false);
+		this.lvl = lvl;
 		
 		infoLbl = new Label("'E'", ResourceManager.itemStyle);
 		s.addActor(infoLbl);
-		
 	}
 	
 	@Override
@@ -33,32 +32,36 @@ public class Gatas extends Ghosts {
 		
 		if(Parametros.cats) {
 			this.setEnabled(true);
+			if(!Parametros.catsKey) {
+				this.lvl.player.stayStill = true;
+			} else {
+				this.lvl.player.stayStill = false;
+			}
 		}
 		if(this.getEnabled()) {
 			dialog();
 			
 			if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				this.lvl.player.stayStill = true;
+				lvl.player.stayStill = true;
 				
-				
-				if(!Parametros.catsKey && !this.lvl.player.stayStill) {
+				if(!Parametros.catsKey) {
 					AudioManager.playSound("audio/sounds/npcs/Gatas.mp3");
 					this.nDialog = 1;
-					this.lvl.player.stayStill = true;
 				} else if(Parametros.catsKey) {
 					AudioManager.playSound("audio/sounds/npcs/Gatas.mp3");
 					this.nDialog = 7;
-					this.lvl.player.stayStill = true;
 				}
-				
 			}
 		
 		if(this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.SPACE)) {
 			this.nDialog++;
+			System.out.println(this.lvl.player.stayStill);
 			if(!Parametros.catsKey) {
+				
 				if(nDialog >= 6) {
 					this.lvl.lblCats.setText("");
 					this.lvl.dialogLabels.get("Jeremy").setText("");
-					this.lvl.player.stayStill = false;
 					Parametros.catsKey = true;
 				}
 			
@@ -66,7 +69,6 @@ public class Gatas extends Ghosts {
 				if(nDialog >= 8) {
 					this.lvl.lblCats.setText("");
 					this.lvl.dialogLabels.get("Jeremy").setText("");
-					this.lvl.player.stayStill = false;
 					Parametros.catsKey = true;
 				}
 			}
@@ -77,10 +79,13 @@ public class Gatas extends Ghosts {
 		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && !this.lvl.player.stayStill && Parametros.catsKey) {
 			infoLbl.setPosition(this.getX() + this.getWidth()/2.5f, this.getY() + this.getHeight()*1.2f);
 			infoLbl.setText("'E'");
+		} else if(this.getEnabled() && !this.overlaps(this.lvl.player.sensor)) {
+			this.lvl.lblCats.setText("");
+			infoLbl.setText("");
 		} else {
 			infoLbl.setText("");
 		}
-			
+		
 	}
 		
 }

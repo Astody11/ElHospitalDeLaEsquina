@@ -71,6 +71,7 @@ public class Chest extends Interactables {
 			this.setPosition(0, 0);
 			this.setAnimation(closeChest);
 			this.lvl.uiStage.addActor(this);
+			AudioManager.playSound("audio/sounds/cajaBonita.mp3");
 			this.toBack();
 			showPuzzle();
 			this.solvingPuzzle = true;

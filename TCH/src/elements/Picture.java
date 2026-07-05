@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 import game.Parametros;
+import managers.AudioManager;
 import managers.ResourceManager;
 import screens.GameScreen;
 
@@ -42,6 +43,7 @@ public class Picture extends Interactables {
 	public void act(float delta) {
 		super.act(delta);
 		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+			AudioManager.playSound("audio/sounds/verCuadro.mp3");
 			this.setAnimation(big);
 			this.setPosition(0, 0);
 			this.lvl.uiStage.addActor(this);

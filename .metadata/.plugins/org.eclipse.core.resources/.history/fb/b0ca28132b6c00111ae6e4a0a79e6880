@@ -1,0 +1,82 @@
+package elements;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.GameScreen;
+
+public class Key224 extends Interactables {
+	
+	Label interactLbl;
+	
+	
+	public Key224(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s, lvl);
+	
+		loadFullAnimation("maps/images/Llave224.png",1,1,1,false);
+		this.setRectangle();
+		this.lvl = lvl;
+		this.setEnabled(false);
+		
+		interactLbl = new Label("'E'", ResourceManager.itemStyle);
+		s.addActor(interactLbl);
+		
+	}
+	
+	public void act(float delta) {
+		super.act(delta);
+		
+		if(!Parametros.firstPressedWASD) {
+			this.lvl.lblInfo.setText("Pulsa WASD para moverte");
+		}
+		
+		if(!Parametros.firstPressedWASD && (Gdx.input.isKeyJustPressed(Keys.A) || Gdx.input.isKeyJustPressed(Keys.D)
+							|| Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.S))) {
+			this.lvl.lblInfo.setText("Pulsa 'espacio' o 'shift' mientras avanzas para ir más rápido");
+			Parametros.firstPressedWASD = true;
+		}
+		
+		if(Parametros.firstPressedWASD && !Parametros.firstPressedSprint && !Parametros.firstEnemyKey && (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT))) {
+			Parametros.firstPressedSprint = true;
+			this.lvl.lblInfo.setText("Pulsa 'espacio' o 'shift' mientras avanzas para ir más rápido");
+		}
+			
+		
+		if(Parametros.firstEnemyKey && !Parametros.key224) {
+			this.setEnabled(true);
+			this.lvl.lblInfo.setText("");
+			this.lvl.lblSophie.setText("Creo que algo ha caído al suelo");
+		}
+		
+		if(Parametros.firstPressedWASD && Parametros.firstPressedSprint && !Parametros.firstEnemyKey) {
+			this.lvl.lblInfo.setText("Apunta con el ratón y haz click izq. para disparar y eliminar enemigos con la pistola láser");
+		}
+		
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor)) {
+			interactLbl.setPosition(this.getX() + this.getWidth()/2.5f, this.getY() + this.getHeight()*1.4f);
+			interactLbl.setText("'E'");
+		} else {
+			interactLbl.setText("");
+		}
+		
+		if(Parametros.key224) {
+			this.setEnabled(false);
+			this.lvl.lblSophie.setText("");
+		}
+					
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+			AudioManager.playSound("audio/sounds/pickup.mp3");
+			Parametros.key224 = true;
+			interactLbl.setText("'E'");
+		}
+		
+	}
+
+}

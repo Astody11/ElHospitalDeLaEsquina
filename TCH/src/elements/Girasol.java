@@ -18,7 +18,7 @@ public class Girasol extends Interactables{
 	
 	public Girasol(float x, float y, Stage s, GameScreen lvl) {
 		super(x, y, s, lvl);
-		loadFullAnimation("maps/images/girasol.png", 1, 1, 1, false);
+		loadFullAnimation("maps/images/nuevoGirasol.png", 1, 1, 1, false);
 		this.lvl = lvl;
 		
 		infoLbl = new Label("'E'", ResourceManager.itemStyle);

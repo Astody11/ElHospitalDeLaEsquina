@@ -53,7 +53,7 @@ public class Marcos extends Ghosts{
 				this.nDialog++;
 				this.lvl.player.stayStill = false;
 				Parametros.ghostCompannion = "Marcos";
-				Parametros.ghostPower = "- Daño periódico 8hp";
+				Parametros.ghostPower = "Daño periódico 8hp";
 				AudioManager.playSound("audio/sounds/npcs/mhm.mp3");
 				this.lvl.yesNoBtns.yesNoTableAppear(false);
 				this.lvl.player.agreeToCompannion = "";
@@ -68,7 +68,11 @@ public class Marcos extends Ghosts{
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
-				this.infoLbl.setText("'E'");
+				if(this.lvl.player.stayStill) {
+					this.infoLbl.setText("");
+				} else {
+					this.infoLbl.setText("'E'");
+				}
 			} else {
 				this.infoLbl.setText("");
 			}

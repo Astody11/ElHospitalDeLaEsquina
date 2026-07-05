@@ -62,7 +62,7 @@ public class CetroEnAccion extends Interactables{
 			cuentaTiempo = timeOnAir;
 			this.setPosition(this.lvl.player.getX(), 1500);
 			this.velocity.x = 0;
-			this.velocity.y = -posx*posy;
+			this.velocity.y = -posx*posy*1.25f;
 		}
 		
 }

@@ -2,29 +2,40 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item key="isRegEx" value="false"/>
-		<item key="selection" value="725"/>
+		<item key="selection" value="camara"/>
 		<item key="casesensitive" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="wrap" value="true"/>
 		<item key="wholeword" value="false"/>
 		<list key="findhistory">
-			<item value="685"/>
-			<item value="705"/>
-			<item value="765"/>
-			<item value="closeLook"/>
-			<item value="add"/>
-			<item value="panel"/>
-			<item value="Piso1"/>
-			<item value="dialog"/>
-			<item value="dialogue"/>
-			<item value="lblCats"/>
-			<item value="lbl"/>
-			<item value="stayStill"/>
-			<item value="this.lvl.player.stayStill"/>
-			<item value="cats"/>
-			<item value="this.persiguiendo"/>
+			<item value="camara"/>
+			<item value="pomo204"/>
+			<item value="Room204"/>
+			<item value="lblDoors"/>
+			<item value="centrar"/>
+			<item value="lblSophie"/>
+			<item value="setO"/>
+			<item value="camera"/>
+			<item value="puzzle"/>
+			<item value="pomo"/>
+			<item value="lblInfo"/>
+			<item value="adviceStyle"/>
+			<item value="power"/>
+			<item value="ghost"/>
+			<item value="soundBu"/>
 		</list>
 		<list key="replacehistory">
+			<item value="yesNoTable"/>
+			<item value="435"/>
+			<item value="735"/>
+			<item value="740"/>
+			<item value="395"/>
+			<item value="390"/>
+			<item value="400"/>
+			<item value="260"/>
+			<item value="385"/>
+			<item value="250"/>
+			<item value="370"/>
 			<item value="725"/>
 			<item value="685"/>
 			<item value="785"/>
@@ -35,7 +46,7 @@
 		<item key="DIALOG_WIDTH" value="322"/>
 		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
 		<item key="DIALOG_HEIGHT" value="391"/>
-		<item key="DIALOG_X_ORIGIN" value="1327"/>
-		<item key="DIALOG_Y_ORIGIN" value="490"/>
+		<item key="DIALOG_X_ORIGIN" value="1116"/>
+		<item key="DIALOG_Y_ORIGIN" value="210"/>
 	</section>
 </section>

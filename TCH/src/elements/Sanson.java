@@ -38,7 +38,7 @@ public class Sanson extends Boss {
 			
 			this.lvl = lvl;
 			this.loadFullAnimation("npcs/SansonFloatsT.png", 1, 15, 0.2f, true);
-			this.hp = 650;
+			this.hp = 1200;
 			this.setRectangle(300, 270, 300, 600);
 			
 			currentScepter = 0;
@@ -66,9 +66,7 @@ public class Sanson extends Boss {
 				scepters2.add(cetro2);
 			}
 			
-			
-			
-			lblHp = new Label("" + this.hp, ResourceManager.bossStyle);
+			lblHp = new Label("" + this.hp, ResourceManager.bossHPStyle);
 			s.addActor(lblHp);
 			
 			invulnerability = false;
@@ -129,7 +127,7 @@ public class Sanson extends Boss {
 				this.lvl.player.win = true;
 			}
 			
-			lblHp.setPosition(this.getX() + this.getWidth()/2, this.getY() + this.getHeight()/1.1f);
+			lblHp.setPosition(this.getX() + this.getWidth()/1.25f, this.getY() + this.getHeight()/2);
 			actualizarLabel();
 			
 		}

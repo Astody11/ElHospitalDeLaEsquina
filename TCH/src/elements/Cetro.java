@@ -16,6 +16,9 @@ public class Cetro extends Interactables{
 	private float angle = 0.0f;
 	private float vAngle = 0.02f;
 	
+	private boolean pufSound = true;
+	private boolean aVerSound = true;
+	
 	private Label infoLbl;
 	
 	private int nDialog = 0;
@@ -28,6 +31,8 @@ public class Cetro extends Interactables{
 		infoLbl = new Label("'E'", ResourceManager.itemStyle);
 		s.addActor(infoLbl);
 		
+		
+		this.setRectangle(this.getWidth()+50, this.getHeight(), -25, -50);
 		this.lvl = lvl;
 	}
 	
@@ -60,7 +65,12 @@ public class Cetro extends Interactables{
 		
 		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor)) {
 			infoLbl.setPosition(this.getX() - this.getWidth()/4, this.getY() + this.getHeight()/2.5f);
-			infoLbl.setText("'E'");
+			
+			if(this.lvl.player.stayStill) {
+				this.infoLbl.setText("'Espacio'");
+			} else {
+				this.infoLbl.setText("'E'");
+			}
 		} else {
 			infoLbl.setText("");
 		}
@@ -68,7 +78,7 @@ public class Cetro extends Interactables{
 		if(this.getEnabled() && this.lvl.player.stayStill && Gdx.input.isKeyJustPressed(Keys.SPACE) && Parametros.nivel == 200) {
 			this.nDialog++;
 			
-			if(nDialog>=11) {
+			if(nDialog>=12) {
 				this.lvl.lblAngy.setText("");
 				this.setEnabled(false);
 				this.lvl.player.stayStill = false;
@@ -89,16 +99,21 @@ public class Cetro extends Interactables{
 		case 2: 
 			this.lvl.lblAngy.setText("");
 			this.lvl.lblSophie.setText("Sophie: No sé que va a pasar a partir de aquí pero claramente la espectralita del cetro "
-					+ "\n" + "está controlando todo lo paranormal de este lugar. Necesito encontrar a los desaparecidos y liberaros.");
+					+ "\n" + "está controlando todo lo paranormal de este lugar."
+					+ "\n" + "Necesito encontrar a los desaparecidos y liberaros.");
 			break;
 			
 		case 3: 
 			this.lvl.lblSophie.setText("");
-			this.lvl.lblAngy.setText("Angy: Es el cetro del director de este sitio, no está aquí porque se le haya olvidado cogerlo.");
+			this.lvl.lblAngy.setText("Angy: Es el cetro del director de este sitio,"
+					+ "\n" + "no está aquí porque se le haya olvidado cogerlo.");
 			break;
 			
-		case 4: 
-			AudioManager.playSound("audio/sounds/AVer.mp3");
+		case 4:
+			if(this.aVerSound) {
+				AudioManager.playSound("audio/sounds/AVer.mp3");
+				this.aVerSound = false;
+			}
 			this.lvl.lblAngy.setText("");
 			this.lvl.lblSophie.setText("Sophie: A ver que tienes para mí.");
 			break;
@@ -110,41 +125,52 @@ public class Cetro extends Interactables{
 			break;
 			
 		case 6: 
-			this.lvl.lblAngy.setText("!Si de verdad piensas que voy a dejar a mi her-!");
+			this.lvl.lblAngy.setText("¡Si de verdad piensas que voy a dejar a mi her-!");
 			this.lvl.lblSanson.setText("");
 			break;
 			
 		case 7:
-			AudioManager.playSound("audio/sounds/Puf.mp3");
+			if(this.pufSound) {
+				AudioManager.playSound("audio/sounds/Puf.mp3");
+				this.pufSound = false;
+			}
+				
 			Parametros.sunflower = false;
 			Parametros.angy = false;
 			Parametros.ghostCompannion = "";
 			Parametros.ghostPower = "Ninguno";
 			this.lvl.lblAngy.setText("");
-			this.lvl.lblSanson.setText("???: Bueno, es la primera que ha sido capaz de llegar a esta habitación, he de admitir que estoy impresionado."
-					+ "\n" + "Me presento, soy Sansón Costura, el director de este hospital,"
-							+ "\n y ahora prepárese para unirse al resto de almas en pena...");
+			this.lvl.lblSanson.setText("???: Bueno, es la primera que ha sido capaz de llegar a esta habitación,"
+					+ "\n" + "he de admitir que estoy impresionado.");
 			break;
 			
-		case 8: 
-			this.lvl.lblSanson.setText("");
-			this.lvl.lblSophie.setText("Sophie: ¿Qué has hecho con los nuevos pacientes? ¿Por qué retienes a las almas que han fallecido en este lugar?"
-					+ "\n" + "¡Quiero respuestas!");
+		case 8:
+			this.lvl.lblSanson.setText("Sansón: Me presento, soy Sansón Costura, el director de este hospital,"
+							+ "\n y tú pareces la niña que se libró de su destino hace años.");
 			break;
 			
 		case 9: 
+			this.lvl.lblSanson.setText("");
+			this.lvl.lblSophie.setText("Sophie: ¿Por qué mandas correos a pacientes terminales con esta dirección?"
+					+ "\n" + "¿Por qué retienes a las almas que han fallecido en este lugar?"
+					+ "\n" + "¡Quiero respuestas!");
+			break;
+			
+		case 10: 
 			this.lvl.lblSophie.setText("");
 			this.lvl.lblSanson.setText("Sansón: ¡¡¡SILENCIO!!!");
 			break;
 			
-		case 10: 
+		case 11: 
 			
-			this.lvl.lblSanson.setText("Sansón: ¡Eso no es de su incumbencia! Ha llegado la hora de su final.");
+			this.lvl.lblSanson.setText("Sansón: ¡Eso no es de su incumbencia!"
+					+ "\n" + " Ahora prepárese para unirse al resto de almas en pena....");
 			break;
 			
 		default: 
 			this.lvl.lblSophie.setText("");
 			this.lvl.lblAngy.setText("");
+			this.lvl.lblSanson.setText("");
 			break;
 		}
 		

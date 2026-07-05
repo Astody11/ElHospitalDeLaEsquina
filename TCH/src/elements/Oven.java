@@ -53,6 +53,10 @@ public class Oven extends Interactables{
 			infoLbl.setText("");
 		}
 		
+		if(this.getEnabled() && Parametros.cats) {
+			this.setRectangle(1, 1, 1, 1);
+		}
+		
 	}
 
 }

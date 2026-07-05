@@ -62,10 +62,37 @@ Texture bgImg;
 		
 		tabla.add(playBtn);
 		tabla.row();
-		/*
-		TextButton botonOpciones=new TextButton("Opciones",ResourceManager.textButtonStyle);
-		tabla.add(botonOpciones);
-		*/
+		
+		TextButton creditsBtn=new TextButton("Créditos",ResourceManager.textButtonStyle);
+		creditsBtn.addListener(
+				(Event e)->{if(!(e instanceof InputEvent))
+					return false;
+				
+				InputEvent ie = (InputEvent) e;
+				
+				//Hover on
+		        if (ie.getType() == Type.enter) {
+		        	
+		        	creditsBtn.setStyle(ResourceManager.textButtonHoverStyle);
+		        }
+
+		        //Hover off
+		        if (ie.getType() == Type.exit) {
+
+		        	creditsBtn.setStyle(ResourceManager.textButtonStyle);
+		        }
+
+		        // Handle click
+		        if (ie.getType() == Type.touchDown) {
+		            this.dispose();
+		            game.setScreen(new CreditsScreen(game));
+		        }
+
+				return false;
+			});
+		
+		tabla.add(creditsBtn);
+		tabla.row();
 		
 		TextButton exitBtn=new TextButton("Salir", ResourceManager.textButtonStyle);
 		exitBtn.addListener(

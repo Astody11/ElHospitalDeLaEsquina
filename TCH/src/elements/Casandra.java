@@ -50,7 +50,11 @@ public class Casandra extends Ghosts{
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
-				this.infoLbl.setText("'E'");
+				if(this.lvl.player.stayStill) {
+					this.infoLbl.setText("'Espacio'");
+				} else {
+					this.infoLbl.setText("'E'");
+				}
 			} else {
 				this.infoLbl.setText("");
 			}

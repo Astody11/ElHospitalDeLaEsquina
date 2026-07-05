@@ -25,6 +25,7 @@ public class Valentina extends Ghosts{
 		izq = loadFullAnimation("npcs/ValentinaFloatsT.png", 1, 10, 0.2f, true);
 		dcha = loadFullAnimation("npcs/ValentinaFloatsTDcha.png", 1, 10, 0.2f, true);
 		
+		this.setRectangle(this.getWidth()-100, 200, 50, 0);
 		this.setAnimation(izq);
 		
 		infoLbl = new Label("", ResourceManager.npcMarcadorStyle);
@@ -68,7 +69,11 @@ public class Valentina extends Ghosts{
 			}
 			
 			if(this.overlaps(this.lvl.player.sensor)) {
-				this.infoLbl.setText("'E'");
+				if(this.lvl.player.stayStill) {
+					this.infoLbl.setText("");
+				} else {
+					this.infoLbl.setText("'E'");
+				}
 			} else {
 				this.infoLbl.setText("");
 			}

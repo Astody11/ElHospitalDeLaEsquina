@@ -144,6 +144,6 @@
  <objectgroup id="4" name="Interactables">
   <object id="10" gid="3" x="408.345" y="1559.64" width="752" height="1590"/>
   <object id="11" gid="9" x="1885.32" y="1701.62" width="762" height="1467"/>
-  <object id="12" gid="37" x="1779.65" y="906.433" width="256" height="256"/>
+  <object id="12" gid="37" x="898.74" y="1162.63" width="256" height="256"/>
  </objectgroup>
 </map>

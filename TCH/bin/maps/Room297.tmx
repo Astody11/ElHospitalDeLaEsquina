@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="128" height="85" tilewidth="24" tileheight="24" infinite="0" nextlayerid="5" nextobjectid="16">
  <tileset firstgid="1" source="Objects.tsx"/>
- <tileset firstgid="23" source="Ghosts.tsx"/>
+ <tileset firstgid="24" source="Ghosts.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="128" height="85">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -132,8 +132,8 @@
   </object>
  </objectgroup>
  <objectgroup id="4" name="Interactuables">
-  <object id="10" gid="15" x="1123.71" y="859.025" width="130" height="222"/>
-  <object id="13" gid="37" x="2040" y="1008" width="192" height="571"/>
+  <object id="10" gid="15" x="1105.04" y="860.358" width="130" height="222"/>
+  <object id="13" gid="38" x="2040" y="1008" width="192" height="571"/>
   <object id="14" gid="22" x="733.455" y="1207.81" width="256" height="256"/>
  </objectgroup>
 </map>

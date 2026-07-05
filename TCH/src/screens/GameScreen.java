@@ -94,9 +94,10 @@ Solid pomo200;
 Solid pomo204;
 Solid pomo231;
 
-
 Solid puzzleRoom;
 Solid exitDoor2;
+
+Solid freezer;
 
 OrthographicCamera camara;
 private TiledMap map;
@@ -487,6 +488,12 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 			exitDoor2 = new Solid((float)props.get("x"), (float)props.get("y"), mainStage, (float)props.get("width"), (float)props.get("height"));
 		}
 		
+		if(!getRectangleList("freezer").isEmpty()) {
+			elementos = getRectangleList("freezer");
+			props = elementos.get(0).getProperties();
+			freezer = new Solid((float)props.get("x"), (float)props.get("y"), mainStage, (float)props.get("width"), (float)props.get("height"));
+		}
+		
 		camara = (OrthographicCamera) mainStage.getCamera();
 		camara.setToOrtho(false, Parametros.getAnchoPantalla()*Parametros.zoom, Parametros.getAltoPantalla()*Parametros.zoom);
 		
@@ -847,8 +854,23 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 			}
 		}
 		
+		if(this.freezer != null) {
+			if(this.freezer.overlaps(this.player.sensor)){
+				if(Gdx.input.isKeyJustPressed(Keys.E)) {
+					AudioManager.playSound("audio/sounds/freezerDoor.mp3");
+				}
+			}
+		}
+		
 		switch(Parametros.nivel) {
 			case 0:
+				if(this.freezer != null) {
+					if(this.freezer.overlaps(this.player.sensor)) {
+						lblDoors.setText("'E' Entrar");
+					} else {
+						lblDoors.setText("");
+					}
+				}
 				break;
 			case 1:
 				if(this.pomo224 != null && this.pomo243 != null && this.pomo297 != null) {
@@ -965,7 +987,9 @@ public Map<String, Label> dialogLabels = new HashMap<>();
 			Parametros.angy = false;
 			Parametros.ghostCompannion = "";
 			
+			Parametros.blackScreen = false;
 			Parametros.jumpscared = false;
+
 		}
 		
 		for(Solid s: solidos) {

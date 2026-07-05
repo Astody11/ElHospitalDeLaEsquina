@@ -106,12 +106,12 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="3" x="6548.25" y="627.273" width="13.3333" height="1201.09">
+  <object id="3" x="6487.64" y="627.273" width="216.364" height="1358.67">
    <properties>
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="4" x="-1.57579" y="625.939" width="14.6667" height="1255.4">
+  <object id="4" x="-95.5152" y="625.939" width="141.939" height="1376.61">
    <properties>
     <property name="name" value="Solid"/>
    </properties>

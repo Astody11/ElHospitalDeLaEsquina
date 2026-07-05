@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="272" height="86" tilewidth="24" tileheight="24" infinite="0" nextlayerid="6" nextobjectid="39">
  <tileset firstgid="1" source="Objects.tsx"/>
- <tileset firstgid="23" source="EnemigosMetalicos.tsx"/>
+ <tileset firstgid="24" source="EnemigosMetalicos.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="272" height="86">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -111,9 +111,9 @@
     <property name="name" value="Start"/>
    </properties>
   </object>
-  <object id="20" gid="23" x="2505.06" y="1934.73" width="447" height="424"/>
-  <object id="21" gid="23" x="3905.61" y="1943.52" width="447" height="424"/>
-  <object id="22" gid="23" x="5132.75" y="1920.85" width="447" height="424"/>
+  <object id="20" gid="24" x="2505.06" y="1934.73" width="447" height="424"/>
+  <object id="21" gid="24" x="3905.61" y="1943.52" width="447" height="424"/>
+  <object id="22" gid="24" x="5202.45" y="1978.43" width="447" height="424"/>
   <object id="23" x="2140.61" y="1146.18" width="86.303" height="80.606">
    <properties>
     <property name="name" value="Room297"/>
@@ -135,7 +135,7 @@
    </properties>
   </object>
   <object id="30" gid="17" x="735.272" y="1674.88" width="484.848" height="471.576"/>
-  <object id="33" x="6537.21" y="341.212" width="49.8182" height="1739.03">
+  <object id="33" x="6537.21" y="341.212" width="74.0606" height="1739.03">
    <properties>
     <property name="name" value="Solid"/>
    </properties>

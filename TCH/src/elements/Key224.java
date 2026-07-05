@@ -40,7 +40,9 @@ public class Key224 extends Interactables {
 		if(!Parametros.firstPressedWASD && (Gdx.input.isKeyJustPressed(Keys.A) || Gdx.input.isKeyJustPressed(Keys.D)
 							|| Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.S))) {
 			this.lvl.lblInfo.setText("Pulsa 'espacio' o 'shift' mientras avanzas para ir más rápido");
+			AudioManager.playSound("audio/sounds/bienvenidaDeNuevo.mp3");
 			Parametros.firstPressedWASD = true;
+			
 		}
 		
 		if(Parametros.firstPressedWASD && !Parametros.firstPressedSprint && !Parametros.firstEnemyKey && (Gdx.input.isKeyJustPressed(Keys.SPACE) || Gdx.input.isKeyJustPressed(Keys.SHIFT_LEFT))) {

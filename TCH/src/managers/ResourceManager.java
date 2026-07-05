@@ -51,6 +51,7 @@ public final class ResourceManager {
 	public static LabelStyle doorsStyle;
 	public static LabelStyle enemyStyle;
 	public static LabelStyle bossStyle;
+	public static LabelStyle bossHPStyle;
 	
 	public static TextButtonStyle circle1;
 	public static TextButtonStyle circle2;
@@ -84,6 +85,7 @@ public final class ResourceManager {
 		
         //elementos de mapa
 		assets.load("maps/images/girasol.png", Texture.class);
+		assets.load("maps/images/nuevoGirasol.png", Texture.class);
         assets.load("maps/images/panel.png", Texture.class);
         assets.load("maps/images/closePanel.jpg", Texture.class);
         assets.load("maps/images/PuzzleAscensor.png", Texture.class);
@@ -199,6 +201,7 @@ public final class ResourceManager {
         assets.load("audio/music/AngysRoom.mp3", Music.class);
         assets.load("audio/music/defeatMusic.mp3", Music.class);
         assets.load("audio/music/boss.mp3", Music.class);
+        assets.load("audio/music/Silence.mp3", Music.class);
         
         //Sonidos
         assets.load("audio/sounds/ovenDoor.mp3", Sound.class);
@@ -207,9 +210,7 @@ public final class ResourceManager {
         assets.load("audio/sounds/pickup.mp3", Sound.class);
         assets.load("audio/sounds/wellDone.wav", Sound.class);
         assets.load("audio/sounds/Puf.mp3", Sound.class);
-        
-        
-        
+        assets.load("audio/sounds/VeggyJumpscare.mp3", Sound.class);
         
 	        //Player
         	assets.load("audio/sounds/YEsto.mp3", Sound.class);
@@ -220,6 +221,12 @@ public final class ResourceManager {
 	        assets.load("audio/sounds/door224.mp3", Sound.class);
 	        assets.load("audio/sounds/laserGun.mp3", Sound.class);
 	        assets.load("audio/sounds/shield.wav", Sound.class);
+	        assets.load("audio/sounds/bienvenidaDeNuevo.mp3", Sound.class);
+	        assets.load("audio/sounds/cajaBonita.mp3", Sound.class);
+	        assets.load("audio/sounds/freezerDoor.mp3", Sound.class);
+	        assets.load("audio/sounds/malPresentimiento.mp3", Sound.class);
+	        assets.load("audio/sounds/verCuadro.mp3", Sound.class);
+	        
 	        
 	        //NPCs
 	        
@@ -335,7 +342,7 @@ public final class ResourceManager {
 		
 		//Sophie
 		FreeTypeFontParameter ftfp1 = new FreeTypeFontParameter();
-		ftfp1.size=25;
+		ftfp1.size=20;
 		ftfp1.color=Color.NAVY;
 		ftfp1.borderColor=Color.WHITE;
 		ftfp1.borderWidth=3;
@@ -346,10 +353,10 @@ public final class ResourceManager {
 		
 		//Angy
 		FreeTypeFontParameter ftfp7 = new FreeTypeFontParameter();
-		ftfp7.size=25;
+		ftfp7.size=20;
 		ftfp7.color=Color.PURPLE;
 		ftfp7.borderColor=Color.BLACK;
-		ftfp7.borderWidth=4;
+		ftfp7.borderWidth=3;
 		
 		BitmapFont angyFont = ftfg.generateFont(ftfp7);
 		angyStyle = new LabelStyle();
@@ -381,7 +388,7 @@ public final class ResourceManager {
 		ftfp9.size=20;
 		ftfp9.color=Color.GREEN;
 		ftfp9.borderColor=Color.PURPLE;
-		ftfp9.borderWidth=4;
+		ftfp9.borderWidth=3;
 		
 		BitmapFont catsFont = ftfg.generateFont(ftfp9);
 		catsStyle = new LabelStyle();
@@ -415,14 +422,24 @@ public final class ResourceManager {
 		
 		//Boss
 		FreeTypeFontParameter ftfp5= new FreeTypeFontParameter();
-		ftfp5.size=28;
+		ftfp5.size=22;
 		ftfp5.color=Color.PURPLE;
 		ftfp5.borderColor=Color.GOLD;
-		ftfp5.borderWidth=9;
+		ftfp5.borderWidth=3;
 		
 		BitmapFont bossFont = ftfg.generateFont(ftfp5);
 		bossStyle = new LabelStyle();
 		bossStyle.font = bossFont;
+		
+		FreeTypeFontParameter ftfp15= new FreeTypeFontParameter();
+		ftfp6.size=64;
+		ftfp6.color=Color.PURPLE;
+		ftfp6.borderColor=Color.GOLD;
+		ftfp6.borderWidth=8;
+		
+		BitmapFont bossHPFont = ftfg.generateFont(ftfp6);
+		bossHPStyle = new LabelStyle();
+		bossHPStyle.font = bossHPFont;
 		
 		//Lágrimas, puzzle ascensor
 		FreeTypeFontParameter ftfp2= new FreeTypeFontParameter();

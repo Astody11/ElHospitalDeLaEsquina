@@ -31,10 +31,10 @@ public EndScreen(Demo game) {
 	
 	//initialize();
 	sb = new SpriteBatch();
-	bgImg = new Texture(Gdx.files.internal("maps/images/endScreen.jpg"));
+	bgImg = new Texture(Gdx.files.internal("maps/images/EndScreenText.png"));
 	tabla = new Table();
 	tabla.setFillParent(true);
-	tabla.setPosition(-450, 10);
+	tabla.setPosition(-450, -50);
 	this.uiStage.addActor(tabla);
 	
 	TextButton resetBtn = new TextButton("Volver a jugar", ResourceManager.textButtonStyle);
@@ -65,6 +65,38 @@ public EndScreen(Demo game) {
 			return false;
 		});
 	tabla.add(resetBtn);
+	tabla.row();
+	
+	TextButton backBtn = new TextButton("Volver al menú", ResourceManager.textButtonStyle);
+	backBtn.addListener(
+			(Event e)->{if(!(e instanceof InputEvent))
+				return false;
+			
+			InputEvent ie = (InputEvent) e;
+			
+			//Hover on
+	        if (ie.getType() == Type.enter) {
+	        	
+	        	backBtn.setStyle(ResourceManager.textButtonHoverStyle);
+	        }
+
+	        //Hover off
+	        if (ie.getType() == Type.exit) {
+
+	        	backBtn.setStyle(ResourceManager.textButtonStyle);
+	        }
+
+	        // Handle click
+	        if (ie.getType() == Type.touchDown) {
+	            this.dispose();
+	            game.setScreen(new TitleScreen(game));
+	        }
+
+			return false;
+		});
+			
+	
+	tabla.add(backBtn);
 	tabla.row();
 	
 	TextButton botonSalir = new TextButton("Salir", ResourceManager.textButtonStyle);

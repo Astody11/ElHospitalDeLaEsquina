@@ -1,0 +1,101 @@
+package elements;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
+import game.Parametros;
+import managers.AudioManager;
+import managers.ResourceManager;
+import screens.DeathScreen;
+import screens.GameScreen;
+
+public class UnknownDoor extends Interactables {
+	
+	private Animation<TextureRegion> pomo;
+	private Animation<TextureRegion> veggy;
+	
+	private Label infoLbl;
+	
+	public UnknownDoor(float x, float y, Stage s, GameScreen lvl) {
+		super(x, y, s, lvl);
+	
+		pomo = this.loadFullAnimation("maps/images/PomoVeggy.png",1,1,1,false);
+		veggy = this.loadFullAnimation("maps/images/Llave200.png",1,1,1,false);
+		
+		this.setRectangle();
+		this.lvl = lvl;
+		
+		this.setEnabled(false);
+		
+		infoLbl = new Label("'E'", ResourceManager.itemStyle);
+		s.addActor(infoLbl);
+		
+		this.setAnimation(pomo);
+	}
+	
+	public void act(float delta) {
+		super.act(delta);
+				
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+			this.setAnimation(veggy);
+		}
+		
+		/*
+		 * if(this.pomoUnknown != null) {
+			if(this.pomoUnknown.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
+				nUnknownDoorDialog++;
+				
+				switch(nUnknownDoorDialog) {
+					case 1:
+						this.lblSophie.setText("Tengo un mal presentimiento...");
+						this.player.stayStill = true;
+						
+						break;
+						
+					case 2:
+						this.lblSophie.setText("Creo que debería pensármelo mejor");
+						this.player.stayStill = true;
+						
+						break;
+						
+					case 3:
+						this.lblSophie.setText("");
+						this.lblAngy.setText("¡Sophie no abras eso!");
+						this.player.stayStill = true;
+						
+						break;
+						
+					case 4:
+						this.lblAngy.setText("");
+						this.lblSophie.setText("Esta es mi última oportunidad");
+						this.player.stayStill = true;
+						
+						break;
+						
+					case 5:
+						this.lblAngy.setText("¡¡NOOOO!!");
+						game.setScreen(new DeathScreen(game));
+						Parametros.vida = Parametros.maxVida;
+						break;
+						
+						default:
+							this.lblSophie.setText("");
+							break;
+				}
+			}
+			
+			if(this.pomoUnknown.overlaps(this.player.sensor) && Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+					this.lblSophie.setText("");
+					this.lblAngy.setText("");
+					this.player.stayStill = false;
+			}
+		}
+		 */
+		
+	}
+
+}

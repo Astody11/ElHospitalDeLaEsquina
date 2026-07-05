@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-    <fullyQualifiedTypeName name="elements.Valentina"/>
     <fullyQualifiedTypeName name="elements.Mireya"/>
     <fullyQualifiedTypeName name="elements.Selena"/>
     <fullyQualifiedTypeName name="elements.Casandra"/>
@@ -39,12 +38,10 @@
     <fullyQualifiedTypeName name="elements.Angy"/>
     <fullyQualifiedTypeName name="elements.Girasol"/>
     <fullyQualifiedTypeName name="managers.ResourceManager"/>
-    <fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
     <fullyQualifiedTypeName name="com.badlogic.gdx.Input.Keys"/>
     <fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.ui.Label"/>
     <fullyQualifiedTypeName name="game.Parametros"/>
     <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.g2d.SpriteBatch"/>
-    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Texture"/>
     <fullyQualifiedTypeName name="managers.AudioManager"/>
     <fullyQualifiedTypeName name="com.badlogic.gdx.maps.Map"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
@@ -60,4 +57,7 @@
     <fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.InputEvent.Type"/>
     <fullyQualifiedTypeName name="com.badlogic.gdx.scenes.scene2d.Event"/>
     <fullyQualifiedTypeName name="com.badlogic.gdx.utils.Align"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.graphics.Texture"/>
+    <fullyQualifiedTypeName name="com.badlogic.gdx.Gdx"/>
+    <fullyQualifiedTypeName name="elements.YesNoButtons"/>
 </qualifiedTypeNameHistroy>

@@ -67,6 +67,10 @@ public class Erraticos extends Enemies {
 		
 		super.act(dt);
 		
+		if(Parametros.blackScreen == true) {
+			this.setEnabled(false);
+		}
+		
 		if(this.getEnabled() && this.enemyHitBox.overlaps(this.lvl.player.hitBox) && this.lvl.player.invulnerabilityTime<=0) {
 			AudioManager.playSound("audio/sounds/axe.mp3");
 		}
@@ -93,7 +97,7 @@ public class Erraticos extends Enemies {
 			moveBy(velocity.x * dt, velocity.y * dt);
 		}
 		
-		if(this.hp<240) {
+		if(this.hp<360) {
 			this.persiguiendo = !Parametros.ghostCompannion.equals("Jeremy");
 		}
 		
@@ -162,7 +166,7 @@ public class Erraticos extends Enemies {
 			lblHp.setText("" + this.hp);
 		} else {
 			if(Parametros.nivel == 205 && !dead) {
-				Parametros.erraticosKilled++;
+				Parametros.erraticosKilled = Parametros.erraticosKilled +1;
 				System.out.println(Parametros.erraticosKilled);
 				dead = true;
 			}

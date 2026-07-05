@@ -37,6 +37,7 @@ public class UnknownDoor extends Interactables {
 		this.lvl = lvl;
 		
 		infoLbl = new Label("'E'", ResourceManager.itemStyle);
+		
 		s.addActor(infoLbl);
 		
 		this.setAnimation(pomo);
@@ -48,6 +49,7 @@ public class UnknownDoor extends Interactables {
 				
 		if(openedDoor) {
 			blackFrameTimer -= delta;
+			Parametros.blackScreen = true;
 			this.setPosition(this.lvl.player.getX()-475, this.lvl.player.getY()-75);
 			this.setScale(1.2f, 1.2f);
 			this.setRectangle(this.getWidth(), this.getHeight(), 0, 0);
@@ -59,12 +61,19 @@ public class UnknownDoor extends Interactables {
 			Parametros.jumpscared = true;
 		}
 		
+		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor)) {
+			infoLbl.setPosition(this.getX() - this.getWidth()*1.75f, this.getY() + this.getHeight()*1.4f);
+			this.infoLbl.setText("'E' Entrar");
+		} else {
+			this.infoLbl.setText("");
+		}
 		
 		if(this.getEnabled() && this.overlaps(this.lvl.player.sensor) && Gdx.input.isKeyJustPressed(Keys.E)) {
 			nUnknownDoorDialog++;
 			
 			switch(nUnknownDoorDialog) {
 				case 1:
+					AudioManager.playSound("audio/sounds/malPresentimiento.mp3");
 					this.lvl.lblSophie.setText("Tengo un mal presentimiento...");
 					this.lvl.player.stayStill = true;
 					

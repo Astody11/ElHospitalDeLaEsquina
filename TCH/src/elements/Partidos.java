@@ -66,7 +66,7 @@ public class Partidos extends Enemies {
 		
 		super.act(dt);
 		
-		if(Parametros.jumpscared == true) {
+		if(Parametros.blackScreen == true) {
 			this.setEnabled(false);
 		}
 			

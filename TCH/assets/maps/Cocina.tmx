@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="137" height="70" tilewidth="24" tileheight="24" infinite="0" nextlayerid="6" nextobjectid="18">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="137" height="70" tilewidth="24" tileheight="24" infinite="0" nextlayerid="6" nextobjectid="19">
  <tileset firstgid="1" source="Objects.tsx"/>
- <tileset firstgid="23" source="Ghosts.tsx"/>
+ <tileset firstgid="24" source="Ghosts.tsx"/>
  <layer id="1" name="Capa de patrones 1" width="137" height="70">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -90,7 +90,7 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="7" x="-2.84923" y="5.69846" width="34.1907" height="1968.82">
+  <object id="7" x="-78.8492" y="5.69846" width="110.191" height="1968.82">
    <properties>
     <property name="name" value="Solid"/>
    </properties>
@@ -100,7 +100,7 @@
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="9" x="3225.33" y="330.51" width="65.5323" height="1683.89">
+  <object id="9" x="3225.33" y="330.51" width="123.532" height="1683.89">
    <properties>
     <property name="name" value="Solid"/>
    </properties>
@@ -112,11 +112,16 @@
   </object>
  </objectgroup>
  <objectgroup id="4" name="Interactables">
-  <object id="4" name="Gatas" gid="36" x="1513.43" y="1472.51" width="472" height="432" visible="0"/>
+  <object id="4" name="Gatas" gid="37" x="1513.43" y="1414.51" width="472" height="432"/>
   <object id="10" gid="20" x="2539.1" y="1059.98" width="97" height="170"/>
   <object id="13" gid="22" x="57.2039" y="1658.04" width="256" height="256"/>
-  <object id="14" gid="34" x="1807.39" y="1712.02" width="529" height="968"/>
+  <object id="14" gid="35" x="1807.39" y="1712.02" width="529" height="968"/>
   <object id="6" gid="8" x="1152.3" y="1187.91" width="255" height="255"/>
   <object id="17" gid="21" x="1552.67" y="1385.33" width="400" height="400"/>
+  <object id="18" x="258" y="982" width="388" height="272">
+   <properties>
+    <property name="name" value="freezer"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

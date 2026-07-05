@@ -10,7 +10,6 @@ public class Boss extends Elements {
 
 	protected GameScreen lvl;
 	public int hp = 400;
-	public int damage;
 	protected boolean invulnerability;
 	protected float invulnerabilityCounter;
 	protected float invulnerabilityDuration;
@@ -21,7 +20,6 @@ public class Boss extends Elements {
 		this.lvl = lvl;
 		this.invulnerability = false;
 		this.invulnerabilityDuration = 1;
-		this.damage = 0;
 		
 	}
 	
@@ -45,8 +43,6 @@ public class Boss extends Elements {
 			this.invulnerability = false;
 		}
 		
-		colide();
-		
 	}
 	
 	public void damage(int damage) {
@@ -57,14 +53,6 @@ public class Boss extends Elements {
 		this.invulnerability = true;
 		this.invulnerabilityCounter -= this.invulnerabilityDuration;
 	
-	}
-	
-	public void colide() {
-		if(this.getEnabled() && this.overlaps(this.lvl.player)) {
-			
-			lvl.player.damage(this.damage);
-		}
-		
 	}
 	
 }

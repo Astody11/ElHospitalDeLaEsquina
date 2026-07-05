@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;Silence.mp3&apos; to &apos;TCH/assets/audio.music&apos;&#x0D;&#x0A;- Original project: &apos;TCH&apos;&#x0D;&#x0A;- Destination element: &apos;TCH/assets/audio.music&apos;&#x0D;&#x0A;- Original element: &apos;Silence.mp3&apos;&#x0D;&#x0A;- Update references to refactored element" description="Move file" destination="/assets&lt;audio.music" element1="assets/audio/sounds/Silence.mp3" files="1" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1781463597375" units="0" version="1.0"/>
+</session>

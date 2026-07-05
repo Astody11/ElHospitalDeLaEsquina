@@ -74,75 +74,9 @@ public JumpscareScreen(Demo game) {
 	veggy = new Animation<TextureRegion>(0.035f, jsFrames);
 	//sb = new SpriteBatch();
 	stateTime = 0f;
-	/*
-	tabla = new Table();
-	tabla.setFillParent(true);
-	tabla.setPosition(-500, 100);
-	this.uiStage.addActor(tabla);
-	
-	TextButton resetBtn = new TextButton("Reintentar", ResourceManager.textButtonStyle);
-	resetBtn.addListener(
-			(Event e)->{if(!(e instanceof InputEvent))
-				return false;
-			
-			InputEvent ie = (InputEvent) e;
-			
-			//Hover on
-	        if (ie.getType() == Type.enter) {
-	        	
-	        	resetBtn.setStyle(ResourceManager.textButtonHoverStyle);
-	        }
-
-	        //Hover off
-	        if (ie.getType() == Type.exit) {
-
-	        	resetBtn.setStyle(ResourceManager.textButtonStyle);
-	        }
-
-	        // Handle click
-	        if (ie.getType() == Type.touchDown) {
-	            this.dispose();
-	            game.setScreen(new GameScreen(game));
-	        }
-
-			return false;
-		});
-			
-	
-	tabla.add(resetBtn);
-	tabla.row();
-	
-	TextButton botonSalir = new TextButton("Salir", ResourceManager.textButtonStyle);
-	botonSalir.addListener(
-			(Event e)->{if(!(e instanceof InputEvent))
-				return false;
-			
-			InputEvent ie = (InputEvent) e;
-			
-			//Hover on
-	        if (ie.getType() == Type.enter) {
-	        	
-	        	botonSalir.setStyle(ResourceManager.textButtonHoverStyle);
-	        }
-
-	        //Hover off
-	        if (ie.getType() == Type.exit) {
-
-	        	botonSalir.setStyle(ResourceManager.textButtonStyle);
-	        }
-
-	        // Handle click
-	        if (ie.getType() == Type.touchDown) {
-	        	this.dispose();
-	            Gdx.app.exit();
-	        }
-
-			return false;
-		});
-	
-	tabla.add(botonSalir);
-	
-	AudioManager.playMusic("audio/music/defeatMusic.mp3");*/
+	//Parametros.soundVolume = Parametros.soundVolume-2;
+	AudioManager.playSound("audio/sounds/VeggyJumpscare.mp3");
+	AudioManager.playMusic("audio/music/Silence.mp3");
 }
 
 	@Override
@@ -165,10 +99,10 @@ public JumpscareScreen(Demo game) {
 	    // Comprobación para salir del jumpscare
 	    if (veggy.isAnimationFinished(stateTime)) {
 	    	jumpscareFinished = true;
+	    	
+			Parametros.blackScreen = false;
 	    	Parametros.jumpscared = false;
 	    	lvl.setScreen(new DeathScreen(lvl));
-	        //System.out.println("El jumpscare ha terminado. Cambiar de pantalla aquí.");
-	        //Parametros.vida = 0;
 	    }
 	}
 	
